@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MTRTamalate</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea</string>
+    <string name="tanggal">Senin 3 Januari 2021</string>
+    <string name="cari">Cari..</string>
+    <string name="hildayanti">Hildayanti</string>
+    <string name="ket_foto">*Foto yang dikirim sebagai bukti keluhan anda dan juga agar memudahkan petugas untuk menemukan sampah anda.</string>
+</resources>
