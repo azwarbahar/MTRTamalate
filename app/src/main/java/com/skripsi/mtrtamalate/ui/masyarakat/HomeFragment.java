@@ -26,6 +26,7 @@ import com.skripsi.mtrtamalate.adapter.BeritaAdapter;
 import com.skripsi.mtrtamalate.adapter.EdukasiAdapter;
 import com.skripsi.mtrtamalate.models.edukasi.SliderEdukasiItem;
 import com.skripsi.mtrtamalate.ui.masyarakat.bacaan.BacaanActivity;
+import com.skripsi.mtrtamalate.ui.masyarakat.sampah.DataSampahActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +117,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void menuDataSampah(View view) {
-        Toast.makeText(getActivity(), "Klik Data Sampah", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), DataSampahActivity.class));
     }
 
     private void menuInfo(View view) {

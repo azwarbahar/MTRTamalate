@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.skripsi.mtrtamalate"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -82,8 +82,10 @@ dependencies {
     // Allert
     implementation 'com.github.f0ris.sweetalert:library:1.5.6'
 
-    //sliding up panel
-    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    // pie chart
+//    implementation 'com.github.razerdp:AnimatedPieView:1.2.4'
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
 
 //    //Butterknife
     implementation 'com.jakewharton:butterknife:10.2.3'

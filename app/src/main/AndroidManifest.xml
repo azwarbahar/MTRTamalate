@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTRTamalate">
-        <activity android:name=".ui.masyarakat.FormLaporActivity"></activity>
+        <activity android:name=".ui.masyarakat.sampah.DataSampahActivity"></activity>
+        <activity android:name=".ui.masyarakat.FormLaporActivity" />
         <activity android:name=".ui.masyarakat.bacaan.BacaanActivity" />
         <activity android:name=".ui.masyarakat.MasyarakatActivity">
             <intent-filter>
