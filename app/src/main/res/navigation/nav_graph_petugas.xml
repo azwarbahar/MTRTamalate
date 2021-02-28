@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph_petugas"
+    app:startDestination="@id/homeFragmentPetugas">
+
+    <fragment
+        android:id="@+id/homeFragmentPetugas"
+        android:name="com.skripsi.mtrtamalate.ui.petugas.HomeFragmentPetugas"
+        android:label="HomeFragmentPetugas" />
+    <fragment
+        android:id="@+id/riwayatFragmentPetugas"
+        android:name="com.skripsi.mtrtamalate.ui.petugas.RiwayatFragmentPetugas"
+        android:label="RiwayatFragmentPetugas" />
+    <fragment
+        android:id="@+id/akunFragmentPetugas"
+        android:name="com.skripsi.mtrtamalate.ui.petugas.AkunFragmentPetugas"
+        android:label="AkunFragmentPetugas" />
+</navigation>
