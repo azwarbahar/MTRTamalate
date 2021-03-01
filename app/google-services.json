@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "901477177108",
+    "firebase_url": "https://kesiniku-default-rtdb.firebaseio.com",
+    "project_id": "kesiniku",
+    "storage_bucket": "kesiniku.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901477177108:android:8f90b5c220d4008f01d401",
+        "android_client_info": {
+          "package_name": "com.technest.needfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901477177108-qoc994kt7l8s4kc448sdp5l8kb8kdgll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADOPa-PFJUHC3eEI03OZ8kLLumjK4t39M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901477177108-qoc994kt7l8s4kc448sdp5l8kb8kdgll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
