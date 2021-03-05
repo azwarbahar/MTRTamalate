@@ -21,13 +21,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MTRTamalate">
         <activity android:name=".LoginActivity">
-        </activity>
-        <activity android:name=".ui.petugas.PetugasActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.petugas.PetugasActivity" >
         </activity>
         <activity android:name=".ui.masyarakat.sampah.DataSampahActivity" />
         <activity android:name=".ui.masyarakat.FormLaporActivity" />

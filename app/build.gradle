@@ -70,6 +70,9 @@ dependencies {
     //cardview
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    //sliding up panel
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+
     //glide
     implementation 'com.dyhdyh.support:glide:1.0.0'
 
