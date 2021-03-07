@@ -26,10 +26,10 @@ public class BeritaFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_item_bacaan, container, false);
 
         rv_bacaan = view.findViewById(R.id.rv_bacaan);
-
-        rv_bacaan.setLayoutManager(new LinearLayoutManager(getActivity()));
-        beritaAdapter = new BeritaAdapter(getActivity());
-        rv_bacaan.setAdapter(beritaAdapter);
+//
+//        rv_bacaan.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        beritaAdapter = new BeritaAdapter(getActivity());
+//        rv_bacaan.setAdapter(beritaAdapter);
 
         return  view;
     }

@@ -16,6 +16,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,8 +30,16 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.skripsi.mtrtamalate.R;
+import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
+import com.skripsi.mtrtamalate.network.ApiClient;
+import com.skripsi.mtrtamalate.network.ApiInterface;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FormLaporActivity extends AppCompatActivity {
 
@@ -37,6 +47,7 @@ public class FormLaporActivity extends AppCompatActivity {
     private RelativeLayout rl_send;
     private EditText et_keterangan;
     private ImageView img_foto;
+    private Bitmap bitmap_gambar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +65,49 @@ public class FormLaporActivity extends AppCompatActivity {
         rl_send = findViewById(R.id.rl_send);
 
         rl_foto.setOnClickListener(this::clickFoto);
-        rl_send.setOnClickListener(this::clickSend);
+        rl_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                String keterangan = et_keterangan.getText().toString();
+                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                Call<ResponLaporan> responLaporanCall = apiInterface.AddLaporan(keterangan, imgToString(),"lat",
+                        "long", "alamatnya", "niknya", "kell",
+                        "areanya","idmas");
+                responLaporanCall.enqueue(new Callback<ResponLaporan>() {
+                    @Override
+                    public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
+                        if (response.isSuccessful()){
+                            Log.e("RESPON", "SUCCESS");
+                            String Kode = response.body().getKode();
+                            if (Kode.equals("1")){
+
+                                Log.e("RESPON", "SUCCESS PESAN : 1");
+                            } else {
+
+                                Log.e("RESPON", "SUCCESS PESAN >1");
+                            }
+                        } else {
+
+                            Log.e("RESPON", "Gagal");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponLaporan> call, Throwable t) {
+
+                        Log.e("RESPON", t.getLocalizedMessage());
+                    }
+                });
+            }
+        });
 
     }
-
-    private void clickSend(View view) {
-        String keterangan = et_keterangan.getText().toString();
-        Toast.makeText(this, "Kirim : "+keterangan, Toast.LENGTH_SHORT).show();
+    private String imgToString() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap_gambar.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imgByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByte, Base64.DEFAULT);
     }
 
     private void clickFoto(View view) {
@@ -132,16 +178,9 @@ public class FormLaporActivity extends AppCompatActivity {
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-//                        int srcWidth = selectedImage.getWidth();
-//                        int srcHeight = selectedImage.getHeight();
-//                        int dstWidth = (int)(srcWidth*0.8f);
-//                        int dstHeight = (int)(srcHeight*0.8f);
-//                        int lebar = selectedImage.getWidth()*5;
-//                        int tinggi = selectedImage.getHeight()*5;
-//                        Toast.makeText(this, "Lebar : "+  lebar + ", Dan Tinggi : " + tinggi, Toast.LENGTH_LONG).show();
-//                        Bitmap resized = Bitmap.createScaledBitmap(selectedImage, dstWidth, dstHeight, false);
-                        img_foto.setImageBitmap(selectedImage);
+                        Bitmap resized  = (Bitmap) data.getExtras().get("data");
+                        bitmap_gambar = Bitmap.createScaledBitmap(resized, 1000, 1000, false);
+                        img_foto.setImageBitmap(bitmap_gambar);
                     }
 
                     break;
@@ -157,6 +196,7 @@ public class FormLaporActivity extends AppCompatActivity {
 
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
+                                bitmap_gambar = BitmapFactory.decodeFile(picturePath);
                                 img_foto.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                                 cursor.close();
                             }

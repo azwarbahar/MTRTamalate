@@ -24,12 +24,20 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.adapter.BeritaAdapter;
 import com.skripsi.mtrtamalate.adapter.EdukasiAdapter;
+import com.skripsi.mtrtamalate.models.berita.Berita;
+import com.skripsi.mtrtamalate.models.berita.ResponseBerita;
 import com.skripsi.mtrtamalate.models.edukasi.SliderEdukasiItem;
+import com.skripsi.mtrtamalate.network.ApiClient;
+import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.masyarakat.bacaan.BacaanActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.sampah.DataSampahActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
@@ -42,6 +50,7 @@ public class HomeFragment extends Fragment {
     private RelativeLayout rl_btn_lapor;
 
     private TextView tv_show_all;
+    private ArrayList<Berita> beritas;
 
     private ViewPager2 viewPagerHomeEdukasi;
     private RecyclerView rv_berita;
@@ -101,11 +110,32 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        rv_berita.setLayoutManager(new LinearLayoutManager(getActivity()));
-        beritaAdapter = new BeritaAdapter(getActivity());
-        rv_berita.setAdapter(beritaAdapter);
+        loadBerita();
 
         return view;
+    }
+
+    private void loadBerita() {
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBerita> responseBeritaCall = apiInterface.getBerita();
+        responseBeritaCall.enqueue(new Callback<ResponseBerita>() {
+            @Override
+            public void onResponse(Call<ResponseBerita> call, Response<ResponseBerita> response) {
+
+                beritas = (ArrayList<Berita>) response.body().getBerita();
+
+                rv_berita.setLayoutManager(new LinearLayoutManager(getActivity()));
+                beritaAdapter = new BeritaAdapter(getActivity(), beritas);
+                rv_berita.setAdapter(beritaAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBerita> call, Throwable t) {
+
+            }
+        });
+
     }
 
     private void menuLapor(View view) {
