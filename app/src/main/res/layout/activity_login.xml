@@ -72,6 +72,8 @@
         android:layout_marginTop="15dp"
         android:textColorHint="@color/colorPrimary"
         app:boxStrokeColor="@color/colorPrimary"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/colorPrimary"
         app:hintTextColor="@color/colorPrimary"
         app:startIconDrawable="@drawable/ic_baseline_lock_24"
         app:startIconTint="@color/colorPrimary">

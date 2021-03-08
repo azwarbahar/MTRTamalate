@@ -2,6 +2,7 @@ package com.skripsi.mtrtamalate.network;
 
 import com.skripsi.mtrtamalate.models.berita.ResponseBerita;
 import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
+import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -9,6 +10,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -28,4 +30,10 @@ public interface ApiInterface {
     // BERITA
     @GET("berita/readBerita.php")
     Call<ResponseBerita> getBerita();
+
+
+    // MASYARAKAT
+    @GET("masyarakat/auth_masyarakat.php")
+    Call<ResponseMasyarakat> authMasyarakat(@Query("nik_masyarakat") String nik_masyarakat,
+                                            @Query("password_masyarakat") String password_masyarakat);
 }
