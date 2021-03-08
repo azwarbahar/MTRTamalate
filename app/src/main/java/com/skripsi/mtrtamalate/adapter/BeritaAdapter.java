@@ -40,11 +40,11 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.MyHolderVi
     public void onBindViewHolder(@NonNull BeritaAdapter.MyHolderView holder, int position) {
 
         holder.tv_judul.setText(beritas.get(position).getJudulBerita());
-        holder.tv_penulis.setText("Oleh : "+beritas.get(position).getJudulBerita());
+        holder.tv_penulis.setText("Oleh : " + beritas.get(position).getJudulBerita());
         holder.tv_deskripsi.setText(beritas.get(position).getIsiBerita());
         holder.tv_tanggal.setText(beritas.get(position).getCreatedAt());
         Glide.with(context)
-                .load(Constanta.URL_IMG_BERITA+beritas.get(position).getFotoBerita())
+                .load(Constanta.URL_IMG_BERITA + beritas.get(position).getFotoBerita())
                 .placeholder(R.drawable.loading_animation)
                 .error(R.drawable.ic_broken_image)
                 .into(holder.img_foto);
@@ -72,7 +72,6 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.MyHolderVi
             tv_penulis = itemView.findViewById(R.id.tv_penulis);
             tv_deskripsi = itemView.findViewById(R.id.tv_deskripsi);
             tv_tanggal = itemView.findViewById(R.id.tv_tanggal);
-
 
         }
     }

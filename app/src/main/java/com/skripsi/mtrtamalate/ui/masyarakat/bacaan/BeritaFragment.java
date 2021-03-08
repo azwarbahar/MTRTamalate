@@ -13,12 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.adapter.BeritaAdapter;
+import com.skripsi.mtrtamalate.models.berita.Berita;
+import com.skripsi.mtrtamalate.models.berita.ResponseBerita;
+import com.skripsi.mtrtamalate.network.ApiClient;
+import com.skripsi.mtrtamalate.network.ApiInterface;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BeritaFragment extends Fragment {
 
     View view;
     private RecyclerView rv_bacaan;
     private BeritaAdapter beritaAdapter;
+    private ArrayList<Berita> beritas;
 
     @Nullable
     @Override
@@ -30,7 +41,30 @@ public class BeritaFragment extends Fragment {
 //        rv_bacaan.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        beritaAdapter = new BeritaAdapter(getActivity());
 //        rv_bacaan.setAdapter(beritaAdapter);
-
+        loadBerita();
         return  view;
+    }
+
+    private void loadBerita() {
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBerita> responseBeritaCall = apiInterface.getBerita();
+        responseBeritaCall.enqueue(new Callback<ResponseBerita>() {
+            @Override
+            public void onResponse(Call<ResponseBerita> call, Response<ResponseBerita> response) {
+
+                beritas = (ArrayList<Berita>) response.body().getBerita();
+
+                rv_bacaan.setLayoutManager(new LinearLayoutManager(getActivity()));
+                beritaAdapter = new BeritaAdapter(getActivity(), beritas);
+                rv_bacaan.setAdapter(beritaAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBerita> call, Throwable t) {
+
+            }
+        });
+
     }
 }

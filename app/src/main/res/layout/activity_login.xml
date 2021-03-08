@@ -6,21 +6,139 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <Button
-        android:id="@+id/btn_masyarakat"
-        android:text="Masyarakat"
-        android:layout_marginTop="@dimen/dimen_40dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/asset_login" />
 
-    <Button
-        android:id="@+id/btn_petugas"
-        android:layout_below="@id/btn_masyarakat"
-        android:text="Petugas"
-        android:layout_marginTop="@dimen/dimen_40dp"
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img1"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp"
+        android:text="Welcome \nBack,"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:layout_alignParentRight="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:text="Login"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_nik"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv2"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="15dp"
+        android:textColorHint="@color/colorPrimary"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:hintTextColor="@color/colorPrimary"
+        app:startIconDrawable="@drawable/ic_baseline_person_24"
+        app:startIconTint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tie_nik"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="NIK"
+            android:inputType="text"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/til_nik"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="15dp"
+        android:textColorHint="@color/colorPrimary"
+        app:boxStrokeColor="@color/colorPrimary"
+        app:hintTextColor="@color/colorPrimary"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        app:startIconTint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tie_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/img_login"
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_40dp"
+        android:layout_below="@id/til_password"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/bg_bulat_primary"
+        android:padding="5dp"
+        android:src="@drawable/ic_baseline_arrow_forward_24"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="Masuk Sebagai :"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/tv3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/view1"
+        android:layout_alignBottom="@id/view1"
+        android:layout_toRightOf="@id/view1"
+        android:gravity="center_vertical"
+        android:text="Petugas"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/view1"
+        android:layout_alignBottom="@id/view1"
+        android:layout_toLeftOf="@id/view1"
+        android:gravity="center_vertical"
+        android:text="Koordinaor"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold|italic" />
 
 </RelativeLayout>
