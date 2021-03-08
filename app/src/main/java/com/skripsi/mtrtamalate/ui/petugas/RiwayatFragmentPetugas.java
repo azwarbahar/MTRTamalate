@@ -24,9 +24,9 @@ public class RiwayatFragmentPetugas extends Fragment {
         view = inflater.inflate(R.layout.fragment_riwayat_petugas, container,false);
 
         RecyclerView rv_riwayat = view.findViewById(R.id.rv_riwayat);
-        rv_riwayat.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RiwayatAdapter riwayatAdapter = new RiwayatAdapter(getActivity());
-        rv_riwayat.setAdapter(riwayatAdapter);
+//        rv_riwayat.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        RiwayatAdapter riwayatAdapter = new RiwayatAdapter(getActivity());
+//        rv_riwayat.setAdapter(riwayatAdapter);
 
         return view;
     }

@@ -14,6 +14,10 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
+    // LPORAN
+    @GET("laporan/getLaporanMasarakat.php")
+    Call<ResponLaporan> laporanMasyarakatStatus(@Query("masyarakat_id") String masyarakat_id);
+
     @FormUrlEncoded
     @POST("laporan/addLaporan.php")
     Call<ResponLaporan> AddLaporan(@Field("keterangan_laporan") String keterangan_laporan,

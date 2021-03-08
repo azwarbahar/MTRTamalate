@@ -1,9 +1,16 @@
 package com.skripsi.mtrtamalate.models.laporan;
 
+import java.util.List;
+
 public class ResponLaporan {
 
     private String kode;
     private String pesan;
+    private List<Laporan> result_laporan_masyarakat;
+
+    public List<Laporan> getResult_laporan_masyarakat() {
+        return result_laporan_masyarakat;
+    }
 
     public String getKode() {
         return kode;

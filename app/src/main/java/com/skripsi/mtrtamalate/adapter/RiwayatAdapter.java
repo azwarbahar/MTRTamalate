@@ -9,13 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.skripsi.mtrtamalate.R;
+import com.skripsi.mtrtamalate.models.laporan.Laporan;
+
+import java.util.ArrayList;
 
 public class RiwayatAdapter extends RecyclerView.Adapter<RiwayatAdapter.MyHolderView> {
 
     private Context context;
+    private ArrayList<Laporan> laporans;
 
-    public RiwayatAdapter(Context context) {
+    public RiwayatAdapter(Context context, ArrayList<Laporan> laporans) {
         this.context = context;
+        this.laporans = laporans;
     }
 
     @NonNull
@@ -35,7 +40,7 @@ public class RiwayatAdapter extends RecyclerView.Adapter<RiwayatAdapter.MyHolder
 
     @Override
     public int getItemCount() {
-        return 15;
+        return laporans.size();
     }
 
     public class MyHolderView extends RecyclerView.ViewHolder {
