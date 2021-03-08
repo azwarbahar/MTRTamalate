@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -84,8 +85,8 @@ public class LoginActivity extends AppCompatActivity {
         til_nik = findViewById(R.id.til_nik);
         til_password = findViewById(R.id.til_password);
 
-        ImageView img_login = findViewById(R.id.img_login);
-        img_login.setOnClickListener(new View.OnClickListener() {
+        TextView tv_btn_login = findViewById(R.id.tv_btn_login);
+        tv_btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 til_nik.setError(null);

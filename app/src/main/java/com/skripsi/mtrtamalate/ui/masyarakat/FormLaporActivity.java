@@ -73,7 +73,7 @@ public class FormLaporActivity extends AppCompatActivity {
                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                 Call<ResponLaporan> responLaporanCall = apiInterface.AddLaporan(keterangan, imgToString(),"lat",
                         "long", "alamatnya", "niknya", "kell",
-                        "areanya","idmas");
+                        "areanya","1");
                 responLaporanCall.enqueue(new Callback<ResponLaporan>() {
                     @Override
                     public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {

@@ -13,6 +13,13 @@ public class ResponseMasyarakat{
 	@SerializedName("auth_masayarkat")
 	private Masayarkat masayarkat;
 
+	@SerializedName("result_masyarakat")
+	private Masayarkat result_masyarakat;
+
+	public Masayarkat getResult_masyarakat() {
+		return result_masyarakat;
+	}
+
 	public String getPesan() {
 		return pesan;
 	}

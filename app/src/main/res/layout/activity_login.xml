@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/rl_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -59,9 +59,9 @@
             android:id="@+id/tie_nik"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="NIK"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:hint="NIK"
             android:inputType="numberDecimal"
             android:textColor="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary" />
@@ -93,26 +93,32 @@
             android:textColorHint="@color/colorPrimary" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/img_login"
-        android:layout_width="@dimen/dimen_40dp"
-        android:layout_height="@dimen/dimen_40dp"
+    <TextView
+        android:id="@+id/tv_btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/til_password"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/bg_bulat_primary"
-        android:padding="5dp"
-        android:src="@drawable/ic_baseline_arrow_forward_24"
-        app:tint="@color/white" />
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_btn_lapor"
+        android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/white"
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="5dp"
+        android:text="Masuk"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tv3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/img_login"
+        android:layout_below="@id/tv_btn_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:text="Masuk Sebagai :"
         android:textSize="12sp" />
 

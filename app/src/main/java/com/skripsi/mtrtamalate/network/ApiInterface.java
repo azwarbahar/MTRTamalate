@@ -40,4 +40,14 @@ public interface ApiInterface {
     @GET("masyarakat/auth_masyarakat.php")
     Call<ResponseMasyarakat> authMasyarakat(@Query("nik_masyarakat") String nik_masyarakat,
                                             @Query("password_masyarakat") String password_masyarakat);
+    @GET("masyarakat/getMasyarakatId.php")
+    Call<ResponseMasyarakat> getMasyarakatId(@Query("id_masyarakat") String id_masyarakat);
+
+    @FormUrlEncoded
+    @POST("masyarakat/editProfilMasyarakat.php")
+    Call<ResponseMasyarakat> editProfil(@Field("id_masyarakat") String id_masyarakat,
+                                   @Field("nama_masyarakat") String nama_masyarakat,
+                                   @Field("alamat_masyarakat") String alamat_masyarakat,
+                                   @Field("telpon_masyarakat") String telpon_masyarakat,
+                                   @Field("usia_masyarakat") String usia_masyarakat);
 }
