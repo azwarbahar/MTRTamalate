@@ -40,6 +40,12 @@ public interface ApiInterface {
     @GET("masyarakat/auth_masyarakat.php")
     Call<ResponseMasyarakat> authMasyarakat(@Query("nik_masyarakat") String nik_masyarakat,
                                             @Query("password_masyarakat") String password_masyarakat);
+
+    @GET("masyarakat/editPasswordMasyarakat.php")
+    Call<ResponseMasyarakat> editPassword(@Query("id_masyarakat") String id_masyarakat,
+                                          @Query("password_lama") String password_lama,
+                                          @Query("password_baru") String password_baru);
+
     @GET("masyarakat/getMasyarakatId.php")
     Call<ResponseMasyarakat> getMasyarakatId(@Query("id_masyarakat") String id_masyarakat);
 

@@ -66,16 +66,24 @@ public class AkunFragment extends Fragment {
         tv_telpon = view.findViewById(R.id.tv_telpon);
         loadData();
 
+        rl_password = view.findViewById(R.id.rl_password);
+        rl_password.setOnClickListener(this::clickUbahPassword);
+
         rl_edit = view.findViewById(R.id.rl_edit);
-        rl_edit.setOnClickListener(this::edit);
+        rl_edit.setOnClickListener(this::clickEdit);
 
         rl_logout = view.findViewById(R.id.rl_logout);
-        rl_logout.setOnClickListener(this::setLogout);
+        rl_logout.setOnClickListener(this::clickLogout);
 
         return view;
     }
 
-    private void edit(View view) {
+    private void clickUbahPassword(View view) {
+        startActivity(new Intent(getActivity(), UbahPasswordActivity.class));
+
+    }
+
+    private void clickEdit(View view) {
         startActivity(new Intent(getActivity(), EditAkunActivity.class));
     }
 
@@ -97,7 +105,7 @@ public class AkunFragment extends Fragment {
         pDialog.dismiss();
     }
 
-    private void setLogout(View view) {
+    private void clickLogout(View view) {
         new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Logout")
                 .setContentText("Ingin Keluar Dari Akun ?")

@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTRTamalate">
-        <activity android:name=".ui.masyarakat.akun.EditAkunActivity"></activity>
+        <activity android:name=".ui.masyarakat.akun.UbahPasswordActivity"></activity>
+        <activity android:name=".ui.masyarakat.akun.EditAkunActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,11 +29,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.petugas.PetugasActivity"></activity>
+        <activity android:name=".ui.petugas.PetugasActivity" />
         <activity android:name=".ui.masyarakat.sampah.DataSampahActivity" />
         <activity android:name=".ui.masyarakat.FormLaporActivity" />
         <activity android:name=".ui.masyarakat.bacaan.BacaanActivity" />
-        <activity android:name=".ui.masyarakat.MasyarakatActivity"></activity>
+        <activity android:name=".ui.masyarakat.MasyarakatActivity" />
         <activity android:name=".MainActivity" />
 
         <meta-data
