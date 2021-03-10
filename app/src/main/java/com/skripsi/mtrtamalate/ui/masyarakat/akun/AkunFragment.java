@@ -66,16 +66,23 @@ public class AkunFragment extends Fragment {
         tv_telpon = view.findViewById(R.id.tv_telpon);
         loadData();
 
+        rl_edit = view.findViewById(R.id.rl_edit);
+        rl_edit.setOnClickListener(this::clickEdit);
+
         rl_password = view.findViewById(R.id.rl_password);
         rl_password.setOnClickListener(this::clickUbahPassword);
 
-        rl_edit = view.findViewById(R.id.rl_edit);
-        rl_edit.setOnClickListener(this::clickEdit);
+        rl_location = view.findViewById(R.id.rl_location);
+        rl_location.setOnClickListener(this::clickLokasi);
 
         rl_logout = view.findViewById(R.id.rl_logout);
         rl_logout.setOnClickListener(this::clickLogout);
 
         return view;
+    }
+
+    private void clickLokasi(View view) {
+        startActivity(new Intent(getActivity(), TitikLokasiActivity.class));
     }
 
     private void clickUbahPassword(View view) {
