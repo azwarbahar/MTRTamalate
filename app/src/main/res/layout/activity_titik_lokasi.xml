@@ -120,6 +120,7 @@
         android:textSize="14sp" />
 
     <TextView
+        android:id="@+id/tv_info"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold|italic"
         android:layout_marginHorizontal="16dp"

@@ -59,6 +59,7 @@ public class TitikLokasiActivity extends AppCompatActivity implements OnMapReady
     private String alamat_latlig;
     private EditText et_alamat;
     private TextView tv_lokasi_sekarang;
+    private TextView tv_info;
     private ImageView btn_jenis_map;
     private LatLng latLng;
     private String latitud2, longitud2;
@@ -81,15 +82,29 @@ public class TitikLokasiActivity extends AppCompatActivity implements OnMapReady
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        tv_info = findViewById(R.id.tv_info);
         btn_jenis_map = findViewById(R.id.btn_jenis_map);
         et_alamat = findViewById(R.id.et_alamat);
         tv_lokasi_sekarang = findViewById(R.id.tv_lokasi_sekarang);
         tv_lokasi_sekarang.setOnClickListener(this::clickLokasiSekarang);
         btn_jenis_map.setOnClickListener(this::clickjenisMap);
+        tv_info.setOnClickListener(this::clickInfo);
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         assert supportMapFragment != null;
         supportMapFragment.getMapAsync(this);
+    }
+
+    private void clickInfo(View view) {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(TitikLokasiActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        dialog.setIcon(R.drawable.ic_baseline_info_24);
+        dialog.setCancelable(true);
+        dialog.setTitle("Info Koordinat");
+        dialog.setMessage("Titik Lokasi dan Alamat yang anda pasang adalha bla blab bla ba dan bla blabl a");
+        dialog.show();
+
     }
 
     private void clickjenisMap(View view) {
