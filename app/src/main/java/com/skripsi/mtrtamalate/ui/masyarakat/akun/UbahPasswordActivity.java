@@ -1,6 +1,7 @@
 package com.skripsi.mtrtamalate.ui.masyarakat.akun;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -31,6 +32,12 @@ public class UbahPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ubah_password);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         mPreferences = getSharedPreferences(Constanta.MY_SHARED_PREFERENCES, MODE_PRIVATE);
         id_masyarakat = mPreferences.getString(Constanta.SESSION_ID_MASYARAKAT, "");
 
@@ -74,19 +81,19 @@ public class UbahPasswordActivity extends AppCompatActivity {
         pDialog.show();
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseMasyarakat> responseMasyarakatCall = apiInterface.editPassword(id_masyarakat,old_password,new_password);
+        Call<ResponseMasyarakat> responseMasyarakatCall = apiInterface.editPassword(id_masyarakat, old_password, new_password);
         responseMasyarakatCall.enqueue(new Callback<ResponseMasyarakat>() {
             @Override
             public void onResponse(Call<ResponseMasyarakat> call, Response<ResponseMasyarakat> response) {
                 pDialog.dismiss();
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     String kode = String.valueOf(response.body().getKode());
-                    if (kode.equals("0")){
+                    if (kode.equals("0")) {
                         new SweetAlertDialog(UbahPasswordActivity.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Gagal...")
                                 .setContentText(response.body().getPesan())
                                 .show();
-                    } else if (kode.equals("1")){
+                    } else if (kode.equals("1")) {
                         SweetAlertDialog success = new SweetAlertDialog(UbahPasswordActivity.this, SweetAlertDialog.SUCCESS_TYPE);
                         success.setTitleText("Success..");
                         success.setCancelable(false);
@@ -101,7 +108,7 @@ public class UbahPasswordActivity extends AppCompatActivity {
                             }
                         });
                         success.show();
-                    } else if (kode.equals("2")){
+                    } else if (kode.equals("2")) {
                         new SweetAlertDialog(UbahPasswordActivity.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Gagal...")
                                 .setContentText(response.body().getPesan())
@@ -125,5 +132,11 @@ public class UbahPasswordActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

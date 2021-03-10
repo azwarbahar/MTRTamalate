@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTRTamalate">
-        <activity android:name=".ui.masyarakat.akun.UbahPasswordActivity"></activity>
+        <activity android:name=".ui.masyarakat.akun.TitikLokasiActivity"></activity>
+        <activity android:name=".ui.masyarakat.akun.UbahPasswordActivity" />
         <activity android:name=".ui.masyarakat.akun.EditAkunActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
