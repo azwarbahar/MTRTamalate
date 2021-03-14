@@ -1,19 +1,17 @@
 package com.skripsi.mtrtamalate.ui.masyarakat;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
@@ -22,7 +20,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -33,26 +35,49 @@ import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
+import com.skripsi.mtrtamalate.ui.masyarakat.akun.TitikLokasiActivity;
+import com.skripsi.mtrtamalate.utils.Constanta;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FormLaporActivity extends AppCompatActivity {
 
+    private SharedPreferences mPreferences;
     private RelativeLayout rl_foto;
     private RelativeLayout rl_send;
     private EditText et_keterangan;
     private ImageView img_foto;
     private Bitmap bitmap_gambar;
 
+    private String id_masyarakat;
+    private String nik_masyarakat;
+    private String nama_masyarakat;
+    private String alamat_masyarakat;
+    private String area_masyarakat;
+    private String telpon_masyarakat;
+    private String usia_masyarakat;
+    private String kelurahan_masyarakat;
+    private String latitude_masyarakat;
+    private String longitude_masyarakat;
+    private String password_masyarakat;
+    private String foto_masyarakat;
+    private String status_masyarakat;
+    private String pembayaran_masyarakat;
+    private String status_marker;
+
+    private SweetAlertDialog pDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_lapor);
+        mPreferences = getSharedPreferences(Constanta.MY_SHARED_PREFERENCES, MODE_PRIVATE);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,40 +94,142 @@ public class FormLaporActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                pDialog = new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog.setTitleText("Loading");
+                pDialog.setCancelable(false);
+                pDialog.show();
+
                 String keterangan = et_keterangan.getText().toString();
-                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                Call<ResponLaporan> responLaporanCall = apiInterface.AddLaporan(keterangan, imgToString(),"lat",
-                        "long", "alamatnya", "niknya", "kell",
-                        "areanya","1");
-                responLaporanCall.enqueue(new Callback<ResponLaporan>() {
-                    @Override
-                    public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
-                        if (response.isSuccessful()){
-                            Log.e("RESPON", "SUCCESS");
-                            String Kode = response.body().getKode();
-                            if (Kode.equals("1")){
+                if (img_foto.getDrawable() == null) {
+                    pDialog.dismiss();
+                    new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Uups..")
+                            .setContentText("Bukti foto belum dilengkapi!")
+                            .show();
+                } else if (keterangan.isEmpty() || keterangan.equals("")) {
+                    pDialog.dismiss();
+                    new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Uups..")
+                            .setContentText("Mohon lengkapi Keterangan!")
+                            .show();
+                } else {
 
-                                Log.e("RESPON", "SUCCESS PESAN : 1");
-                            } else {
-
-                                Log.e("RESPON", "SUCCESS PESAN >1");
-                            }
-                        } else {
-
-                            Log.e("RESPON", "Gagal");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponLaporan> call, Throwable t) {
-
-                        Log.e("RESPON", t.getLocalizedMessage());
-                    }
-                });
+                    new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Mengirim")
+                            .setContentText("Mengirim Laporan langsung ke Pengelolah sampah dan petugas sampah ?")
+                            .setCancelButton("Batal", new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    pDialog.dismiss();
+                                    sweetAlertDialog.dismiss();
+                                }
+                            })
+                            .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.dismiss();
+                                    pDialog.show();
+                                    clickSend(keterangan);
+                                }
+                            })
+                            .show();
+                }
             }
         });
 
+        loadDataSession();
+
     }
+
+    private void loadDataSession() {
+        id_masyarakat = mPreferences.getString(Constanta.SESSION_ID_MASYARAKAT, "");
+        nik_masyarakat = mPreferences.getString(Constanta.SESSION_NIK_MASYARAKAT, "");
+        nama_masyarakat = mPreferences.getString(Constanta.SESSION_NAMA_MASYARAKAT, "");
+        alamat_masyarakat = mPreferences.getString(Constanta.SESSION_ALAMAT_MASYARAKAT, "");
+        area_masyarakat = mPreferences.getString(Constanta.SESSION_AREA_MASYARAKAT, "");
+        telpon_masyarakat = mPreferences.getString(Constanta.SESSION_TELPON_MASYARAKAT, "");
+        usia_masyarakat = mPreferences.getString(Constanta.SESSION_USIA_MASYARAKAT, "");
+        kelurahan_masyarakat = mPreferences.getString(Constanta.SESSION_KELURAHAN_MASYARAKAT, "");
+        latitude_masyarakat = mPreferences.getString(Constanta.SESSION_LATITUDE_MASYARAKAT, "");
+        longitude_masyarakat = mPreferences.getString(Constanta.SESSION_LONGITUDE_MASYARAKAT, "");
+        password_masyarakat = mPreferences.getString(Constanta.SESSION_PASSWORD_MASYARAKAT, "");
+        foto_masyarakat = mPreferences.getString(Constanta.SESSION_FOTO_MASYARAKAT, "");
+        status_masyarakat = mPreferences.getString(Constanta.SESSION_STATUS_MASYARAKAT, "");
+        pembayaran_masyarakat = mPreferences.getString(Constanta.SESSION_PEMBAYARAN_MASYARAKAT, "");
+        status_marker = mPreferences.getString(Constanta.SESSION_STATUS_MARKER, "");
+    }
+
+    private void clickSend(String keterangan) {
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponLaporan> responLaporanCall = apiInterface.AddLaporan(keterangan, imgToString(), latitude_masyarakat,
+                longitude_masyarakat, alamat_masyarakat, nik_masyarakat, kelurahan_masyarakat, area_masyarakat, id_masyarakat);
+        responLaporanCall.enqueue(new Callback<ResponLaporan>() {
+            @Override
+            public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
+                pDialog.dismiss();
+                if (response.isSuccessful()) {
+                    String kode = response.body().getKode();
+                    if (kode.equals("1")) {
+                        new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("Success..")
+                                .setContentText("Laporan Berhasil disampaikan..")
+                                .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        sweetAlertDialog.dismiss();
+                                        configIntent();
+                                    }
+                                })
+                                .show();
+                    } else {
+                        new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Gagal..")
+                                .setContentText("Terjadi kesalahan!")
+                                .show();
+                    }
+                } else {
+                    new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Gagal..")
+                            .setContentText("Terjadi kesalahan!")
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponLaporan> call, Throwable t) {
+                pDialog.dismiss();
+                new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Gagal..")
+                        .setContentText("Terjadi kesalahan!")
+                        .show();
+            }
+        });
+    }
+
+    private void configIntent() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                pDialog = new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog.setTitleText("Menyimpan Data..");
+                pDialog.setCancelable(true);
+                pDialog.show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        pDialog.dismiss();
+                        finish();
+                    }
+                }, 2500);
+            }
+        }, 400);
+    }
+
     private String imgToString() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap_gambar.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
@@ -116,11 +243,11 @@ public class FormLaporActivity extends AppCompatActivity {
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()){
+                        if (report.areAllPermissionsGranted()) {
                             showDialogOptionImage(FormLaporActivity.this);
                         }
 
-                        if (report.isAnyPermissionPermanentlyDenied()){
+                        if (report.isAnyPermissionPermanentlyDenied()) {
                             showSettingDialog();
                         }
                     }
@@ -178,7 +305,7 @@ public class FormLaporActivity extends AppCompatActivity {
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
-                        Bitmap resized  = (Bitmap) data.getExtras().get("data");
+                        Bitmap resized = (Bitmap) data.getExtras().get("data");
                         bitmap_gambar = Bitmap.createScaledBitmap(resized, 1000, 1000, false);
                         img_foto.setImageBitmap(bitmap_gambar);
                     }

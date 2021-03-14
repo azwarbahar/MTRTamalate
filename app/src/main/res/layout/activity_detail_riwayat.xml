@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.masyarakat.riwayat.DetailRiwayatActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.AppCompat.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:theme="@style/ToolbarTheme"
+        app:title="Detail Laporan"
+        app:titleTextColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/rl_status"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="-2dp"
+        android:background="@color/colorBackWarning"
+        android:paddingVertical="14dp">
+
+        <ImageView
+            android:id="@+id/img_status"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="16dp"
+            tools:src="@drawable/icon_hourglass" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/img_status"
+            android:textStyle="italic"
+            tools:text="Laporan Telah ditindaki!" />
+
+        <TextView
+            android:id="@+id/tv_batal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="16dp"
+            android:text="Batal"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@id/rl_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_tanggal"
+                android:text="Tanggal Laporan : 20 Januari 2020"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_foto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_tanggal"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:background="@drawable/bg_selected_image"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/img_foto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="300dp"
+                    android:scaleType="fitCenter" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_foto"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:text="Keterangan"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_keterangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv1"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:autoLink="all"
+                android:background="@drawable/bg_stroke_radius_primary"
+                android:gravity="top|left"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp"
+                android:scrollbars="none"
+                android:textSize="14sp"
+                tools:text="Sampah Tidak diambil" />
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_keterangan"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:text="Alamat"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_alamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv2"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:autoLink="all"
+                android:background="@drawable/bg_stroke_radius_primary"
+                android:gravity="top|left"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp"
+                android:scrollbars="none"
+                android:textSize="14sp"
+                tools:text="Jalan Mamoa Baru No 1" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_alamat"
+                android:layout_marginTop="30dp"
+                android:paddingBottom="15dp"
+                android:background="@color/white2">
+
+                <TextView
+                    android:id="@+id/tv_tdk_tersedia"
+                    android:text="- Belum tersedia -"
+                    android:textStyle="italic"
+                    android:textColor="@color/grey"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Petugas" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_foto_petugas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv3"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="18dp"
+                    app:cardCornerRadius="30dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/img_petugas"
+                            android:scaleType="fitXY"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_nama_petugas"
+                    android:layout_toRightOf="@id/cv_foto_petugas"
+                    android:layout_alignTop="@id/cv_foto_petugas"
+                    android:text="Nama Petugas"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_jekel_petugas"
+                    android:layout_toRightOf="@id/cv_foto_petugas"
+                    android:layout_below="@id/tv_nama_petugas"
+                    android:text="Laki - laki"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

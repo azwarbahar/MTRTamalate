@@ -3,6 +3,7 @@ package com.skripsi.mtrtamalate.network;
 import com.skripsi.mtrtamalate.models.berita.ResponseBerita;
 import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
 import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
+import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -68,4 +69,9 @@ public interface ApiInterface {
                                    @Field("alamat_masyarakat") String alamat_masyarakat,
                                    @Field("telpon_masyarakat") String telpon_masyarakat,
                                    @Field("usia_masyarakat") String usia_masyarakat);
+
+
+    // PETUGAS
+    @GET("petugas/getPetugasId.php")
+    Call<ResponsePetugas> getPetugasId(@Query("id_petugas") String id_petugas);
 }

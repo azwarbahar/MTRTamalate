@@ -1,8 +1,11 @@
 package com.skripsi.mtrtamalate.models.laporan;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Laporan{
+public class Laporan implements Parcelable {
 
 	@SerializedName("petugas_id")
 	private String petugasId;
@@ -45,6 +48,35 @@ public class Laporan{
 
 	@SerializedName("area_laporan")
 	private String areaLaporan;
+
+	protected Laporan(Parcel in) {
+		petugasId = in.readString();
+		idLaporan = in.readString();
+		fotoLaporan = in.readString();
+		createdAt = in.readString();
+		latitudeLaporan = in.readString();
+		stausLaporan = in.readString();
+		longitudeLaporan = in.readString();
+		nikLaporan = in.readString();
+		masyarakatId = in.readString();
+		kelurahanLaporan = in.readString();
+		keteranganLaporan = in.readString();
+		updateAt = in.readString();
+		alamatLaporan = in.readString();
+		areaLaporan = in.readString();
+	}
+
+	public static final Creator<Laporan> CREATOR = new Creator<Laporan>() {
+		@Override
+		public Laporan createFromParcel(Parcel in) {
+			return new Laporan(in);
+		}
+
+		@Override
+		public Laporan[] newArray(int size) {
+			return new Laporan[size];
+		}
+	};
 
 	public String getPetugasId(){
 		return petugasId;
@@ -100,5 +132,28 @@ public class Laporan{
 
 	public String getAreaLaporan(){
 		return areaLaporan;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+		parcel.writeString(petugasId);
+		parcel.writeString(idLaporan);
+		parcel.writeString(fotoLaporan);
+		parcel.writeString(createdAt);
+		parcel.writeString(latitudeLaporan);
+		parcel.writeString(stausLaporan);
+		parcel.writeString(longitudeLaporan);
+		parcel.writeString(nikLaporan);
+		parcel.writeString(masyarakatId);
+		parcel.writeString(kelurahanLaporan);
+		parcel.writeString(keteranganLaporan);
+		parcel.writeString(updateAt);
+		parcel.writeString(alamatLaporan);
+		parcel.writeString(areaLaporan);
 	}
 }

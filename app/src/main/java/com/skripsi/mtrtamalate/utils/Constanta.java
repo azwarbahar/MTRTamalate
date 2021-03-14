@@ -3,7 +3,7 @@ package com.skripsi.mtrtamalate.utils;
 public class Constanta {
 
     // IP
-    public static final String IP = "192.168.43.188";
+    public static final String IP = "192.168.137.1";
 
     // URL API
     public static final String BASE_URL = "http://" + IP + "/pelaporan-sampah/api/";
@@ -13,6 +13,12 @@ public class Constanta {
 
     public static final String URL_IMG_MASYARAKAT = "http://" + IP + "/pelaporan-sampah/kelurahan/" +
             "admin/masyarakat/foto/";
+
+    public static final String URL_IMG_PETUGAS = "http://" + IP + "/pelaporan-sampah/kelurahan/" +
+            "admin/petugas/foto/";
+
+    public static final String URL_IMG_LAPORAN = "http://" + IP + "/pelaporan-sampah/assets/" +
+            "dist/img/laporan/";
 
     // Shared Preferences
     public static final String MY_SHARED_PREFERENCES = "my_shared_preferences";

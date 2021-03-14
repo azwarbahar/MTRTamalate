@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTRTamalate">
-        <activity android:name=".ui.masyarakat.akun.ImagePickerActivity"></activity>
+        <activity android:name=".ui.masyarakat.riwayat.DetailRiwayatActivity"></activity>
+        <activity android:name=".ui.masyarakat.akun.ViewImageActivity" />
+        <activity android:name=".ui.masyarakat.akun.ImagePickerActivity" />
         <activity android:name=".ui.masyarakat.akun.TitikLokasiActivity" />
         <activity android:name=".ui.masyarakat.akun.UbahPasswordActivity" />
         <activity android:name=".ui.masyarakat.akun.EditAkunActivity" />
@@ -36,8 +38,7 @@
         <activity android:name=".ui.masyarakat.FormLaporActivity" />
         <activity android:name=".ui.masyarakat.bacaan.BacaanActivity" />
         <activity android:name=".ui.masyarakat.MasyarakatActivity" />
-        <activity android:name=".MainActivity" />
-        <!-- uCrop cropping activity -->
+        <activity android:name=".MainActivity" /> <!-- uCrop cropping activity -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait" /> <!-- cache directory file provider paths -->

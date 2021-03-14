@@ -178,7 +178,7 @@ public class TitikLokasiActivity extends AppCompatActivity implements OnMapReady
                         sendData();
                     }
                 }
-            }, 2000);
+            }, 500);
         } else {
             setModeUpdate();
         }

@@ -2,6 +2,8 @@ package com.skripsi.mtrtamalate.ui.masyarakat.riwayat;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,9 +76,37 @@ public class RiwayatFragment extends Fragment implements SwipeRefreshLayout.OnRe
             }
         });
 
+        et_cari.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
 
 
         return view;
+    }
+
+    private void filter(String text) {
+        ArrayList<Laporan> filteredList = new ArrayList<>();
+        for (Laporan item : laporans) {
+            if (item.getStausLaporan().toLowerCase().contains(text.toLowerCase()) ||
+                    item.getKeteranganLaporan().toLowerCase().contains(text.toLowerCase()) ||
+                    item.getCreatedAt().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        riwayatAdapter.filterList(filteredList);
     }
 
     private void loadData(String session_id) {
