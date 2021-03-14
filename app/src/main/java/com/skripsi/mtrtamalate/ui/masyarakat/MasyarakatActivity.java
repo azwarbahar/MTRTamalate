@@ -106,7 +106,7 @@ public class MasyarakatActivity extends AppCompatActivity {
         if (!status_masyarakat.equals("Aktif")) {
 
             SweetAlertDialog sweetAlertDialogError = new SweetAlertDialog(MasyarakatActivity.this,
-                    SweetAlertDialog.ERROR_TYPE);
+            SweetAlertDialog.ERROR_TYPE);
             sweetAlertDialogError.setTitleText("Maaf..");
             sweetAlertDialogError.setCancelable(false);
             sweetAlertDialogError.setContentText("Akun anda telah di suspend!");

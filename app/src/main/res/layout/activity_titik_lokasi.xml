@@ -19,57 +19,60 @@
 
     <fragment
         android:id="@+id/map"
-        android:layout_below="@id/toolbar"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="300dp"
+        android:layout_below="@id/toolbar" />
 
     <androidx.cardview.widget.CardView
-        app:cardElevation="4dp"
-        app:cardCornerRadius="8dp"
-        android:layout_marginTop="16dp"
+        android:id="@+id/cv_tap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@id/map"
         android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
 
         <RelativeLayout
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="3dp"
+            android:background="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="3dp">
 
             <TextView
-                android:textSize="12sp"
-                android:text="Tap Untuk Menentukan Titik Lokasi"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Tap Untuk Menentukan Titik Lokasi"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/img_my_location"-->
-<!--        android:layout_width="35dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_marginHorizontal="@dimen/dimen_20dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:background="@drawable/bg_bulat_putih"-->
-<!--        android:elevation="8dp"-->
-<!--        android:padding="6dp"-->
-<!--        android:layout_alignTop="@id/map"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        android:src="@drawable/ic_baseline_my_location_24"-->
-<!--        app:tint="@color/white" />-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/img_my_location"-->
+    <!--        android:layout_width="35dp"-->
+    <!--        android:layout_height="35dp"-->
+    <!--        android:layout_marginHorizontal="@dimen/dimen_20dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:background="@drawable/bg_bulat_putih"-->
+    <!--        android:elevation="8dp"-->
+    <!--        android:padding="6dp"-->
+    <!--        android:layout_alignTop="@id/map"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        android:src="@drawable/ic_baseline_my_location_24"-->
+    <!--        app:tint="@color/white" />-->
 
     <ImageView
         android:id="@+id/btn_jenis_map"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginBottom="@dimen/dimen_40dp"
         android:layout_alignBottom="@id/map"
         android:layout_marginHorizontal="@dimen/dimen_20dp"
+        android:layout_marginBottom="@dimen/dimen_40dp"
         android:background="@drawable/bg_bulat_putih"
         android:elevation="8dp"
         android:padding="6dp"
@@ -78,58 +81,82 @@
 
     <TextView
         android:id="@+id/tv1"
-        android:layout_marginTop="@dimen/dimen_20dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_below="@id/map"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:text="Alamat"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/map"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:text="Alamat"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_lokasi_sekarang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv1"
+        android:layout_alignParentRight="true"
+        android:layout_marginHorizontal="16dp"
+        android:text="Gunakan Lokasi Sekarang"
         android:textColor="@color/blue"
         android:textSize="12sp"
-        android:textStyle="italic"
-        android:layout_marginHorizontal="16dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignBottom="@id/tv1"
-        android:text="Gunakan Lokasi Sekarang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textStyle="italic" />
 
-    <EditText
-        android:id="@+id/et_alamat"
+    <RelativeLayout
+        android:id="@+id/rl_continer_alamat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv1"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="15dp"
-        android:autoLink="all"
-        android:background="@drawable/bg_input_keluhan"
-        android:gravity="top|left"
-        android:hint="Masukkan Alamat.."
-        android:inputType="textCapSentences|textMultiLine"
-        android:lines="5"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp"
-        android:scrollbars="none"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white3"
-        android:textSize="14sp" />
+        android:layout_below="@id/tv1">
+
+        <EditText
+            android:id="@+id/et_alamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp"
+            android:autoLink="all"
+            android:background="@drawable/bg_input_keluhan"
+            android:gravity="top|left"
+            android:hint="Masukkan Alamat.."
+            android:inputType="textCapSentences|textMultiLine"
+            android:lines="5"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white3"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_alamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp"
+            android:autoLink="all"
+            android:background="@drawable/bg_input_keluhan"
+            android:gravity="top|left"
+            android:lines="5"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white3"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_info"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold|italic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_continer_alamat"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="15dp"
-        android:textSize="12sp"
-        android:layout_below="@id/et_alamat"
         android:text="Koordinat digunakan untuk?"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12sp"
+        android:textStyle="bold|italic" />
 
     <RelativeLayout
         android:id="@+id/rl_edit"
@@ -151,6 +178,7 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/img_btn_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

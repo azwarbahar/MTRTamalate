@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTRTamalate">
-        <activity android:name=".ui.masyarakat.akun.TitikLokasiActivity"></activity>
+        <activity android:name=".ui.masyarakat.akun.ImagePickerActivity"></activity>
+        <activity android:name=".ui.masyarakat.akun.TitikLokasiActivity" />
         <activity android:name=".ui.masyarakat.akun.UbahPasswordActivity" />
         <activity android:name=".ui.masyarakat.akun.EditAkunActivity" />
         <activity android:name=".LoginActivity">
@@ -36,6 +37,19 @@
         <activity android:name=".ui.masyarakat.bacaan.BacaanActivity" />
         <activity android:name=".ui.masyarakat.MasyarakatActivity" />
         <activity android:name=".MainActivity" />
+        <!-- uCrop cropping activity -->
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait" /> <!-- cache directory file provider paths -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

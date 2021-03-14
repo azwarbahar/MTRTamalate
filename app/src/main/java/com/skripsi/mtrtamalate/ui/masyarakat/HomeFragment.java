@@ -1,6 +1,7 @@
 package com.skripsi.mtrtamalate.ui.masyarakat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -29,12 +30,15 @@ import com.skripsi.mtrtamalate.models.berita.ResponseBerita;
 import com.skripsi.mtrtamalate.models.edukasi.SliderEdukasiItem;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
+import com.skripsi.mtrtamalate.ui.masyarakat.akun.TitikLokasiActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.bacaan.BacaanActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.sampah.DataSampahActivity;
+import com.skripsi.mtrtamalate.utils.Constanta;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +47,11 @@ public class HomeFragment extends Fragment {
 
     View view;
     private Handler slideEdukasiHandler = new Handler();
+
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor editor;
+    private String latitude_masyarakat;
+    private String longitude_masyarakat;
 
     private LinearLayout menu_bacaan;
     private LinearLayout menu_data_sampah;
@@ -70,6 +79,7 @@ public class HomeFragment extends Fragment {
         menu_bacaan = view.findViewById(R.id.menu_bacaan);
         menu_data_sampah = view.findViewById(R.id.menu_data_sampah);
         menu_info = view.findViewById(R.id.menu_info);
+        mPreferences = getActivity().getSharedPreferences(Constanta.MY_SHARED_PREFERENCES, getActivity().MODE_PRIVATE);
 
         tv_show_all.setOnClickListener(this::showAll);
         rl_btn_lapor.setOnClickListener(this::menuLapor);
@@ -139,7 +149,34 @@ public class HomeFragment extends Fragment {
     }
 
     private void menuLapor(View view) {
-        startActivity(new Intent(getActivity(), FormLaporActivity.class));
+
+        latitude_masyarakat = mPreferences.getString(Constanta.SESSION_LATITUDE_MASYARAKAT, "");
+        longitude_masyarakat = mPreferences.getString(Constanta.SESSION_LATITUDE_MASYARAKAT, "");
+        if (latitude_masyarakat.equals("-")||longitude_masyarakat.equals("-")||latitude_masyarakat.isEmpty()){
+            SweetAlertDialog sweetAlertDialogError = new SweetAlertDialog(getActivity(),
+                    SweetAlertDialog.ERROR_TYPE);
+            sweetAlertDialogError.setTitleText("Maaf..");
+            sweetAlertDialogError.setCancelable(false);
+            sweetAlertDialogError.setContentText("Atur Titik Lokasi Terlebih dahulu sebelum mengajukan laporan!");
+            sweetAlertDialogError.setConfirmButton("OK", new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    sweetAlertDialog.dismiss();
+                    Intent intent = new Intent(getActivity(), TitikLokasiActivity.class);
+                    intent.putExtra("extra_data", "Home");
+                    startActivity(intent);
+                }
+            });
+            sweetAlertDialogError.setCancelButton("Batal", new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    sweetAlertDialog.dismiss();
+                }
+            });
+            sweetAlertDialogError.show();
+        } else {
+            startActivity(new Intent(getActivity(), FormLaporActivity.class));
+        }
     }
 
     private void menuBacaan(View view) {
