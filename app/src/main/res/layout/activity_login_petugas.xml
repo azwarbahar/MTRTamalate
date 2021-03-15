@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context=".LoginActivity">
+    tools:context=".LoginPetugasActivity">
 
     <ImageView
         android:id="@+id/img1"
@@ -15,7 +15,7 @@
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:src="@drawable/asset_login" />
+        android:src="@drawable/img_change_password" />
 
     <TextView
         android:id="@+id/tv1"
@@ -122,38 +122,17 @@
         android:text="Masuk Sebagai :"
         android:textSize="12sp" />
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="2dp"
-        android:layout_height="20dp"
+    <TextView
+        android:id="@+id/tv_login_masyarakat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="Masyarakat"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold|italic"
         android:layout_below="@id/tv3"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="18dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/black" />
-
-    <TextView
-        android:id="@+id/tv_masuk_petugas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/view1"
-        android:layout_alignBottom="@id/view1"
-        android:layout_toRightOf="@id/view1"
-        android:gravity="center_vertical"
-        android:text="Petugas"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold|italic" />
-
-    <TextView
-        android:id="@+id/tv_masuk_koordinator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/view1"
-        android:layout_alignBottom="@id/view1"
-        android:layout_toLeftOf="@id/view1"
-        android:gravity="center_vertical"
-        android:text="Koordinaor"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold|italic" />
+        android:layout_marginTop="14dp"/>
 
 </RelativeLayout>

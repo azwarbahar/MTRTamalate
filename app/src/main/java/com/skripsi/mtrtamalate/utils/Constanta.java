@@ -3,7 +3,7 @@ package com.skripsi.mtrtamalate.utils;
 public class Constanta {
 
     // IP
-    public static final String IP = "192.168.137.1";
+    public static final String IP = "192.168.43.188";
 
     // URL API
     public static final String BASE_URL = "http://" + IP + "/pelaporan-sampah/api/";
@@ -40,4 +40,24 @@ public class Constanta {
     public static final String SESSION_STATUS_MASYARAKAT  = "SESSION_STATUS_MASYARAKAT";
     public static final String SESSION_PEMBAYARAN_MASYARAKAT  = "SESSION_PEMBAYARAN_MASYARAKAT";
     public static final String SESSION_STATUS_MARKER  = "SESSION_STATUS_MARKER";
+
+    // Key Session Petugas
+    public static final String SESSION_ID_PETUGAS  = "SESSION_ID_PETUGAS";
+    public static final String SESSION_NIK_PETUGAS  = "SESSION_NIK_PETUGAS";
+    public static final String SESSION_NAMA_PETUGAS  = "SESSION_NAMA_PETUGAS";
+    public static final String SESSION_JEKEL_PETUGAS  = "SESSION_JEKEL_PETUGAS";
+    public static final String SESSION_USIA_PETUGAS  = "SESSION_USIA_PETUGAS";
+    public static final String SESSION_ALAMAT_PETUGAS  = "SESSION_ALAMAT_PETUGAS";
+    public static final String SESSION_LATITUDE_PETUGAS  = "SESSION_LATITUDE_PETUGAS";
+    public static final String SESSION_LONGITUDE_PETUGAS  = "SESSION_LONGITUDE_PETUGAS";
+    public static final String SESSION_TELPON_PETUGAS  = "SESSION_TELPON_PETUGAS";
+    public static final String SESSION_KELURAHAN_PETUGAS  = "SESSION_KELURAHAN_PETUGAS";
+    public static final String SESSION_PASSWORD_PETUGAS  = "SESSION_PASSWORD_PETUGAS";
+    public static final String SESSION_AREA_PETUGAS  = "SESSION_AREA_PETUGAS";
+    public static final String SESSION_KENDARAAN_PETUGAS  = "SESSION_KENDARAAN_PETUGAS";
+    public static final String SESSION_FOTO_PETUGAS  = "SESSION_FOTO_PETUGAS";
+    public static final String SESSION_STATUS_PETUGAS  = "SESSION_STATUS_PETUGAS";
+    public static final String SESSION_STATUS_KERJA_PETUGAS  = "SESSION_STATUS_KERJA_PETUGAS";
+    public static final String SESSION_ROLE_PETUGAS  = "SESSION_ROLE_PETUGAS";
+
 }

@@ -74,4 +74,8 @@ public interface ApiInterface {
     // PETUGAS
     @GET("petugas/getPetugasId.php")
     Call<ResponsePetugas> getPetugasId(@Query("id_petugas") String id_petugas);
+
+    @GET("petugas/auth_petugas.php")
+    Call<ResponsePetugas> authPetugas(@Query("nik_petugas") String nik_petugas,
+                                      @Query("password_petugas") String password_petugas);
 }

@@ -2,6 +2,8 @@ package com.skripsi.mtrtamalate.models.petugas;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ResponsePetugas {
 
     @SerializedName("result_petugas")

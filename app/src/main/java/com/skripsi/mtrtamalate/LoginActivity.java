@@ -54,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedpreferences;
     private SharedPreferences.Editor editor;
 
+    private TextView tv_masuk_petugas;
+    private TextView tv_masuk_koordinator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(this, MasyarakatActivity.class));
                     finish();
                     break;
-                case "petugas":
+                case "Petugas":
                     startActivity(new Intent(this, PetugasActivity.class));
                     finish();
                     break;
@@ -102,6 +105,28 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     loadLogin(nik, pass);
                 }
+            }
+        });
+
+        tv_masuk_petugas = findViewById(R.id.tv_masuk_petugas);
+        tv_masuk_koordinator = findViewById(R.id.tv_masuk_koordinator);
+        tv_masuk_petugas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, LoginPetugasActivity.class);
+                intent.putExtra("login_data", "Petugas");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        tv_masuk_koordinator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, LoginPetugasActivity.class);
+                intent.putExtra("login_data", "Koordinator");
+                startActivity(intent);
+                finish();
             }
         });
 

@@ -52,6 +52,13 @@ public class Petugas {
 	@SerializedName("longitude_pekerja")
 	private String longitudePekerja;
 
+	@SerializedName("role_pekerja")
+	private String rolePekerja;
+
+	public String getRolePekerja() {
+		return rolePekerja;
+	}
+
 	public String getUsiaPekerja(){
 		return usiaPekerja;
 	}
