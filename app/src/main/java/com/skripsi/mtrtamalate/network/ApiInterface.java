@@ -38,7 +38,6 @@ public interface ApiInterface {
 
 
     // MASYARAKAT
-
     @FormUrlEncoded
     @POST("masyarakat/editFotoMasyarakat.php")
     Call<ResponseMasyarakat> editFoto(@Field("id_masyarakat") String id_masyarakat,
@@ -47,6 +46,10 @@ public interface ApiInterface {
     @GET("masyarakat/auth_masyarakat.php")
     Call<ResponseMasyarakat> authMasyarakat(@Query("nik_masyarakat") String nik_masyarakat,
                                             @Query("password_masyarakat") String password_masyarakat);
+
+    @GET("masyarakat/getAllLokasiMasyarakat.php")
+    Call<ResponseMasyarakat> getAllLokasiMasyarakat(@Query("kelurahan_pekerja") String kelurahan_pekerja,
+                                                    @Query("area_pekerja") String area_pekerja);
 
     @GET("masyarakat/editPasswordMasyarakat.php")
     Call<ResponseMasyarakat> editPassword(@Query("id_masyarakat") String id_masyarakat,
@@ -78,4 +81,11 @@ public interface ApiInterface {
     @GET("petugas/auth_petugas.php")
     Call<ResponsePetugas> authPetugas(@Query("nik_petugas") String nik_petugas,
                                       @Query("password_petugas") String password_petugas);
+
+    @FormUrlEncoded
+    @POST("petugas/editLocationPetugas.php")
+    Call<ResponsePetugas> editLocationPetugas(@Field("id_petugas") String id_petugas,
+                                              @Field("alamat_petugas") String alamat_petugas,
+                                              @Field("latitude_petugas") String latitude_petugas,
+                                              @Field("longitude_petugas") String longitude_petugas);
 }

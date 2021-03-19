@@ -2,6 +2,8 @@ package com.skripsi.mtrtamalate.models.masyarakat;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ResponseMasyarakat{
 
 	@SerializedName("kode")
@@ -15,6 +17,13 @@ public class ResponseMasyarakat{
 
 	@SerializedName("result_masyarakat")
 	private Masayarkat result_masyarakat;
+
+	@SerializedName("masyarakat_marker")
+	private List<Masayarkat> masyarakat_marker;
+
+	public List<Masayarkat> getMasyarakat_marker() {
+		return masyarakat_marker;
+	}
 
 	public Masayarkat getResult_masyarakat() {
 		return result_masyarakat;

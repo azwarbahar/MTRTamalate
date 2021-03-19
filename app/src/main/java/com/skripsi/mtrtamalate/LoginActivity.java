@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(this, PetugasActivity.class));
                     finish();
                     break;
-                case "koordinator":
+                case "Koordinator":
                     Toast.makeText(this, "Koordinator", Toast.LENGTH_SHORT).show();
 //                    startActivity(new Intent(this, DashboardSpvActivity.class));
 //                    finish();
