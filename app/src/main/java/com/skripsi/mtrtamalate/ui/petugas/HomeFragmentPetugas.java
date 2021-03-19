@@ -49,6 +49,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.skripsi.mtrtamalate.R;
+import com.skripsi.mtrtamalate.models.laporan.Laporan;
+import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
 import com.skripsi.mtrtamalate.models.masyarakat.Masayarkat;
 import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
 import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
@@ -131,6 +133,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
     private SweetAlertDialog pDialog;
 
     private ArrayList<Masayarkat> masayarkats;
+    private ArrayList<Laporan> laporans;
 
 
     @Override
@@ -149,7 +152,6 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
         mPreferences = getActivity().getSharedPreferences(Constanta.MY_SHARED_PREFERENCES,
                 getActivity().MODE_PRIVATE);
 
-        loadDataSession();
         sliding_layout = view.findViewById(R.id.sliding_layout);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
@@ -172,10 +174,40 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 //                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng_petugas,13));
 //            }
 //        });
+        loadDataSession();
+        loadDataLaporan();
 
         btn_jenis_map.setOnClickListener(this::clickjenisMap);
 
         return view;
+
+    }
+
+    private void loadDataLaporan() {
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponLaporan> laporanCall = apiInterface.getLaporanMapPetugas(kelurahan_pekerja, area_pekerja, "Proccess");
+        laporanCall.enqueue(new Callback<ResponLaporan>() {
+            @Override
+            public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
+                if (response.isSuccessful()){
+                    String kode = response.body().getKode();
+                    if (kode.equals("1")){
+                        laporans = (ArrayList<Laporan>) response.body().getResult_marker_laporan();
+                        initMarkerLaporan(laporans);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponLaporan> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void initMarkerLaporan(ArrayList<Laporan> laporans) {
 
     }
 

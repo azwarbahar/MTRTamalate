@@ -19,6 +19,11 @@ public interface ApiInterface {
     @GET("laporan/getLaporanMasarakat.php")
     Call<ResponLaporan> laporanMasyarakatStatus(@Query("masyarakat_id") String masyarakat_id);
 
+    @GET("laporan/getLaporanMapPetugas.php")
+    Call<ResponLaporan> getLaporanMapPetugas(@Query("kelurahan_laporan") String kelurahan_laporan,
+                                             @Query("area_laporan") String area_laporan,
+                                             @Query("staus_laporan") String staus_laporan);
+
     @FormUrlEncoded
     @POST("laporan/addLaporan.php")
     Call<ResponLaporan> AddLaporan(@Field("keterangan_laporan") String keterangan_laporan,
