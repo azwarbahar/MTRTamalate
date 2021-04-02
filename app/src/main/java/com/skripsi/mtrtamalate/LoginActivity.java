@@ -189,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                 pDialog.dismiss();
                 new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Opss..")
-                        .setContentText("Terjadi Kesalahan Sistem!")
+                        .setContentText(t.getMessage())
                         .show();
             }
         });

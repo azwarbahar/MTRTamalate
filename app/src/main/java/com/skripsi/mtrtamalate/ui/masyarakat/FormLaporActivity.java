@@ -129,7 +129,7 @@ public class FormLaporActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     sweetAlertDialog.dismiss();
-                                    pDialog.show();
+//                                    pDialog.show();
                                     clickSend(keterangan);
                                 }
                             })
@@ -161,9 +161,9 @@ public class FormLaporActivity extends AppCompatActivity {
     }
 
     private void clickSend(String keterangan) {
-
+        String img_send = imgToString(bitmap_gambar);
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponLaporan> responLaporanCall = apiInterface.AddLaporan(keterangan, imgToString(), latitude_masyarakat,
+        Call<ResponLaporan> responLaporanCall = apiInterface.AddLaporan(keterangan, img_send, latitude_masyarakat,
                 longitude_masyarakat, alamat_masyarakat, nik_masyarakat, kelurahan_masyarakat, area_masyarakat, id_masyarakat);
         responLaporanCall.enqueue(new Callback<ResponLaporan>() {
             @Override
@@ -186,7 +186,7 @@ public class FormLaporActivity extends AppCompatActivity {
                     } else {
                         new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Gagal..")
-                                .setContentText("Terjadi kesalahan!")
+                                .setContentText("Terjadi kesalahan!, Kode : "+kode)
                                 .show();
                     }
                 } else {
@@ -202,7 +202,7 @@ public class FormLaporActivity extends AppCompatActivity {
                 pDialog.dismiss();
                 new SweetAlertDialog(FormLaporActivity.this, SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Gagal..")
-                        .setContentText("Terjadi kesalahan!")
+                        .setContentText("Terjadi kesalahan Sistem!")
                         .show();
             }
         });
@@ -230,9 +230,9 @@ public class FormLaporActivity extends AppCompatActivity {
         }, 400);
     }
 
-    private String imgToString() {
+    private String imgToString(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap_gambar.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] imgByte = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imgByte, Base64.DEFAULT);
     }

@@ -78,6 +78,9 @@ public interface ApiInterface {
                                    @Field("telpon_masyarakat") String telpon_masyarakat,
                                    @Field("usia_masyarakat") String usia_masyarakat);
 
+    @GET("masyarakat/editStatusMarker.php")
+    Call<ResponseMasyarakat> editStatusMarker(@Query("id_masyarakat") String id_masyarakat);
+
 
     // PETUGAS
     @GET("petugas/getPetugasId.php")

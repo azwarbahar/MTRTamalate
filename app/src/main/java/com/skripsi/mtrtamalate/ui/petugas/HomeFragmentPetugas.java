@@ -32,6 +32,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -49,6 +51,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.skripsi.mtrtamalate.R;
+import com.skripsi.mtrtamalate.adapter.LaporanPetugasAdapter;
 import com.skripsi.mtrtamalate.models.laporan.Laporan;
 import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
 import com.skripsi.mtrtamalate.models.masyarakat.Masayarkat;
@@ -57,6 +60,7 @@ import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.masyarakat.FormLaporActivity;
+import com.skripsi.mtrtamalate.ui.masyarakat.akun.EditAkunActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.TitikLokasiActivity;
 import com.skripsi.mtrtamalate.utils.Constanta;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -64,6 +68,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -81,6 +86,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
     private LatLng latLng_petugas;
 
     private GoogleMap map;
+    private GoogleMap mapLaporan;
     View view;
     private Drawable vectorDrawble;
     private Bitmap bitmap;
@@ -127,6 +133,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
     private String addres_latlig_petugas;
 
+
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor editor;
     private ImageView btn_jenis_map;
@@ -135,19 +142,32 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
     private ArrayList<Masayarkat> masayarkats;
     private ArrayList<Laporan> laporans;
 
+    private RecyclerView rv_laporan;
+    private LaporanPetugasAdapter laporanPetugasAdapter;
+    private TextView tv_jumlah_laporan;
+    private ImageView img_kosong;
+
+    HashMap<String, Masayarkat> markerMapMasyarakat = new HashMap<String, Masayarkat>();
+    HashMap<String, Laporan> markerMapLaporan = new HashMap<String, Laporan>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         geocoder = new Geocoder(getActivity(), Locale.getDefault());
-
+//        startLocationUpdate();
+        buildGoogleApiClient();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home_petugas, container, false);
+
+        pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
 
         mPreferences = getActivity().getSharedPreferences(Constanta.MY_SHARED_PREFERENCES,
                 getActivity().MODE_PRIVATE);
@@ -156,6 +176,10 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
+
+        tv_jumlah_laporan = view.findViewById(R.id.tv_jumlah_laporan);
+        rv_laporan = view.findViewById(R.id.rv_laporan);
+        img_kosong = view.findViewById(R.id.img_kosong);
 
         cv_laporan = view.findViewById(R.id.cv_laporan);
         cv_laporan.setOnClickListener(new View.OnClickListener() {
@@ -175,7 +199,6 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 //            }
 //        });
         loadDataSession();
-        loadDataLaporan();
 
         btn_jenis_map.setOnClickListener(this::clickjenisMap);
 
@@ -190,33 +213,61 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
         laporanCall.enqueue(new Callback<ResponLaporan>() {
             @Override
             public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     String kode = response.body().getKode();
-                    if (kode.equals("1")){
+                    if (kode.equals("1")) {
+                        img_kosong.setVisibility(View.GONE);
+                        rv_laporan.setVisibility(View.VISIBLE);
                         laporans = (ArrayList<Laporan>) response.body().getResult_marker_laporan();
-                        initMarkerLaporan(laporans);
+                        laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(),laporans);
+                        rv_laporan.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        rv_laporan.setAdapter(laporanPetugasAdapter);
+                        tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
+//                        initMarkerLaporan(laporans);
+                    } else {
+                        img_kosong.setVisibility(View.VISIBLE);
+                        rv_laporan.setVisibility(View.GONE);
+                        showSnackMessage(response.body().getPesan());
+                        tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
                     }
+                } else {
+                    img_kosong.setVisibility(View.VISIBLE);
+                    rv_laporan.setVisibility(View.GONE);
+                    showSnackMessage("Terjadi Kesalahan Saat Memproses Data Laporan!");
+                    tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponLaporan> call, Throwable t) {
-
+                img_kosong.setVisibility(View.VISIBLE);
+                rv_laporan.setVisibility(View.GONE);
+                showSnackMessage("Terjadi Kesalahan Sistem Saat Memproses Data Laporan!");
+                tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
             }
         });
 
     }
 
     private void initMarkerLaporan(ArrayList<Laporan> laporans) {
+        tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
+        for (int i = 0; i < laporans.size(); i++) {
+            double latitude_masyarakat = Double.parseDouble(laporans.get(i).getLatitudeLaporan());
+            double longitude_masyarakat = Double.parseDouble(laporans.get(i).getLongitudeLaporan());
+            Marker marker = mapLaporan.addMarker(new MarkerOptions().title("Lokasi Laporan")
+                    .icon(bitmapDescriptorLaporan(getActivity()))
+                    .position(new LatLng(latitude_masyarakat, longitude_masyarakat)));
+            String idmark = marker.getId();
+            markerMapLaporan.put(idmark, laporans.get(i));
 
+            SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+            assert supportMapFragment != null;
+            supportMapFragment.getMapAsync(HomeFragmentPetugas.this);
+        }
     }
 
     private void loadDataMasyarakat() {
 
-        pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
         pDialog.show();
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -226,9 +277,9 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
             public void onResponse(Call<ResponseMasyarakat> call, Response<ResponseMasyarakat> response) {
                 pDialog.dismiss();
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     String kode = String.valueOf(response.body().getKode());
-                    if (kode.equals("1")){
+                    if (kode.equals("1")) {
                         masayarkats = (ArrayList<Masayarkat>) response.body().getMasyarakat_marker();
                         initMarkerMasyarakat(masayarkats);
                     } else {
@@ -251,13 +302,15 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
     private void initMarkerMasyarakat(ArrayList<Masayarkat> masayarkats) {
 
-        for (int i = 0; i < masayarkats.size(); i++){
+        for (int i = 0; i < masayarkats.size(); i++) {
             double latitude_masyarakat = Double.parseDouble(masayarkats.get(i).getLatitudeMasyarakat());
             double longitude_masyarakat = Double.parseDouble(masayarkats.get(i).getLongitudeMasyarakat());
-            map.addMarker(new MarkerOptions().title("NIK : "+masayarkats.get(i).getNikMasyarakat())
-            .icon(bitmapDescriptor(getActivity()))
-            .snippet("Nama : "+masayarkats.get(i).getNamaMasyarakat())
-            .position(new LatLng(latitude_masyarakat, longitude_masyarakat)));
+            Marker marker = map.addMarker(new MarkerOptions().title("Lokasi Sampah")
+                    .icon(bitmapDescriptor(getActivity()))
+                    .position(new LatLng(latitude_masyarakat, longitude_masyarakat)));
+
+            String idmark = marker.getId();
+            markerMapMasyarakat.put(idmark, masayarkats.get(i));
 
             SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
             assert supportMapFragment != null;
@@ -299,6 +352,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
         role_pekerja = mPreferences.getString(Constanta.SESSION_ROLE_PETUGAS, "");
         role_pekerja = mPreferences.getString(Constanta.SESSION_ROLE, "");
 
+        loadDataLaporan();
         loadDataMasyarakat();
     }
 
@@ -385,8 +439,20 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
     private BitmapDescriptor bitmapDescriptor(Context context) {
         int height = 70;
-        int width = 70;
-        vectorDrawble = ContextCompat.getDrawable(context, R.drawable.icon_mylocation);
+        int width = 55;
+        vectorDrawble = ContextCompat.getDrawable(context, R.drawable.marker_lokasi_sampah);
+        assert vectorDrawble != null;
+        vectorDrawble.setBounds(0, 0, width, height);
+        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawble.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    private BitmapDescriptor bitmapDescriptorLaporan(Context context) {
+        int height = 70;
+        int width = 55;
+        vectorDrawble = ContextCompat.getDrawable(context, R.drawable.marker_laporan);
         assert vectorDrawble != null;
         vectorDrawble.setBounds(0, 0, width, height);
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -398,57 +464,117 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-//        latLng = new LatLng(-5.181629, 119.431791);
-//        markerOptionsPesanan = new MarkerOptions().title("My Location")
-//                .icon(bitmapDescriptor(getActivity()))
-//                .position(latLng);
-//        map.addMarker(markerOptionsPesanan);
-//        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
+        mapLaporan = googleMap;
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
-                //Location Permission already granted
-                buildGoogleApiClient();
                 map.setMyLocationEnabled(true);
             } else {
                 //Request Location Permission
                 checkLocationPermission();
             }
         } else {
-            buildGoogleApiClient();
+//            buildGoogleApiClient();
             map.setMyLocationEnabled(true);
         }
 
-//        try {
-//            boolean success = googleMap.setMapStyle(
-//                    MapStyleOptions.loadRawResourceStyle(
-//                            getActivity(), R.raw.map_style_grey));
-//
-//            if (!success) {
-//                Log.e("MapsActivity", "Style parsing failed.");
-//            }
-//        } catch (Resources.NotFoundException e) {
-//            Log.e("MapsActivity", "Can't find style. Error: ", e);
-//        }
+        try {
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            getActivity(), R.raw.map_style_grey));
+
+            if (!success) {
+                Log.e("MapsActivity", "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e("MapsActivity", "Can't find style. Error: ", e);
+        }
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                showDialogMarker(marker);
+                return false;
+            }
+        });
+
+    }
+
+    private void showDialogMarker(Marker marker) {
+        if (markerMapMasyarakat.get(marker.getId()) == null) {
+
+            Laporan laporan = markerMapLaporan.get(marker.getId());
+            Toast.makeText(getActivity(), "Pesan : " + laporan.getKeteranganLaporan(), Toast.LENGTH_SHORT).show();
+
+        } else {
+            Masayarkat masayarkat = markerMapMasyarakat.get(marker.getId());
+            new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Angkut Sampah ?")
+                    .setCancelButton("Detail", new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                            pDialog.dismiss();
+                            Toast.makeText(getActivity(), "Show Detail " + masayarkat.getNamaMasyarakat(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setConfirmButton("Selesai", new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                            pDialog.show();
+
+                            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                            assert masayarkat != null;
+                            Call<ResponseMasyarakat> responseMasyarakatCall = apiInterface.editStatusMarker(
+                                    masayarkat.getIdMasyarakat());
+                            responseMasyarakatCall.enqueue(new Callback<ResponseMasyarakat>() {
+                                @Override
+                                public void onResponse(Call<ResponseMasyarakat> call, Response<ResponseMasyarakat> response) {
+                                    pDialog.dismiss();
+                                    if (response.isSuccessful()) {
+                                        String kode = String.valueOf(response.body().getKode());
+                                        if (kode.equals("1")) {
+                                            Toast.makeText(getActivity(), "Mengambil Sampah " + masayarkat.getNamaMasyarakat() +
+                                                    " Berhasil!", Toast.LENGTH_SHORT).show();
+                                            marker.remove();
+                                        } else {
+                                            Toast.makeText(getActivity(), "Maaf, Proses Gagal! Kode Kesalahan 001", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(getActivity(), "Maaf, Proses Gagal! Kode Kesalahan 002", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseMasyarakat> call, Throwable t) {
+                                    pDialog.dismiss();
+                                    Toast.makeText(getActivity(), "Maaf, Proses Gagal! Kode Kesalahan 003", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    })
+                    .show();
+        }
 
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            return;
         }
-
-
+        startLocationUpdate();
+        currentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (currentLocation == null) {
+            startLocationUpdate();
+        }
     }
 
     @Override
@@ -477,7 +603,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
         if (first_time) {
             updateLatlingDatabase(location);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_petugas, 18));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_petugas, 19));
             first_time = false;
         }
 
@@ -495,7 +621,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
             @Override
             public void onResponse(Call<ResponsePetugas> call, Response<ResponsePetugas> response) {
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 //                    Toast.makeText(getActivity(), "Sukses Simpan", Toast.LENGTH_SHORT).show();
                 }
 
@@ -554,7 +680,6 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
                 mLocationRequest, this);
 
     }
-
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="10dp"
+    android:background="@drawable/bg_item_laporan_pekerja">
+
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:src="@drawable/illust_megaphone" />
+
+    <TextView
+        android:id="@+id/tv_alamat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="12dp"
+        android:layout_toRightOf="@id/img1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Jalan Mamoa Baru No 1 Kel Mangasa"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_keterangan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="12dp"
+        android:layout_toEndOf="@id/img1"
+        android:layout_toRightOf="@id/img1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Hj Sitti Maryam"
+        android:textColor="@color/grey" />
+
+    <TextView
+        android:id="@+id/tv_tanggal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/img1"
+        android:text="2021-03-14 18:37:48"
+        android:textColor="@color/black" />
+
+
+</RelativeLayout>
