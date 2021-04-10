@@ -24,6 +24,7 @@ public class AkunFragmentPetugas extends Fragment {
     private SharedPreferences.Editor editor;
     private View view;
 
+    private String a;
 
     @Nullable
     @Override
