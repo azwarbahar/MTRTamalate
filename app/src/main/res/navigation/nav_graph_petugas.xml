@@ -13,6 +13,6 @@
         android:label="RiwayatFragmentPetugas" />
     <fragment
         android:id="@+id/akunFragmentPetugas"
-        android:name="com.skripsi.mtrtamalate.ui.petugas.AkunFragmentPetugas"
+        android:name="com.skripsi.mtrtamalate.ui.petugas.akun.AkunFragmentPetugas"
         android:label="AkunFragmentPetugas" />
 </navigation>
