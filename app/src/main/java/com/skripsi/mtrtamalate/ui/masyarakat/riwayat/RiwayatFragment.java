@@ -93,7 +93,6 @@ public class RiwayatFragment extends Fragment implements SwipeRefreshLayout.OnRe
             }
         });
 
-
         return view;
     }
 

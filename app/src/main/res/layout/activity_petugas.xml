@@ -34,4 +34,7 @@
         android:theme="?attr/actionBarTheme"
         app:title="MTR Tamalate"
         app:titleTextColor="@color/white" />
+
+
+
 </RelativeLayout>
