@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.skripsi.mtrtamalate.R;
+
 public class DataMasyarakatActivity extends AppCompatActivity {
 
     @Override

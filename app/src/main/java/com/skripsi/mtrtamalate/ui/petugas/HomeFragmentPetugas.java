@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -92,6 +93,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
     private Bitmap bitmap;
     private MarkerOptions markerOptionsPesanan;
     private CardView cv_laporan;
+    private CardView cv_masyarakat;
 
     private SlidingUpPanelLayout sliding_layout;
 
@@ -186,6 +188,14 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
             @Override
             public void onClick(View view) {
                 showPanel();
+            }
+        });
+
+        cv_masyarakat = view.findViewById(R.id.cv_masyarakat);
+        cv_masyarakat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), DataMasyarakatActivity.class));
             }
         });
 

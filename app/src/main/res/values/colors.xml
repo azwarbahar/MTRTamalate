@@ -23,4 +23,6 @@
     <color name="colorBackSuccess">#DDFFF9</color>
     <color name="colorBackWarning">#FFFAC6</color>
 
+    <color name="green">#11971E</color>
+
 </resources>
