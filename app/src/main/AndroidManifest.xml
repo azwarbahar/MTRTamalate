@@ -18,10 +18,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MTRTamalate">
-        <activity android:name=".LoginPetugasActivity"></activity>
+        android:theme="@style/Theme.MTRTamalate"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.petugas.DataMasyarakatActivity"></activity>
+        <activity android:name=".LoginPetugasActivity" />
         <activity android:name=".ui.masyarakat.riwayat.DetailRiwayatActivity" />
         <activity android:name=".ui.masyarakat.akun.ViewImageActivity" />
         <activity android:name=".ui.masyarakat.akun.ImagePickerActivity" />
@@ -35,8 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.petugas.PetugasActivity" >
-        </activity>
+        <activity android:name=".ui.petugas.PetugasActivity"></activity>
         <activity android:name=".ui.masyarakat.sampah.DataSampahActivity" />
         <activity android:name=".ui.masyarakat.FormLaporActivity" />
         <activity android:name=".ui.masyarakat.bacaan.BacaanActivity" />

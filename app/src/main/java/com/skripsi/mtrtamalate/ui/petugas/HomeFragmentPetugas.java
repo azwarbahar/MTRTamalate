@@ -216,14 +216,21 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
                 if (response.isSuccessful()) {
                     String kode = response.body().getKode();
                     if (kode.equals("1")) {
-                        img_kosong.setVisibility(View.GONE);
-                        rv_laporan.setVisibility(View.VISIBLE);
                         laporans = (ArrayList<Laporan>) response.body().getResult_marker_laporan();
-                        laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(),laporans);
-                        rv_laporan.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        rv_laporan.setAdapter(laporanPetugasAdapter);
-                        tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
+                        if (laporans.size() > 0){
+
+                            img_kosong.setVisibility(View.GONE);
+                            rv_laporan.setVisibility(View.VISIBLE);
+                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(),laporans);
+                            rv_laporan.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            rv_laporan.setAdapter(laporanPetugasAdapter);
+                            tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
 //                        initMarkerLaporan(laporans);
+                        } else {
+                            img_kosong.setVisibility(View.VISIBLE);
+                            rv_laporan.setVisibility(View.GONE);
+                            tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
+                        }
                     } else {
                         img_kosong.setVisibility(View.VISIBLE);
                         rv_laporan.setVisibility(View.GONE);

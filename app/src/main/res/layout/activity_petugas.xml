@@ -19,21 +19,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigationViewPetugas"
-        android:layout_below="@id/toolbar"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph_petugas" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="MTR Tamalate"
-        app:titleTextColor="@color/white" />
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:background="?attr/colorPrimary"-->
+<!--        android:elevation="4dp"-->
+<!--        android:minHeight="?attr/actionBarSize"-->
+<!--        android:theme="?attr/actionBarTheme"-->
+<!--        app:title="MTR Tamalate"-->
+<!--        app:titleTextColor="@color/white" />-->
 
 
 

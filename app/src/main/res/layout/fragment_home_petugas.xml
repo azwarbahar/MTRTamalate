@@ -72,6 +72,44 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_masyarakat"
+            android:layout_below="@id/cv_laporan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="22dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp">
+
+                <ImageView
+                    android:id="@+id/img2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icon_people" />
+
+                <TextView
+                    android:id="@+id/tv12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:layout_toRightOf="@id/img2"
+                    android:text="Masyarakat"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <ImageView
             android:id="@+id/btn_jenis_map"
             android:layout_width="35dp"
@@ -81,7 +119,7 @@
             android:elevation="8dp"
             android:padding="6dp"
             android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_below="@id/cv_laporan"
+            android:layout_below="@id/cv_masyarakat"
             android:src="@drawable/ic_baseline_layers_24"
             app:tint="@color/white" />
 
