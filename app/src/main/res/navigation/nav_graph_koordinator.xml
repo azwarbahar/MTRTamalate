@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph_koordinator"
+    app:startDestination="@id/homeFragmentKoordinator">
+
+    <fragment
+        android:id="@+id/homeFragmentKoordinator"
+        android:name="com.skripsi.mtrtamalate.ui.koordinator.HomeFragmentKoordinator"
+        android:label="HomeFragmentKoordinator" />
+    <fragment
+        android:id="@+id/riwayatFragmentKoordinator"
+        android:name="com.skripsi.mtrtamalate.ui.koordinator.RiwayatFragmentKoordinator"
+        android:label="RiwayatFragmentKoordinator" />
+    <fragment
+        android:id="@+id/akunFragmentKoordinator"
+        android:name="com.skripsi.mtrtamalate.ui.koordinator.AkunFragmentKoordinator"
+        android:label="AkunFragmentKoordinator" />
+</navigation>

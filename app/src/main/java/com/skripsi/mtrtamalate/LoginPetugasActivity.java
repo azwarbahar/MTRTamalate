@@ -17,6 +17,7 @@ import com.skripsi.mtrtamalate.models.petugas.Petugas;
 import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
+import com.skripsi.mtrtamalate.ui.koordinator.KoordinatorActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.MasyarakatActivity;
 import com.skripsi.mtrtamalate.ui.petugas.PetugasActivity;
 import com.skripsi.mtrtamalate.utils.Constanta;
@@ -73,7 +74,7 @@ public class LoginPetugasActivity extends AppCompatActivity {
         tv_login_masyarakat = findViewById(R.id.tv_login_masyarakat);
         tv2 = findViewById(R.id.tv2);
         data_intent = getIntent().getStringExtra("login_data");
-        tv2.setText("Login "+ data_intent);
+        tv2.setText("Login " + data_intent);
 
         tv_login_masyarakat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,13 +195,29 @@ public class LoginPetugasActivity extends AppCompatActivity {
         role_pekerja = petugas.getRolePekerja();
 
         String status = petugas.getStatusPekerja();
-        if (status.equals("Aktif")){
+        if (status.equals("Aktif")) {
             startSession(id_pekerja, nik_pekerja, nama_pekerja, jenis_kelamin_pekerja, usia_pekerja,
                     alamat_pekerja, latitude_pekerja, longitude_pekerja, telpon_pekerja,
                     kelurahan_pekerja, password, area_pekerja, kendaraan_pekerja,
                     foto_pekerja, status_pekerja, status_kerja_pekerja, role_pekerja);
-            startActivity(new Intent(LoginPetugasActivity.this, PetugasActivity.class));
-            finish();
+            if (!role_pekerja.isEmpty()) {
+                switch (role_pekerja) {
+                    case "masyarakat":
+                        startActivity(new Intent(this, MasyarakatActivity.class));
+                        finish();
+                        break;
+                    case "Petugas":
+                        startActivity(new Intent(this, PetugasActivity.class));
+                        finish();
+                        break;
+                    case "Koordinator":
+                        startActivity(new Intent(this, KoordinatorActivity.class));
+                        finish();
+                        break;
+                }
+            }
+//            startActivity(new Intent(LoginPetugasActivity.this, PetugasActivity.class));
+//            finish();
         } else {
             SweetAlertDialog sweetAlertDialogError = new SweetAlertDialog(LoginPetugasActivity.this,
                     SweetAlertDialog.ERROR_TYPE);

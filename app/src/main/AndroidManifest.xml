@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MTRTamalate"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.petugas.DataMasyarakatActivity"></activity>
+        <activity android:name=".ui.koordinator.KoordinatorActivity"></activity>
+        <activity android:name=".ui.koordinator.DataMasyarakatActivity" />
         <activity android:name=".LoginPetugasActivity" />
         <activity android:name=".ui.masyarakat.riwayat.DetailRiwayatActivity" />
         <activity android:name=".ui.masyarakat.akun.ViewImageActivity" />
@@ -36,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.petugas.PetugasActivity"></activity>
+        <activity android:name=".ui.petugas.PetugasActivity" />
         <activity android:name=".ui.masyarakat.sampah.DataSampahActivity" />
         <activity android:name=".ui.masyarakat.FormLaporActivity" />
         <activity android:name=".ui.masyarakat.bacaan.BacaanActivity" />

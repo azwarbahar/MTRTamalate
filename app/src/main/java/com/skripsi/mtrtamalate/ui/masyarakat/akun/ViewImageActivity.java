@@ -21,12 +21,21 @@ public class ViewImageActivity extends AppCompatActivity {
         ImageView img_close = findViewById(R.id.img_close);
         Bundle bundle = getIntent().getExtras();
         String foto = bundle.getString("foto");
-        Glide.with(this)
-                .load(Constanta.URL_IMG_MASYARAKAT + foto)
-                .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_broken_image)
-                .into(photoView);
+        String role = bundle.getString("role");
+        if (role.equals("masyarakat")){
+            Glide.with(this)
+                    .load(Constanta.URL_IMG_MASYARAKAT + foto)
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+                    .into(photoView);
 
+        } else {
+            Glide.with(this)
+                    .load(Constanta.URL_IMG_PETUGAS + foto)
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+                    .into(photoView);
+        }
         img_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

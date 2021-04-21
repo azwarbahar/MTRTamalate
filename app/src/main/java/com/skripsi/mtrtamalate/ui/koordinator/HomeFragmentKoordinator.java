@@ -1,4 +1,4 @@
-package com.skripsi.mtrtamalate.ui.petugas;
+package com.skripsi.mtrtamalate.ui.koordinator;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -60,10 +60,9 @@ import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
 import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
-import com.skripsi.mtrtamalate.ui.koordinator.DataMasyarakatActivity;
+import com.skripsi.mtrtamalate.ui.petugas.HomeFragmentPetugas;
 import com.skripsi.mtrtamalate.utils.Constanta;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,10 +75,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
+public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        com.google.android.gms.location.LocationListener {
+        com.google.android.gms.location.LocationListener  {
 
     private LatLng latLng;
     private LatLng latLng_petugas;
@@ -91,6 +90,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
     private Bitmap bitmap;
     private MarkerOptions markerOptionsPesanan;
     private CardView cv_laporan;
+    private CardView cv_masyarakat;
 
     private SlidingUpPanelLayout sliding_layout;
 
@@ -188,6 +188,14 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
             }
         });
 
+        cv_masyarakat = view.findViewById(R.id.cv_masyarakat);
+        cv_masyarakat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), DataMasyarakatActivity.class));
+            }
+        });
+
         btn_jenis_map = view.findViewById(R.id.btn_jenis_map);
         ImageView img_my_location = view.findViewById(R.id.img_my_location);
         img_my_location.setVisibility(View.GONE);
@@ -268,7 +276,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
             SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
             assert supportMapFragment != null;
-            supportMapFragment.getMapAsync(HomeFragmentPetugas.this);
+            supportMapFragment.getMapAsync(HomeFragmentKoordinator.this);
         }
     }
 
@@ -320,7 +328,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
             SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
             assert supportMapFragment != null;
-            supportMapFragment.getMapAsync(HomeFragmentPetugas.this);
+            supportMapFragment.getMapAsync(HomeFragmentKoordinator.this);
         }
 
     }
@@ -435,10 +443,10 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
     private void showPanel() {
 
         if (sliding_layout != null &&
-                (sliding_layout.getPanelState() == PanelState.EXPANDED || sliding_layout.getPanelState() == PanelState.ANCHORED)) {
-            sliding_layout.setPanelState(PanelState.COLLAPSED);
+                (sliding_layout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || sliding_layout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
+            sliding_layout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else {
-            sliding_layout.setPanelState(PanelState.ANCHORED);
+            sliding_layout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
         }
 
     }

@@ -418,6 +418,7 @@ public class AkunFragment extends Fragment {
     private void launchViewImage() {
 //        Toast.makeText(getActivity(), "Lihat Gambar!!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), ViewImageActivity.class);
+        intent.putExtra("role", "masyarakat");
         intent.putExtra("foto", foto);
         getActivity().startActivity(intent);
     }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_kosong"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/img_kosong"
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:id="@+id/tv1"
+        android:layout_below="@id/img_kosong"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textColor="@color/grey"
+        android:textSize="24sp"
+        android:text="Maaf.."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv1"
+        android:gravity="center_horizontal"
+        android:text="Fitur riwayat tidak tersedia \n untuk Koordinator petugas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

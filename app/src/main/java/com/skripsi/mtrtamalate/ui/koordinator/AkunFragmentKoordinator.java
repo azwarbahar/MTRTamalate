@@ -1,4 +1,4 @@
-package com.skripsi.mtrtamalate.ui.petugas.akun;
+package com.skripsi.mtrtamalate.ui.koordinator;
 
 import android.Manifest;
 import android.app.Activity;
@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,24 +31,17 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.skripsi.mtrtamalate.LoginActivity;
 import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.models.masyarakat.Masayarkat;
-import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
-import com.skripsi.mtrtamalate.network.ApiClient;
-import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.AkunFragment;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.ImagePickerActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.ViewImageActivity;
 import com.skripsi.mtrtamalate.utils.Constanta;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class AkunFragmentPetugas extends Fragment {
+public class AkunFragmentKoordinator extends Fragment {
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor editor;
@@ -100,7 +92,7 @@ public class AkunFragmentPetugas extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_akun_petugas, container,false);
+        view = inflater.inflate(R.layout.fragment_akun_petugas, container, false);
         mPreferences = getActivity().getSharedPreferences(Constanta.MY_SHARED_PREFERENCES, getActivity().MODE_PRIVATE);
 
         pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
@@ -252,7 +244,7 @@ public class AkunFragmentPetugas extends Fragment {
     private void launchViewImage() {
 //        Toast.makeText(getActivity(), "Lihat Gambar!!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), ViewImageActivity.class);
-        intent.putExtra("role", "petugas");
+        intent.putExtra("role", "koordinator");
         intent.putExtra("foto", foto);
         getActivity().startActivity(intent);
     }

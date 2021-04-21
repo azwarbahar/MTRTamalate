@@ -18,6 +18,7 @@ import com.skripsi.mtrtamalate.models.masyarakat.Masayarkat;
 import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
+import com.skripsi.mtrtamalate.ui.koordinator.KoordinatorActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.MasyarakatActivity;
 import com.skripsi.mtrtamalate.ui.petugas.PetugasActivity;
 import com.skripsi.mtrtamalate.utils.Constanta;
@@ -76,9 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                     break;
                 case "Koordinator":
-                    Toast.makeText(this, "Koordinator", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(this, DashboardSpvActivity.class));
-//                    finish();
+                    startActivity(new Intent(this, KoordinatorActivity.class));
+                    finish();
                     break;
             }
         }
