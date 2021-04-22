@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,6 +92,7 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
     private MarkerOptions markerOptionsPesanan;
     private CardView cv_laporan;
     private CardView cv_masyarakat;
+    private CardView cv_petugas;
 
     private SlidingUpPanelLayout sliding_layout;
 
@@ -146,6 +148,8 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
     private TextView tv_jumlah_laporan;
     private ImageView img_kosong;
 
+    private RelativeLayout rl_lapor_data_sampah;
+
     HashMap<String, Masayarkat> markerMapMasyarakat = new HashMap<String, Masayarkat>();
     HashMap<String, Laporan> markerMapLaporan = new HashMap<String, Laporan>();
 
@@ -161,7 +165,7 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home_petugas, container, false);
+        view = inflater.inflate(R.layout.fragment_home_koordinator, container, false);
 
         pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -180,6 +184,14 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
         rv_laporan = view.findViewById(R.id.rv_laporan);
         img_kosong = view.findViewById(R.id.img_kosong);
 
+        rl_lapor_data_sampah = view.findViewById(R.id.rl_lapor_data_sampah);
+        rl_lapor_data_sampah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Klik lapor data sampah harian", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         cv_laporan = view.findViewById(R.id.cv_laporan);
         cv_laporan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,15 +208,16 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
             }
         });
 
+        cv_petugas = view.findViewById(R.id.cv_petugas);
+        cv_petugas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), DataPetugasActivity.class));
+            }
+        });
+
         btn_jenis_map = view.findViewById(R.id.btn_jenis_map);
-        ImageView img_my_location = view.findViewById(R.id.img_my_location);
-        img_my_location.setVisibility(View.GONE);
-//        img_my_location.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng_petugas,13));
-//            }
-//        });
+
         loadDataSession();
 
         btn_jenis_map.setOnClickListener(this::clickjenisMap);

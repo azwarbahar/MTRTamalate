@@ -29,7 +29,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tv1"
         android:gravity="center_horizontal"
-        android:text="Fitur riwayat tidak tersedia \n untuk Koordinator petugas"
+        android:text="Data laporan sampah\ntidak ditemukan.."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

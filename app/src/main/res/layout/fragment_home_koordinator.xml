@@ -110,6 +110,44 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_petugas"
+            android:layout_below="@id/cv_masyarakat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="22dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp">
+
+                <ImageView
+                    android:id="@+id/img3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icon_pekerja" />
+
+                <TextView
+                    android:id="@+id/tv13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:layout_toRightOf="@id/img3"
+                    android:text="Petugas"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <ImageView
             android:id="@+id/btn_jenis_map"
             android:layout_width="35dp"
@@ -119,22 +157,32 @@
             android:elevation="8dp"
             android:padding="6dp"
             android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_below="@id/cv_masyarakat"
+            android:layout_below="@id/cv_petugas"
             android:src="@drawable/ic_baseline_layers_24"
             app:tint="@color/white" />
 
-        <ImageView
-            android:id="@+id/img_my_location"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+
+
+        <RelativeLayout
+            android:id="@+id/rl_lapor_data_sampah"
+            android:layout_width="wrap_content"
+            android:paddingVertical="10sp"
+            android:paddingHorizontal="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="@dimen/dimen_20dp"
-            android:layout_marginVertical="80dp"
-            android:background="@drawable/bg_bulat_putih"
-            android:elevation="8dp"
-            android:padding="5dp"
-            android:src="@drawable/ic_baseline_my_location_24"
-            app:tint="@color/white" />
+            android:background="@drawable/bg_btn_lapor">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Lapor Data Sampah"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

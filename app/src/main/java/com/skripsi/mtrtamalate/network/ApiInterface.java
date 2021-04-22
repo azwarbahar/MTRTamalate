@@ -59,6 +59,9 @@ public interface ApiInterface {
     Call<ResponseMasyarakat> getAllLokasiMasyarakat(@Query("kelurahan_pekerja") String kelurahan_pekerja,
                                                     @Query("area_pekerja") String area_pekerja);
 
+    @GET("masyarakat/getMasyarakatKelurahan.php")
+    Call<ResponseMasyarakat> getMasyarakatKelurahan(@Query("kelurahan_pekerja") String kelurahan_pekerja);
+
     @GET("masyarakat/editPasswordMasyarakat.php")
     Call<ResponseMasyarakat> editPassword(@Query("id_masyarakat") String id_masyarakat,
                                           @Query("password_lama") String password_lama,
