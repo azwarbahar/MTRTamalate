@@ -3,7 +3,7 @@ package com.skripsi.mtrtamalate.utils;
 public class Constanta {
 
     // IP
-    public static final String IP = "192.168.1.33";
+    public static final String IP = "192.168.1.20";
 
     // URL API
     public static final String BASE_URL = "http://" + IP + "/pelaporan-sampah/api/";

@@ -111,7 +111,6 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
         android:id="@+id/rl_send"
         android:layout_width="match_parent"
