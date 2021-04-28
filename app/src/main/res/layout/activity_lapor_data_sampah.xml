@@ -94,7 +94,7 @@
         android:layout_toRightOf="@id/tv2">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_kurang"
+            android:id="@+id/cv_tambah"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -110,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text=" - "
+                    android:text=" + "
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="28sp"
                     android:textStyle="bold" />
@@ -125,15 +125,15 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="14dp"
-            android:layout_toLeftOf="@id/cv_kurang"
+            android:layout_toLeftOf="@id/cv_tambah"
             android:gravity="center"
-            android:text="0"
+            android:text="1"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="25sp"
             android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_tambah"
+            android:id="@+id/cv_kurang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -148,7 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text=" + "
+                    android:text=" - "
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="28sp"
                     android:textStyle="bold" />

@@ -4,6 +4,7 @@ import com.skripsi.mtrtamalate.models.berita.ResponseBerita;
 import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
 import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
 import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
+import com.skripsi.mtrtamalate.models.sampah.ResponSampah;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -43,6 +44,21 @@ public interface ApiInterface {
     // BERITA
     @GET("berita/readBerita.php")
     Call<ResponseBerita> getBerita();
+
+
+    // DATA SAMPAH
+    @FormUrlEncoded
+    @POST("sampah/addSampah.php")
+    Call<ResponSampah> AddSampah(@Field("jumlah_sampah") String jumlah_sampah,
+                                 @Field("satuan_sampah") String satuan_sampah,
+                                 @Field("kelurahan_sampah") String kelurahan_sampah,
+                                 @Field("petugas_id") String petugas_id,
+                                 @Field("tanggal_sekarang") String tanggal_sekarang);
+
+    @GET("sampah/cekTodaySendPetugas.php")
+    Call<ResponSampah> cekTodaySendPetugas(@Query("petugas_id") String petugas_id,
+                                           @Query("tanggal") String tanggal);
+
 
 
     // MASYARAKAT
