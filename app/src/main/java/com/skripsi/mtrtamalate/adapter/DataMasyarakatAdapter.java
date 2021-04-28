@@ -43,7 +43,7 @@ public class DataMasyarakatAdapter extends RecyclerView.Adapter<DataMasyarakatAd
     public void onBindViewHolder(@NonNull DataMasyarakatAdapter.MyHolderview holder, int position) {
 
         holder.tv_nama.setText(masayarkats.get(position).getNamaMasyarakat());
-        holder.tv_nik.setText(masayarkats.get(position).getNikMasyarakat());
+        holder.tv_nik.setText("NIK : "+masayarkats.get(position).getNikMasyarakat());
         holder.tv_status.setText(masayarkats.get(position).getPembayaranMasyarakat());
 
         Glide.with(context)

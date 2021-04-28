@@ -2,6 +2,7 @@ package com.skripsi.mtrtamalate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -132,7 +133,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void loadLogin(String nik, String pass) {
+    public void loadLogin(String nik, String pass) {
+
+        String nilai_kembali_login = "";
 
         SweetAlertDialog pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -193,7 +196,6 @@ public class LoginActivity extends AppCompatActivity {
                         .show();
             }
         });
-
 
 
     }

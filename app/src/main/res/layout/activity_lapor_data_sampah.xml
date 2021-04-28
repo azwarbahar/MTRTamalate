@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/img_mobil_sampah" />
+                android:src="@drawable/img_motor_sampah" />
 
         </RelativeLayout>
 
@@ -73,7 +73,7 @@
         android:layout_alignTop="@id/cv1"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@id/cv1"
-        android:text="Mobil Sampah"
+        android:text="Motor Sampah"
         android:textColor="@color/black"
         android:textStyle="bold" />
 
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv2"
         android:layout_toRightOf="@id/cv1"
-        android:text="100 - 120 Kg"
+        android:text="/Pikul"
         android:textSize="12sp" />
 
     <RelativeLayout
@@ -120,7 +120,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/tv_jumlah_mobil"
+            android:id="@+id/tv_jumlah_motor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -134,123 +134,6 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_tambah"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_jumlah_mobil"
-            app:cardCornerRadius="6dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=" + "
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
-
-    </RelativeLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/cv1"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="24dp"
-        app:cardCornerRadius="8dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/img_motor_sampah" />
-
-        </RelativeLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/tv3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/cv2"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@id/cv2"
-        android:text="Motor Sampah"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv3"
-        android:layout_toRightOf="@id/cv2"
-        android:text="20 - 50 Kg"
-        android:textSize="12sp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/cv2"
-        android:layout_alignBottom="@id/cv2"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/tv3">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_kurang2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            app:cardCornerRadius="6dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=" - "
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/tv_jumlah_motor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginHorizontal="14dp"
-            android:layout_toLeftOf="@id/cv_kurang2"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_tambah2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
