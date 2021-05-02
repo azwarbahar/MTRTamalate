@@ -115,7 +115,6 @@ public class AkunFragmentKoordinator extends Fragment {
         rl_password = view.findViewById(R.id.rl_password);
         rl_password.setOnClickListener(this::clickUbahPassword);
 
-
         rl_logout = view.findViewById(R.id.rl_logout);
         rl_logout.setOnClickListener(new View.OnClickListener() {
             @Override
