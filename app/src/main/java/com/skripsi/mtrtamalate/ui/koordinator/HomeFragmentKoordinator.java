@@ -188,7 +188,7 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
         rl_lapor_data_sampah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), LaporDataSampahActivity.class));
+                startActivity(new Intent(getActivity(), LaporanPetugasActivity.class));
             }
         });
 
