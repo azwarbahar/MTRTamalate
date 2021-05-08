@@ -118,4 +118,7 @@ public interface ApiInterface {
                                               @Field("alamat_petugas") String alamat_petugas,
                                               @Field("latitude_petugas") String latitude_petugas,
                                               @Field("longitude_petugas") String longitude_petugas);
+
+    @GET("petugas/getPetugasKelurahan.php")
+    Call<ResponsePetugas> getPetugasKelurahan(@Query("kelurahan_pekerja") String kelurahan_pekerja);
 }

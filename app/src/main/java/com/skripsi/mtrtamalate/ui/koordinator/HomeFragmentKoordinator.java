@@ -58,6 +58,7 @@ import com.skripsi.mtrtamalate.models.laporan.Laporan;
 import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
 import com.skripsi.mtrtamalate.models.masyarakat.Masayarkat;
 import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
+import com.skripsi.mtrtamalate.models.petugas.Petugas;
 import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
@@ -79,7 +80,7 @@ import retrofit2.Response;
 public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        com.google.android.gms.location.LocationListener  {
+        com.google.android.gms.location.LocationListener {
 
     private LatLng latLng;
     private LatLng latLng_petugas;
@@ -140,6 +141,7 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
     private ImageView btn_jenis_map;
     private SweetAlertDialog pDialog;
 
+    private ArrayList<Petugas> petugases;
     private ArrayList<Masayarkat> masayarkats;
     private ArrayList<Laporan> laporans;
 
@@ -148,8 +150,9 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
     private TextView tv_jumlah_laporan;
     private ImageView img_kosong;
 
-    private RelativeLayout rl_lapor_data_sampah;
+//    private RelativeLayout rl_lapor_data_sampah;
 
+    HashMap<String, Petugas> markerMapPetugas = new HashMap<String, Petugas>();
     HashMap<String, Masayarkat> markerMapMasyarakat = new HashMap<String, Masayarkat>();
     HashMap<String, Laporan> markerMapLaporan = new HashMap<String, Laporan>();
 
@@ -184,13 +187,13 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
         rv_laporan = view.findViewById(R.id.rv_laporan);
         img_kosong = view.findViewById(R.id.img_kosong);
 
-        rl_lapor_data_sampah = view.findViewById(R.id.rl_lapor_data_sampah);
-        rl_lapor_data_sampah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), LaporanPetugasActivity.class));
-            }
-        });
+//        rl_lapor_data_sampah = view.findViewById(R.id.rl_lapor_data_sampah);
+//        rl_lapor_data_sampah.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getActivity(), LaporanPetugasActivity.class));
+//            }
+//        });
 
         cv_laporan = view.findViewById(R.id.cv_laporan);
         cv_laporan.setOnClickListener(new View.OnClickListener() {
@@ -237,11 +240,11 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
                     String kode = response.body().getKode();
                     if (kode.equals("1")) {
                         laporans = (ArrayList<Laporan>) response.body().getResult_marker_laporan();
-                        if (laporans.size() > 0){
+                        if (laporans.size() > 0) {
 
                             img_kosong.setVisibility(View.GONE);
                             rv_laporan.setVisibility(View.VISIBLE);
-                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(),laporans);
+                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(), laporans);
                             rv_laporan.setLayoutManager(new LinearLayoutManager(getActivity()));
                             rv_laporan.setAdapter(laporanPetugasAdapter);
                             tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
@@ -295,20 +298,20 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
 
     private void loadDataMasyarakat() {
 
-        pDialog.show();
+//        pDialog.show();
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseMasyarakat> masyarakatCall = apiInterface.getAllLokasiMasyarakat(kelurahan_pekerja, area_pekerja);
         masyarakatCall.enqueue(new Callback<ResponseMasyarakat>() {
             @Override
             public void onResponse(Call<ResponseMasyarakat> call, Response<ResponseMasyarakat> response) {
-                pDialog.dismiss();
+//                pDialog.dismiss();
 
                 if (response.isSuccessful()) {
                     String kode = String.valueOf(response.body().getKode());
                     if (kode.equals("1")) {
                         masayarkats = (ArrayList<Masayarkat>) response.body().getMasyarakat_marker();
-                        initMarkerMasyarakat(masayarkats);
+//                        initMarkerMasyarakat(masayarkats);
                     } else {
                         showSnackMessage(response.body().getPesan());
                     }
@@ -320,7 +323,7 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
 
             @Override
             public void onFailure(Call<ResponseMasyarakat> call, Throwable t) {
-                pDialog.dismiss();
+//                pDialog.dismiss();
                 showSnackMessage("Terjadi kesalahan sistem saat memproses data masyarakat!");
             }
         });
@@ -380,7 +383,63 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
         role_pekerja = mPreferences.getString(Constanta.SESSION_ROLE, "");
 
         loadDataLaporan();
-        loadDataMasyarakat();
+//        loadDataMasyarakat();
+        loadDataPetugas();
+    }
+
+    private void loadDataPetugas() {
+        pDialog.show();
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponsePetugas> responsePetugasCall = apiInterface.getPetugasKelurahan(kelurahan_pekerja);
+        responsePetugasCall.enqueue(new Callback<ResponsePetugas>() {
+            @Override
+            public void onResponse(Call<ResponsePetugas> call, Response<ResponsePetugas> response) {
+                pDialog.dismiss();
+                if (response.isSuccessful()) {
+                    String kode = response.body().getKode();
+                    if (kode.equals("1")) {
+                        petugases = (ArrayList<Petugas>) response.body().getPetugas_data();
+                        initMarkerPetugas(petugases);
+                    } else {
+                        showSnackMessage(response.body().getPesan());
+                    }
+                } else {
+                    showSnackMessage("Maaf, terjadi kesalahan saat memproses data petugas!");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponsePetugas> call, Throwable t) {
+                pDialog.dismiss();
+                showSnackMessage("Terjadi kesalahan sistem saat memproses data petugas!");
+            }
+        });
+
+    }
+
+    private void initMarkerPetugas(ArrayList<Petugas> petugases) {
+
+        for (int i = 0; i < petugases.size(); i++) {
+            if (!petugases.get(i).getLatitudePekerja().equals("-")) {
+                double latitude_petugas = Double.parseDouble(petugases.get(i).getLatitudePekerja());
+                double longitude_petugas = Double.parseDouble(petugases.get(i).getLongitudePekerja());
+                Marker marker = map.addMarker(new MarkerOptions().title(petugases.get(i).getNamaPekerja())
+                        .snippet("Sedang "+petugases.get(i).getStatusKerjaPekerja())
+                        .icon(bitmapDescriptor(getActivity()))
+                        .position(new LatLng(latitude_petugas, longitude_petugas)));
+
+                String idmark = marker.getId();
+                markerMapPetugas.put(idmark, petugases.get(i));
+
+                SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+                assert supportMapFragment != null;
+                supportMapFragment.getMapAsync(HomeFragmentKoordinator.this);
+            }
+        }
+
+
     }
 
     private void clickjenisMap(View view) {
@@ -466,8 +525,8 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
 
     private BitmapDescriptor bitmapDescriptor(Context context) {
         int height = 70;
-        int width = 55;
-        vectorDrawble = ContextCompat.getDrawable(context, R.drawable.marker_lokasi_sampah);
+        int width = 70;
+        vectorDrawble = ContextCompat.getDrawable(context, R.drawable.icon_marker_petugas);
         assert vectorDrawble != null;
         vectorDrawble.setBounds(0, 0, width, height);
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -523,7 +582,7 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                showDialogMarker(marker);
+//                showDialogMarker(marker);
                 return false;
             }
         });
@@ -625,12 +684,11 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
         //Place current location marker
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng_petugas);
-
         updateLatlingSession(location);
 
         if (first_time) {
             updateLatlingDatabase(location);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_petugas, 19));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_petugas, 15));
             first_time = false;
         }
 

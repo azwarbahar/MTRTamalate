@@ -161,28 +161,26 @@
             android:src="@drawable/ic_baseline_layers_24"
             app:tint="@color/white" />
 
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rl_lapor_data_sampah"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:paddingVertical="10sp"-->
+<!--            android:paddingHorizontal="50dp"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="30dp"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:background="@drawable/bg_btn_lapor">-->
 
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:text="Lapor Data Sampah"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textStyle="bold" />-->
 
-        <RelativeLayout
-            android:id="@+id/rl_lapor_data_sampah"
-            android:layout_width="wrap_content"
-            android:paddingVertical="10sp"
-            android:paddingHorizontal="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/bg_btn_lapor">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Lapor Data Sampah"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
+<!--        </RelativeLayout>-->
 
     </RelativeLayout>
 
