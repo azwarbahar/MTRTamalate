@@ -1,8 +1,11 @@
 package com.skripsi.mtrtamalate.models.petugas;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Petugas {
+public class Petugas implements Parcelable {
 
 	@SerializedName("usia_pekerja")
 	private String usiaPekerja;
@@ -54,6 +57,38 @@ public class Petugas {
 
 	@SerializedName("role_pekerja")
 	private String rolePekerja;
+
+	protected Petugas(Parcel in) {
+		usiaPekerja = in.readString();
+		kelurahanPekerja = in.readString();
+		namaPekerja = in.readString();
+		fotoPekerja = in.readString();
+		idPekerja = in.readString();
+		telponPekerja = in.readString();
+		jenisKelaminPekerja = in.readString();
+		alamatPekerja = in.readString();
+		areaPekerja = in.readString();
+		password = in.readString();
+		latitudePekerja = in.readString();
+		statusKerjaPekerja = in.readString();
+		kendaraanPekerja = in.readString();
+		statusPekerja = in.readString();
+		nikPekerja = in.readString();
+		longitudePekerja = in.readString();
+		rolePekerja = in.readString();
+	}
+
+	public static final Creator<Petugas> CREATOR = new Creator<Petugas>() {
+		@Override
+		public Petugas createFromParcel(Parcel in) {
+			return new Petugas(in);
+		}
+
+		@Override
+		public Petugas[] newArray(int size) {
+			return new Petugas[size];
+		}
+	};
 
 	public String getRolePekerja() {
 		return rolePekerja;
@@ -121,5 +156,31 @@ public class Petugas {
 
 	public String getLongitudePekerja(){
 		return longitudePekerja;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+		parcel.writeString(usiaPekerja);
+		parcel.writeString(kelurahanPekerja);
+		parcel.writeString(namaPekerja);
+		parcel.writeString(fotoPekerja);
+		parcel.writeString(idPekerja);
+		parcel.writeString(telponPekerja);
+		parcel.writeString(jenisKelaminPekerja);
+		parcel.writeString(alamatPekerja);
+		parcel.writeString(areaPekerja);
+		parcel.writeString(password);
+		parcel.writeString(latitudePekerja);
+		parcel.writeString(statusKerjaPekerja);
+		parcel.writeString(kendaraanPekerja);
+		parcel.writeString(statusPekerja);
+		parcel.writeString(nikPekerja);
+		parcel.writeString(longitudePekerja);
+		parcel.writeString(rolePekerja);
 	}
 }

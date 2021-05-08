@@ -116,7 +116,6 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:maxHeight="300dp"
-                    android:src="@drawable/img_mobil_sampah"
                     android:scaleType="fitCenter"/>
 
             </RelativeLayout>

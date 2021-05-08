@@ -56,19 +56,20 @@ public class DataPetugasAdapter extends RecyclerView.Adapter<DataPetugasAdapter.
         holder.tv_lapor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, LaporanPetugasActivity.class));
+                Intent intent = new Intent(context, LaporanPetugasActivity.class);
+                intent.putExtra("data_petugas", petugases.get(position));
+                context.startActivity(intent);
             }
         });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, DetailPetugasActivity.class));
+                Intent intent = new Intent(context, DetailPetugasActivity.class);
+                intent.putExtra("data_petugas", petugases.get(position));
+                context.startActivity(intent);
             }
         });
-
-
-
     }
 
     @Override

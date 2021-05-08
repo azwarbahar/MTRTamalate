@@ -1,6 +1,7 @@
 package com.skripsi.mtrtamalate.network;
 
 import com.skripsi.mtrtamalate.models.berita.ResponseBerita;
+import com.skripsi.mtrtamalate.models.kendaraan.ResponseKendaraan;
 import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
 import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
 import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
@@ -15,6 +16,10 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
+
+    // KENDARAAN
+    @GET("kendaraan/getKendaraanPetugas.php")
+    Call<ResponseKendaraan> getKendaraanPetugas(@Query("id_kendaraan") String id_kendaraan);
 
     // LPORAN
     @GET("laporan/getLaporanMasarakat.php")
