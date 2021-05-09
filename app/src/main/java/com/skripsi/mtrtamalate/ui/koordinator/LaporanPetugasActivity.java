@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -72,17 +73,22 @@ public class LaporanPetugasActivity extends AppCompatActivity {
     private TextView tv_kendaraan;
     private Petugas petugas_parcelable;
     private Kendaraan kendaraan;
-    private LocationManager mLocationManager;
     String alamat_latlig;
-    private LocationRequest mLocationRequest;
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
     private EditText et_keterangan;
 
     private RelativeLayout rl_foto;
     private Bitmap bitmap_gambar;
     private ImageView img_foto;
     private Uri imageUri;
+
+    private String alamat_laporan = "-";
+    private String latitude_laporan = "-";
+    private String longitude_laporan = "-";
+    private LocationManager locationManager;
+
+    private boolean go_to_setting = false;
+    private boolean is_ready_gps;
+
 
     private void getAddress(double latitud, double longitud) {
 
@@ -93,8 +99,8 @@ public class LaporanPetugasActivity extends AppCompatActivity {
         try {
             addressList = geocoder.getFromLocation(latitud, longitud, 1);
             String address = addressList.get(0).getAddressLine(0);
-            alamat_latlig = address;
-            et_keterangan.setText(alamat_latlig);
+            alamat_laporan = address;
+//            et_keterangan.setText(alamat_latlig);
 //            Toast.makeText(this, alamat_latlig, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -121,27 +127,35 @@ public class LaporanPetugasActivity extends AppCompatActivity {
             }
         }
 
+        et_keterangan = findViewById(R.id.et_keterangan);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        LocationManager locationManager = (LocationManager)
+        locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
 
-        LocationListener locationListener = new MyLocationListener();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            is_ready_gps = false;
+            buildAlertMessageNoGps();
+        } else {
+            is_ready_gps = true;
+            LocationListener locationListener = new MyLocationListener();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
+
         }
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
 
         petugas_parcelable = getIntent().getParcelableExtra("data_petugas");
 
         img_profile = findViewById(R.id.img_profile);
         tv_nama = findViewById(R.id.tv_nama);
         tv_kendaraan = findViewById(R.id.tv_kendaraan);
-        et_keterangan = findViewById(R.id.et_keterangan);
         rl_foto = findViewById(R.id.rl_foto);
         img_foto = findViewById(R.id.img_foto);
 
@@ -149,7 +163,50 @@ public class LaporanPetugasActivity extends AppCompatActivity {
 
         loadDataPetugas(petugas_parcelable);
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (go_to_setting){
+            locationManager = (LocationManager)
+                    getSystemService(Context.LOCATION_SERVICE);
+
+            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                is_ready_gps = false;
+                buildAlertMessageNoGps();
+            } else {
+                is_ready_gps = true;
+                LocationListener locationListener = new MyLocationListener();
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
+
+            }
+        }
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("GPS Anda sepertinya dinonaktifkan, apakah Anda ingin mengaktifkannya?")
+                .setCancelable(false)
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        go_to_setting = true;
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                        is_ready_gps = false;
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void clickFoto(View view) {
@@ -160,18 +217,6 @@ public class LaporanPetugasActivity extends AppCompatActivity {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
-//                            Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                            startActivityForResult(takePicture, 0);
-//                            ContentValues values = new ContentValues();
-//                            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-//                            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-//                            imageUri = getContentResolver().insert(
-//                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//                            startActivityForResult(intent, 0);
-
-
                             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                             File file = new File(Environment.getExternalStorageDirectory(),
                                     "/MTR_Tamalate/Laporan Petugas/photo_" + timeStamp + ".png");
@@ -224,7 +269,6 @@ public class LaporanPetugasActivity extends AppCompatActivity {
         startActivityForResult(intent, 101);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -258,13 +302,11 @@ public class LaporanPetugasActivity extends AppCompatActivity {
 
         @Override
         public void onLocationChanged(@NonNull Location loc) {
+//            latitude_laporan
+            latitude_laporan = String.valueOf(loc.getLatitude());
+            longitude_laporan = String.valueOf(loc.getLongitude());
+            getAddress(loc.getLatitude(), loc.getLongitude());
 
-            String lat = String.valueOf(loc.getLatitude());
-            Toast.makeText(
-                    getBaseContext(),
-                    "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-                            + loc.getLongitude(), Toast.LENGTH_SHORT).show();
-            et_keterangan.setText(lat);
         }
 
     }
@@ -302,7 +344,7 @@ public class LaporanPetugasActivity extends AppCompatActivity {
 
     private void initKendaraan(Kendaraan kendaraan) {
 
-        tv_kendaraan.setText("Kendaraab : " + kendaraan.getNamaKendaraan() +
+        tv_kendaraan.setText("Kendaraan : " + kendaraan.getNamaKendaraan() +
                 " - " + kendaraan.getNomorKendaraan());
 
     }
