@@ -217,8 +217,39 @@
                 android:scrollbars="none"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white3"
-                android:textSize="14sp"
-                android:layout_marginBottom="100dp"/>
+                android:textSize="14sp"/>
+
+            <RelativeLayout
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="25dp"
+                android:layout_below="@id/et_keterangan"
+                android:layout_marginBottom="100dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp"
+                android:background="@drawable/bg_primary_trans_radius"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img3"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_baseline_info_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tint="@color/colorPrimaryDark" />
+
+                <TextView
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_toRightOf="@id/img3"
+                    android:text="Tanggal, jam dan lokasi diambil secara otomatis oleh sistem."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

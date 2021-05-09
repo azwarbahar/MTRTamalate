@@ -19,6 +19,7 @@
 
     <color name="colorPrimary">#E52020</color>
     <color name="colorPrimaryDark">#B10404</color>
+    <color name="colorPrimaryDarkTrans">#37B10404</color>
 
     <color name="colorBackDanger">#FFD4D4</color>
     <color name="colorBackSuccess">#DDFFF9</color>
