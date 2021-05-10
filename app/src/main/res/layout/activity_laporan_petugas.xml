@@ -6,33 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.koordinator.LaporanPetugasActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.AppCompat.Toolbar"
         android:layout_width="match_parent"
-        android:layout_above="@id/rl_send"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:theme="@style/ToolbarTheme"
+        app:title="Laporan Petugas"
+        app:titleTextColor="@color/white" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rl_send">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.AppCompat.Toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:elevation="4dp"
-                app:theme="@style/ToolbarTheme"
-                app:title="Laporan Petugas"
-                app:titleTextColor="@color/white" />
-
-
-
             <RelativeLayout
                 android:id="@+id/cv_foto"
                 android:layout_width="@dimen/toolbar_profile_width"
-                android:layout_below="@id/toolbar"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp">
@@ -67,14 +65,14 @@
 
             <TextView
                 android:id="@+id/tv_kendaraan"
-                android:layout_marginTop="4dp"
-                android:layout_centerHorizontal="true"
-                android:textSize="12sp"
-                android:layout_below="@id/tv_nama"
-                android:textColor="@color/grey"
-                android:text="Kendaraan : Viar - DD 6855 MY"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_nama"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:text="Kendaraan : Viar - DD 6855 MY"
+                android:textColor="@color/grey"
+                android:textSize="12sp" />
 
             <RelativeLayout
                 android:id="@+id/rl_foto"
@@ -116,73 +114,73 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:maxHeight="300dp"
-                    android:scaleType="fitCenter"/>
+                    android:scaleType="fitCenter" />
 
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv1"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="*wajib foto petugas"
-                android:textSize="10sp"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="16dp"
-                android:layout_below="@id/rl_foto"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_foto"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                android:text="*wajib foto petugas"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="10sp" />
 
             <TextView
-                android:layout_below="@id/tv1"
                 android:id="@+id/tv2"
-                android:text="Berat Sampah"
-                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv1"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="@dimen/dimen_20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:text="Berat Sampah"
+                android:textColor="@color/black" />
 
             <TextView
-                android:text=" *"
                 android:id="@+id/tv3"
-                android:layout_toRightOf="@id/tv2"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_alignTop="@id/tv2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tv2"
+                android:layout_toRightOf="@id/tv2"
+                android:text=" *"
+                android:textColor="@color/colorPrimaryDark" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_berat"
-                android:layout_marginVertical="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/tv3"
                 android:layout_marginHorizontal="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_marginVertical="8dp">
 
                 <RelativeLayout
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="10dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp">
 
                     <EditText
                         android:id="@+id/et_berat"
-                        android:hint="Isi"
-                        android:inputType="number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_toLeftOf="@id/tv_kg"
                         android:background="@color/transparan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:hint="Isi"
+                        android:inputType="number" />
 
                     <TextView
                         android:id="@+id/tv_kg"
-                        android:textStyle="bold"
-                        android:text="Kg"
-                        android:layout_marginHorizontal="12dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:textColor="@color/colorPrimaryDark"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="12dp"
+                        android:text="Kg"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -190,14 +188,14 @@
 
 
             <TextView
-                android:layout_below="@id/cv_berat"
                 android:id="@+id/tv4"
-                android:text="Keterangan"
-                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_berat"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:text="Keterangan"
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/et_keterangan"
@@ -217,37 +215,38 @@
                 android:scrollbars="none"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white3"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <RelativeLayout
+                android:id="@+id/rl1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_keterangan"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="25dp"
-                android:layout_below="@id/et_keterangan"
-                android:layout_marginBottom="100dp"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="10dp"
                 android:background="@drawable/bg_primary_trans_radius"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:paddingHorizontal="16dp"
+                android:layout_marginBottom="100dp"
+                android:paddingVertical="10dp">
 
                 <ImageView
                     android:id="@+id/img3"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_baseline_info_24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_baseline_info_24"
                     app:tint="@color/colorPrimaryDark" />
 
                 <TextView
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="13dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
-                    android:gravity="center_vertical"
                     android:layout_toRightOf="@id/img3"
+                    android:gravity="center_vertical"
                     android:text="Tanggal, jam dan lokasi diambil secara otomatis oleh sistem."
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="13dp" />
 
             </RelativeLayout>
 

@@ -103,19 +103,26 @@ public class DataPetugasActivity extends AppCompatActivity implements SwipeRefre
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onLoadData();
+        loadDataPekerja(kelurahan);
+    }
+
     private void loadDataPekerja(String kelurahan) {
-        
+
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponsePetugas> responseMasyarakatCall = apiInterface.getPetugasKelurahan(kelurahan);
         responseMasyarakatCall.enqueue(new Callback<ResponsePetugas>() {
             @Override
             public void onResponse(Call<ResponsePetugas> call, Response<ResponsePetugas> response) {
                 swipe_continer.setRefreshing(false);
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     String kode = String.valueOf(response.body().getKode());
-                    if (kode.equals("1")){
+                    if (kode.equals("1")) {
                         petugases = (ArrayList<Petugas>) response.body().getPetugas_data();
-                        if (petugases.size() < 1){
+                        if (petugases.size() < 1) {
                             onEmptyData();
                         } else {
                             onGetData();
@@ -156,14 +163,16 @@ public class DataPetugasActivity extends AppCompatActivity implements SwipeRefre
 
     private void filter(String text) {
         ArrayList<Petugas> filteredList = new ArrayList<>();
-        for (Petugas item : petugases) {
-            if (item.getNamaPekerja().toLowerCase().contains(text.toLowerCase()) ||
-                    item.getNikPekerja().toLowerCase().contains(text.toLowerCase()) ||
-                    item.getStatusKerjaPekerja().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
+        if (!petugases.isEmpty()) {
+            for (Petugas item : petugases) {
+                if (item.getNamaPekerja().toLowerCase().contains(text.toLowerCase()) ||
+                        item.getNikPekerja().toLowerCase().contains(text.toLowerCase()) ||
+                        item.getStatusKerjaPekerja().toLowerCase().contains(text.toLowerCase())) {
+                    filteredList.add(item);
+                }
             }
+            dataPetugasAdapter.filterList(filteredList);
         }
-        dataPetugasAdapter.filterList(filteredList);
     }
 
     @Override
@@ -184,14 +193,14 @@ public class DataPetugasActivity extends AppCompatActivity implements SwipeRefre
         rv_petugas.setVisibility(View.GONE);
     }
 
-    private void onGetData(){
+    private void onGetData() {
         et_cari.setEnabled(true);
         cv_progressBar.setVisibility(View.GONE);
         img_kosong.setVisibility(View.GONE);
         rv_petugas.setVisibility(View.VISIBLE);
     }
 
-    private void onEmptyData(){
+    private void onEmptyData() {
         et_cari.setEnabled(false);
         cv_progressBar.setVisibility(View.GONE);
         img_kosong.setVisibility(View.VISIBLE);

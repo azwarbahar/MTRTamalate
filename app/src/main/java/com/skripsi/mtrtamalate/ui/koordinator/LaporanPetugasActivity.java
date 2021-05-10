@@ -9,10 +9,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -62,6 +64,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,15 +78,21 @@ public class LaporanPetugasActivity extends AppCompatActivity {
     private Kendaraan kendaraan;
     String alamat_latlig;
     private EditText et_keterangan;
+    private EditText et_berat;
 
+    private RelativeLayout rl_send;
     private RelativeLayout rl_foto;
     private Bitmap bitmap_gambar;
     private ImageView img_foto;
     private Uri imageUri;
 
+    private String berat_send = "-";
+    private String keterangan_send = "-";
     private String alamat_laporan = "-";
     private String latitude_laporan = "-";
     private String longitude_laporan = "-";
+    private String koordinat = "-";
+    private String timestamp = "-";
     private LocationManager locationManager;
 
     private boolean go_to_setting = false;
@@ -112,6 +121,14 @@ public class LaporanPetugasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laporan_petugas);
+        petugas_parcelable = getIntent().getParcelableExtra("data_petugas");
+        // Set Time Date
+
+        Thread myThread = null;
+
+        Runnable runnable = new CountDownRunner();
+        myThread = new Thread(runnable);
+        myThread.start();
 
         File direct = new File(Environment.getExternalStorageDirectory() + "/MTR_Tamalate");
         if (!direct.exists()) {
@@ -127,7 +144,9 @@ public class LaporanPetugasActivity extends AppCompatActivity {
             }
         }
 
+        rl_send = findViewById(R.id.rl_send);
         et_keterangan = findViewById(R.id.et_keterangan);
+        et_berat = findViewById(R.id.et_berat);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -137,7 +156,7 @@ public class LaporanPetugasActivity extends AppCompatActivity {
         locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
 
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             is_ready_gps = false;
             buildAlertMessageNoGps();
         } else {
@@ -151,7 +170,6 @@ public class LaporanPetugasActivity extends AppCompatActivity {
 
         }
 
-        petugas_parcelable = getIntent().getParcelableExtra("data_petugas");
 
         img_profile = findViewById(R.id.img_profile);
         tv_nama = findViewById(R.id.tv_nama);
@@ -160,20 +178,78 @@ public class LaporanPetugasActivity extends AppCompatActivity {
         img_foto = findViewById(R.id.img_foto);
 
         rl_foto.setOnClickListener(this::clickFoto);
+        rl_send.setOnClickListener(this::clickSend);
 
         loadDataPetugas(petugas_parcelable);
 
+    }
+
+    private void clickSend(View view) {
+        if (is_ready_gps) {
+            if (ready_image()) {
+                if (ready_berat()) {
+                    if (ready_koordinat()){
+                        new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("Success..")
+                                .setContentText("Laporan Berhasil disampaikan..")
+                                .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        sweetAlertDialog.dismiss();
+                                    }
+                                })
+                                .show();
+                    } else {
+                        // Koordinat kosong
+                        new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Gagal..")
+                                .setContentText("Koordinat Kosong")
+                                .show();
+                    }
+                } else {
+                    // berat kosong
+                    new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Gagal..")
+                            .setContentText("Berat Kosong")
+                            .show();
+                }
+
+            } else {
+                // imgae belum diset
+                new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Gagal..")
+                        .setContentText("Gambar Kosong")
+                        .show();
+            }
+
+        } else {
+            // gps blom aktip
+            buildAlertMessageNoGps();
+        }
+    }
+
+    private boolean ready_image() {
+        return img_foto.getDrawable() != null;
+    }
+
+    private boolean ready_berat() {
+        berat_send = et_berat.getText().toString();
+        return !berat_send.isEmpty() && !berat_send.equals("-");
+    }
+
+    private boolean ready_koordinat() {
+        return !koordinat.equals("-");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (go_to_setting){
+        if (go_to_setting) {
             locationManager = (LocationManager)
                     getSystemService(Context.LOCATION_SERVICE);
 
-            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 is_ready_gps = false;
                 buildAlertMessageNoGps();
             } else {
@@ -187,7 +263,39 @@ public class LaporanPetugasActivity extends AppCompatActivity {
 
             }
         }
+
+        IntentFilter filter = new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION);
+        filter.addAction(Intent.ACTION_PROVIDER_CHANGED);
+        this.registerReceiver(gpsSwitchStateReceiver, filter);
+
+
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.unregisterReceiver(gpsSwitchStateReceiver);
+    }
+
+    private BroadcastReceiver gpsSwitchStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (LocationManager.PROVIDERS_CHANGED_ACTION.equals(intent.getAction())) {
+
+                LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                boolean isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+                if (isGpsEnabled || isNetworkEnabled) {
+                    is_ready_gps = true;
+                } else {
+                    // Handle Location turned OFF
+                    is_ready_gps = false;
+                }
+            }
+        }
+    };
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -305,10 +413,25 @@ public class LaporanPetugasActivity extends AppCompatActivity {
 //            latitude_laporan
             latitude_laporan = String.valueOf(loc.getLatitude());
             longitude_laporan = String.valueOf(loc.getLongitude());
+            koordinat = latitude_laporan + " - " + longitude_laporan;
             getAddress(loc.getLatitude(), loc.getLongitude());
 
         }
 
+        @Override
+        public void onProviderDisabled(@NonNull String provider) {
+            is_ready_gps = false;
+        }
+
+        @Override
+        public void onProviderEnabled(@NonNull String provider) {
+            is_ready_gps = true;
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
     }
 
     private void loadDataPetugas(Petugas petugas_parcelable) {
@@ -354,4 +477,30 @@ public class LaporanPetugasActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    private class CountDownRunner implements Runnable {
+        @Override
+        public void run() {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    doGetTime();
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+
+    private void doGetTime() {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String millisInString = dateFormat.format(new Date());
+            timestamp = millisInString;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -434,13 +434,6 @@ public class TitikLokasiActivity extends AppCompatActivity implements OnMapReady
         getAddress(Double.valueOf(latitud2), Double.valueOf(longitud2));
     }
 
-    private void clear() {
-        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        assert supportMapFragment != null;
-        supportMapFragment.getMapAsync(this);
-        et_alamat.setText("");
-    }
-
     private void getAddress(double latitud, double longitud) {
 
         Geocoder geocoder;
