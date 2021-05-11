@@ -139,7 +139,7 @@ public class LaporDataSampahActivity extends AppCompatActivity {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             sweetAlertDialog.dismiss();
-                            proccesSend();
+//                            proccesSend();
                         }
                     })
                     .show();
@@ -153,54 +153,54 @@ public class LaporDataSampahActivity extends AppCompatActivity {
 
     }
 
-    private void proccesSend() {
-        String jumlah_data = tv_jumlah_motor.getText().toString();
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponSampah> responSampahCall = apiInterface.AddSampah(jumlah_data, "Pikul", kelurahan, id, tanggal_sekarang);
-        responSampahCall.enqueue(new Callback<ResponSampah>() {
-            @Override
-            public void onResponse(Call<ResponSampah> call, Response<ResponSampah> response) {
-                pDialog.dismiss();
-                if (response.isSuccessful()) {
-                    String kode = response.body().getKode();
-                    if (kode.equals("1")) {
-                        new SweetAlertDialog(LaporDataSampahActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                .setTitleText("Success..")
-                                .setContentText("Laporan Berhasil dikirim..")
-                                .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                        sweetAlertDialog.dismiss();
-                                        setReadySend(id, tanggal_sekarang);
-                                    }
-                                })
-                                .show();
-                    } else {
-                        new SweetAlertDialog(LaporDataSampahActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                .setTitleText("Gagal..")
-                                .setContentText("Terjadi kesalahan!, Kode : " + kode)
-                                .show();
-                    }
-                } else {
-                    new SweetAlertDialog(LaporDataSampahActivity.this, SweetAlertDialog.ERROR_TYPE)
-                            .setTitleText("Gagal..")
-                            .setContentText("Terjadi kesalahan!")
-                            .show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponSampah> call, Throwable t) {
-                pDialog.dismiss();
-                new SweetAlertDialog(LaporDataSampahActivity.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Gagal..")
-                        .setContentText("Terjadi kesalahan Sistem!")
-                        .show();
-            }
-        });
-
-    }
+//    private void proccesSend() {
+//        String jumlah_data = tv_jumlah_motor.getText().toString();
+//        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+//        Call<ResponSampah> responSampahCall = apiInterface.AddSampah(jumlah_data, "Pikul", kelurahan, id, tanggal_sekarang);
+//        responSampahCall.enqueue(new Callback<ResponSampah>() {
+//            @Override
+//            public void onResponse(Call<ResponSampah> call, Response<ResponSampah> response) {
+//                pDialog.dismiss();
+//                if (response.isSuccessful()) {
+//                    String kode = response.body().getKode();
+//                    if (kode.equals("1")) {
+//                        new SweetAlertDialog(LaporDataSampahActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+//                                .setTitleText("Success..")
+//                                .setContentText("Laporan Berhasil dikirim..")
+//                                .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+//                                    @Override
+//                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                        sweetAlertDialog.dismiss();
+//                                        setReadySend(id, tanggal_sekarang);
+//                                    }
+//                                })
+//                                .show();
+//                    } else {
+//                        new SweetAlertDialog(LaporDataSampahActivity.this, SweetAlertDialog.ERROR_TYPE)
+//                                .setTitleText("Gagal..")
+//                                .setContentText("Terjadi kesalahan!, Kode : " + kode)
+//                                .show();
+//                    }
+//                } else {
+//                    new SweetAlertDialog(LaporDataSampahActivity.this, SweetAlertDialog.ERROR_TYPE)
+//                            .setTitleText("Gagal..")
+//                            .setContentText("Terjadi kesalahan!")
+//                            .show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponSampah> call, Throwable t) {
+//                pDialog.dismiss();
+//                new SweetAlertDialog(LaporDataSampahActivity.this, SweetAlertDialog.ERROR_TYPE)
+//                        .setTitleText("Gagal..")
+//                        .setContentText("Terjadi kesalahan Sistem!")
+//                        .show();
+//            }
+//        });
+//
+//    }
 
     private void setModeAktifSend() {
         rl_send.setBackground(ContextCompat.getDrawable(LaporDataSampahActivity.this, R.color.colorPrimaryDark));

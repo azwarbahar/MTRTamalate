@@ -15,10 +15,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -29,6 +31,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -52,11 +55,13 @@ import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.models.kendaraan.Kendaraan;
 import com.skripsi.mtrtamalate.models.kendaraan.ResponseKendaraan;
 import com.skripsi.mtrtamalate.models.petugas.Petugas;
+import com.skripsi.mtrtamalate.models.sampah.ResponSampah;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.masyarakat.FormLaporActivity;
 import com.skripsi.mtrtamalate.utils.Constanta;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -70,6 +75,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LaporanPetugasActivity extends AppCompatActivity {
+
+    private SharedPreferences mPreferences;
 
     private CircularImageView img_profile;
     private TextView tv_nama;
@@ -86,6 +93,10 @@ public class LaporanPetugasActivity extends AppCompatActivity {
     private ImageView img_foto;
     private Uri imageUri;
 
+    private String id_koordinator;
+    private String id_petugas;
+    private String kelurahan;
+    private String tanggal_sekarang;
     private String berat_send = "-";
     private String keterangan_send = "-";
     private String alamat_laporan = "-";
@@ -97,6 +108,8 @@ public class LaporanPetugasActivity extends AppCompatActivity {
 
     private boolean go_to_setting = false;
     private boolean is_ready_gps;
+
+    private SweetAlertDialog pDialog;
 
 
     private void getAddress(double latitud, double longitud) {
@@ -122,13 +135,13 @@ public class LaporanPetugasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laporan_petugas);
         petugas_parcelable = getIntent().getParcelableExtra("data_petugas");
-        // Set Time Date
+        id_petugas = petugas_parcelable.getIdPekerja();
+        mPreferences = getSharedPreferences(Constanta.MY_SHARED_PREFERENCES, MODE_PRIVATE);
+        id_koordinator = mPreferences.getString(Constanta.SESSION_ID_PETUGAS, "");
+        kelurahan = mPreferences.getString(Constanta.SESSION_KELURAHAN_PETUGAS, "");
 
-        Thread myThread = null;
-
-        Runnable runnable = new CountDownRunner();
-        myThread = new Thread(runnable);
-        myThread.start();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        tanggal_sekarang = dateFormat.format(new Date());
 
         File direct = new File(Environment.getExternalStorageDirectory() + "/MTR_Tamalate");
         if (!direct.exists()) {
@@ -188,17 +201,23 @@ public class LaporanPetugasActivity extends AppCompatActivity {
         if (is_ready_gps) {
             if (ready_image()) {
                 if (ready_berat()) {
-                    if (ready_koordinat()){
-                        new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                                .setTitleText("Success..")
-                                .setContentText("Laporan Berhasil disampaikan..")
-                                .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                        sweetAlertDialog.dismiss();
-                                    }
-                                })
-                                .show();
+                    if (ready_koordinat()) {
+                        berat_send = et_berat.getText().toString();
+                        keterangan_send = et_keterangan.getText().toString();
+                        String image_send = imgToString(bitmap_gambar);
+                        sendData(kelurahan, id_koordinator, id_petugas, berat_send, image_send,
+                                latitude_laporan, longitude_laporan, alamat_laporan, keterangan_send, tanggal_sekarang);
+
+//                        new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+//                                .setTitleText("Success..")
+//                                .setContentText("Laporan Berhasil disampaikan..")
+//                                .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+//                                    @Override
+//                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                        sweetAlertDialog.dismiss();
+//                                    }
+//                                })
+//                                .show();
                     } else {
                         // Koordinat kosong
                         new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
@@ -226,6 +245,48 @@ public class LaporanPetugasActivity extends AppCompatActivity {
             // gps blom aktip
             buildAlertMessageNoGps();
         }
+    }
+
+    private void sendData(String kelurahan, String id_koordinator, String id_petugas,
+                          String berat_send, String image_send, String latitude_laporan,
+                          String longitude_laporan, String alamat_laporan, String keterangan_send,
+                          String tanggal_sekarang) {
+
+        pDialog = new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponSampah> responSampahCall = apiInterface.AddSampah(kelurahan, id_koordinator,
+                id_petugas, berat_send, image_send, latitude_laporan, longitude_laporan,
+                alamat_laporan, keterangan_send, tanggal_sekarang);
+        responSampahCall.enqueue(new Callback<ResponSampah>() {
+            @Override
+            public void onResponse(Call<ResponSampah> call, Response<ResponSampah> response) {
+                pDialog.dismiss();
+                if (response.isSuccessful()){
+                    String kode = response.body().getKode();
+                    if (kode.equals("1")){
+                        Toast.makeText(LaporanPetugasActivity.this, "suskes", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LaporanPetugasActivity.this, "kode "+ kode, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(LaporanPetugasActivity.this, "gagal", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponSampah> call, Throwable t) {
+                pDialog.dismiss();
+                Toast.makeText(LaporanPetugasActivity.this, "Terjadi Kesalahn", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     private boolean ready_image() {
@@ -325,14 +386,17 @@ public class LaporanPetugasActivity extends AppCompatActivity {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
-                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                            File file = new File(Environment.getExternalStorageDirectory(),
-                                    "/MTR_Tamalate/Laporan Petugas/photo_" + timeStamp + ".png");
-                            imageUri = Uri.fromFile(file);
+//                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//                            File file = new File(Environment.getExternalStorageDirectory(),
+//                                    "/MTR_Tamalate/Laporan Petugas/photo_" + timeStamp + ".png");
+//                            imageUri = Uri.fromFile(file);
 
-                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                            startActivityForResult(intent, 0);
+//                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//                            startActivityForResult(intent, 0);
+
+                            Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(takePicture, 0);
 
                         }
 
@@ -346,6 +410,13 @@ public class LaporanPetugasActivity extends AppCompatActivity {
 
                     }
                 }).check();
+    }
+
+    private String imgToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imgByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByte, Base64.DEFAULT);
     }
 
     public String getRealPathFromURI(Uri contentUri) {
@@ -382,23 +453,31 @@ public class LaporanPetugasActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
-                case 0:
-                    if (requestCode == 0) {
-                        if (resultCode == RESULT_OK) {
-                            try {
-                                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
-                                        getContentResolver(), imageUri);
-                                img_foto.setImageBitmap(thumbnail);
-                                String imageurl = getRealPathFromURI(imageUri);
-//                                Toast.makeText(this, imageurl, Toast.LENGTH_SHORT).show();
+//                case 0:
+//                    if (requestCode == 0) {
+//                        if (resultCode == RESULT_OK) {
+//                            try {
+//                                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
+//                                        getContentResolver(), imageUri);
+//                                img_foto.setImageBitmap(thumbnail);
+//                                bitmap_gambar = thumbnail;
+//                                String imageurl = getRealPathFromURI(imageUri);
+////                                Toast.makeText(this, imageurl, Toast.LENGTH_SHORT).show();
+//
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+////                        Bitmap resized = (Bitmap) data.getExtras().get("data");
+////                        bitmap_gambar = Bitmap.createScaledBitmap(resized, 1000, 1000, false);
+////                        img_foto.setImageBitmap(bitmap_gambar);
+//                        }
+//                    }
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-//                        Bitmap resized = (Bitmap) data.getExtras().get("data");
-//                        bitmap_gambar = Bitmap.createScaledBitmap(resized, 1000, 1000, false);
-//                        img_foto.setImageBitmap(bitmap_gambar);
-                        }
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap resized = (Bitmap) data.getExtras().get("data");
+                        bitmap_gambar = Bitmap.createScaledBitmap(resized, 1000, 1000, false);
+                        img_foto.setImageBitmap(bitmap_gambar);
                     }
                     break;
             }
@@ -476,31 +555,6 @@ public class LaporanPetugasActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    private class CountDownRunner implements Runnable {
-        @Override
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    doGetTime();
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } catch (Exception e) {
-                }
-            }
-        }
-    }
-
-    private void doGetTime() {
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String millisInString = dateFormat.format(new Date());
-            timestamp = millisInString;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }

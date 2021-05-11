@@ -54,11 +54,16 @@ public interface ApiInterface {
     // DATA SAMPAH
     @FormUrlEncoded
     @POST("sampah/addSampah.php")
-    Call<ResponSampah> AddSampah(@Field("jumlah_sampah") String jumlah_sampah,
-                                 @Field("satuan_sampah") String satuan_sampah,
-                                 @Field("kelurahan_sampah") String kelurahan_sampah,
-                                 @Field("petugas_id") String petugas_id,
-                                 @Field("tanggal_sekarang") String tanggal_sekarang);
+    Call<ResponSampah> AddSampah(@Field("kelurahan") String kelurahan,
+                                 @Field("id_koordinator") String id_koordinator,
+                                 @Field("id_petugas") String id_petugas,
+                                 @Field("berat_sampah") String berat_sampah,
+                                 @Field("foto_bukti") String foto_bukti,
+                                 @Field("latitude_sampah") String latitude_sampah,
+                                 @Field("longitude_sampah") String longitude_sampah,
+                                 @Field("alamat_sampah") String alamat_sampah,
+                                 @Field("keterangan") String keterangan,
+                                 @Field("tanggal") String tanggal);
 
     @GET("sampah/cekTodaySendPetugas.php")
     Call<ResponSampah> cekTodaySendPetugas(@Query("petugas_id") String petugas_id,
