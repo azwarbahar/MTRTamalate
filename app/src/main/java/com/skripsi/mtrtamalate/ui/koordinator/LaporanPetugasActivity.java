@@ -87,8 +87,10 @@ public class LaporanPetugasActivity extends AppCompatActivity {
     private EditText et_keterangan;
     private EditText et_berat;
 
+    private TextView tv_lihat;
     private RelativeLayout rl_send;
     private RelativeLayout rl_foto;
+    private RelativeLayout rl_alert_done;
     private Bitmap bitmap_gambar;
     private ImageView img_foto;
     private Uri imageUri;
@@ -157,6 +159,8 @@ public class LaporanPetugasActivity extends AppCompatActivity {
             }
         }
 
+        tv_lihat = findViewById(R.id.tv_lihat);
+        rl_alert_done = findViewById(R.id.rl_alert_done);
         rl_send = findViewById(R.id.rl_send);
         et_keterangan = findViewById(R.id.et_keterangan);
         et_berat = findViewById(R.id.et_berat);
@@ -192,8 +196,57 @@ public class LaporanPetugasActivity extends AppCompatActivity {
 
         rl_foto.setOnClickListener(this::clickFoto);
         rl_send.setOnClickListener(this::clickSend);
+        tv_lihat.setOnClickListener(this::clickLihat);
 
         loadDataPetugas(petugas_parcelable);
+        setReadySend(petugas_parcelable.getIdPekerja(), tanggal_sekarang);
+
+    }
+
+    private void clickLihat(View view) {
+        Toast.makeText(this, "Lihat Klik", Toast.LENGTH_SHORT).show();
+    }
+
+    private void setReadySend(String idPekerja, String tanggal_sekarang) {
+
+        pDialog = new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponSampah> responSampahCall = apiInterface.cekTodaySendPetugas(idPekerja, tanggal_sekarang);
+        responSampahCall.enqueue(new Callback<ResponSampah>() {
+            @Override
+            public void onResponse(Call<ResponSampah> call, Response<ResponSampah> response) {
+                pDialog.dismiss();
+                if (response.isSuccessful()) {
+                    String kode = response.body().getKode();
+                    if (kode.equals("1")) {
+                        if (response.body().getResult_data() == null) {
+                            rl_alert_done.setVisibility(View.GONE);
+                        } else {
+                            rl_alert_done.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        rl_alert_done.setVisibility(View.GONE);
+                    }
+                } else {
+                    rl_alert_done.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponSampah> call, Throwable t) {
+                pDialog.dismiss();
+                rl_alert_done.setVisibility(View.GONE);
+
+            }
+        });
+
+
 
     }
 

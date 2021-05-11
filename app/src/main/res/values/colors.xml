@@ -26,5 +26,6 @@
     <color name="colorBackWarning">#FFFAC6</color>
 
     <color name="green">#11971E</color>
+    <color name="greenTrans">#52047810</color>
 
 </resources>

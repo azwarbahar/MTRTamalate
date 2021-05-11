@@ -66,7 +66,7 @@ public interface ApiInterface {
                                  @Field("tanggal") String tanggal);
 
     @GET("sampah/cekTodaySendPetugas.php")
-    Call<ResponSampah> cekTodaySendPetugas(@Query("petugas_id") String petugas_id,
+    Call<ResponSampah> cekTodaySendPetugas(@Query("id_petugas") String id_petugas,
                                            @Query("tanggal") String tanggal);
 
 
