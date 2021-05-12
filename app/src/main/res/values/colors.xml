@@ -9,6 +9,7 @@
     <color name="black">#FF000000</color>
     <color name="blackTrans">#9A000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="whiteTrans">#C4FFFFFF</color>
     <color name="white2">#F6F6F6</color>
     <color name="white3">#EDEDED</color>
     <color name="white4">#BABABA</color>
@@ -27,5 +28,8 @@
 
     <color name="green">#11971E</color>
     <color name="greenTrans">#52047810</color>
+
+    <color name="doneText">#089554</color>
+    <color name="doneBack">#C8FFE6</color>
 
 </resources>

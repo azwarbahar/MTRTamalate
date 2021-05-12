@@ -56,6 +56,7 @@ import com.skripsi.mtrtamalate.models.kendaraan.Kendaraan;
 import com.skripsi.mtrtamalate.models.kendaraan.ResponseKendaraan;
 import com.skripsi.mtrtamalate.models.petugas.Petugas;
 import com.skripsi.mtrtamalate.models.sampah.ResponSampah;
+import com.skripsi.mtrtamalate.models.sampah.SampahPetugas;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.masyarakat.FormLaporActivity;
@@ -65,6 +66,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -112,7 +114,7 @@ public class LaporanPetugasActivity extends AppCompatActivity {
     private boolean is_ready_gps;
 
     private SweetAlertDialog pDialog;
-
+    private ArrayList<SampahPetugas> sampahPetugases;
 
     private void getAddress(double latitud, double longitud) {
 
@@ -224,9 +226,10 @@ public class LaporanPetugasActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String kode = response.body().getKode();
                     if (kode.equals("1")) {
-                        if (response.body().getResult_data() == null) {
+                        if (response.body().getResult_data_petugas() == null) {
                             rl_alert_done.setVisibility(View.GONE);
                         } else {
+                            sampahPetugases = (ArrayList<SampahPetugas>) response.body().getResult_data_petugas();
                             rl_alert_done.setVisibility(View.VISIBLE);
                         }
                     } else {

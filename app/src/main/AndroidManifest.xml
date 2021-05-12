@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MTRTamalate"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.koordinator.DetailPetugasActivity"></activity>
+        <activity android:name=".ui.koordinator.DetailLaporanActivity"></activity>
+        <activity android:name=".ui.koordinator.DetailPetugasActivity" />
         <activity android:name=".ui.koordinator.LaporanPetugasActivity" />
         <activity android:name=".ui.koordinator.LaporDataSampahActivity" />
         <activity android:name=".ui.koordinator.DataPetugasActivity" />

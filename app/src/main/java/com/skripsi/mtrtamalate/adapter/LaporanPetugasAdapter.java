@@ -1,6 +1,7 @@
 package com.skripsi.mtrtamalate.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.models.laporan.Laporan;
+import com.skripsi.mtrtamalate.ui.koordinator.DetailLaporanActivity;
 
 import java.util.ArrayList;
 
@@ -39,6 +41,15 @@ public class LaporanPetugasAdapter extends RecyclerView.Adapter<LaporanPetugasAd
         holder.tv_alamat.setText(laporans.get(position).getAlamatLaporan());
         holder.tv_keterangan.setText(laporans.get(position).getKeteranganLaporan());
         holder.tv_tanggal.setText(laporans.get(position).getCreatedAt());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailLaporanActivity.class);
+                intent.putExtra("extra_data", laporans.get(position));
+                context.startActivity(intent);
+            }
+        });
 
     }
 

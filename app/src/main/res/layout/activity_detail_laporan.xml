@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.koordinator.DetailLaporanActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.AppCompat.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:theme="@style/ToolbarTheme"
+        app:title="Detail Laporan"
+        app:titleTextColor="@color/white" />
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_below="@id/rl_top"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_marginTop="-20dp"
+        android:layout_above="@id/rl_bottom"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/bg_primary_corner_bottom"
+        android:layout_width="wrap_content"
+        android:paddingBottom="@dimen/dimen_20dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img1"
+            android:src="@drawable/marker_lokasi_sampah"
+            android:layout_width="40dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_height="40dp"/>
+
+        <TextView
+            android:id="@+id/tv1"
+            android:textColor="@color/white3"
+            android:textSize="10sp"
+            android:text="Alamat"
+            android:layout_alignTop="@id/img1"
+            android:layout_toRightOf="@id/img1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_alamat"
+            android:textStyle="bold"
+            android:textColor="@color/white2"
+            android:textSize="12sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="Jl. Mamoa Baru No.3, RT.002/RW.10, Mangasa, Kec. Tamalate, Kota Makassar, Sulawesi Selatan 90221, Indonesia"
+            android:layout_toRightOf="@id/img1"
+            android:layout_below="@id/tv1"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_below="@id/tv_alamat"
+            android:background="@color/grey"
+            android:layout_marginHorizontal="16dp"
+            android:layout_width="match_parent"
+            android:layout_marginVertical="10dp"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_marginHorizontal="16dp"
+            android:layout_below="@id/view1"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="10dp"
+            android:text="Keterangan:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_keterangan"
+            android:background="@drawable/bg_white_trans_strok"
+            android:paddingHorizontal="16dp"
+            android:layout_below="@id/tv2"
+            android:layout_marginTop="5dp"
+            android:paddingVertical="6dp"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="16dp"
+            android:gravity="center_vertical"
+            android:text="dhjsbkdjsn jdskcnhjskd sjkdcnkdsj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:id="@+id/img_menu"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv4"
+            android:text="Pelapor:"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="10dp"
+            android:textColor="@color/white3"
+            android:layout_marginBottom="8dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_nama"
+            android:layout_marginHorizontal="16dp"
+            android:layout_below="@id/tv4"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="Nama : Hildayanti"
+            android:layout_toLeftOf="@id/img_menu"
+            android:layout_width="match_parent"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_nik"
+            android:textSize="12sp"
+            android:text="NIK : 7371600108800006"
+            android:textColor="@color/white2"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/tv_nama"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_marginVertical="5dp"
+            android:layout_below="@id/tv_nik"
+            android:background="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:id="@+id/tv5"
+            android:text="Status : "
+            android:layout_below="@id/view2"
+            android:textSize="10sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white3"
+            android:layout_marginHorizontal="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:textColor="@color/doneText"
+            android:background="@drawable/bg_status_done"
+            android:text="Selesai"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/view2"
+            android:textSize="12sp"
+            android:paddingVertical="2dp"
+            android:paddingHorizontal="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/tv5"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

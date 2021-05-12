@@ -21,6 +21,11 @@
     <string name="lbl_show_photo">Lihat Foto</string>
     <string name="toast_image_intent_null">Image picker option is missing!</string>
 
+    <string name="option">Option</string>
+    <string name="lihat_pelapor">Lihat Pelapor</string>
+    <string name="petugas">Petugas</string>
+    <string name="foto_laporan">Foto Laporan</string>
+
 
     <!-- font families -->
     <string name="font_family_light">sans-serif-light</string>
