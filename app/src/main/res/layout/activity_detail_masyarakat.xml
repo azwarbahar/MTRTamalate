@@ -6,4 +6,305 @@
     android:layout_height="match_parent"
     tools:context=".ui.koordinator.DetailMasyarakatActivity">
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/cities_detail_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/cities_detail_collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleGravity="bottom"
+                app:expandedTitleMarginEnd="16dp"
+                app:expandedTitleMarginStart="16dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_foto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@null"
+                        android:fitsSystemWindows="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_mtr" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat"
+                    app:title="Detail Masyarakat" />
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_nama"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="14dp"
+                        android:maxLines="1"
+                        android:text="Hildayanti"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_telpon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_nama"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="5dp"
+                        android:text="0987656789" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/tv_nama"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginHorizontal="16dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="3dp">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="4dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_baseline_local_phone_24"
+                                app:tint="@color/black" />
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_telpon"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        app:cardElevation="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/img_age"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginTop="8dp"
+                                android:src="@drawable/ic_baseline_date_range_24"
+                                app:tint="@color/grey" />
+
+                            <TextView
+                                android:id="@+id/tv_umur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/img_age"
+                                android:layout_alignBottom="@id/img_age"
+                                android:layout_marginLeft="16dp"
+                                android:layout_toRightOf="@id/img_age"
+                                android:gravity="center_vertical"
+                                android:text="20 Tahun"
+                                android:textColor="@color/black" />
+
+
+                            <View
+                                android:id="@+id/line2"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_below="@id/img_age"
+                                android:layout_marginHorizontal="10dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@color/grey" />
+
+                            <ImageView
+                                android:id="@+id/img_area"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/line2"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginTop="8dp"
+                                android:src="@drawable/ic_baseline_area_chart_24"
+                                app:tint="@color/grey" />
+
+                            <TextView
+                                android:id="@+id/tv_area"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/img_area"
+                                android:layout_alignBottom="@id/img_area"
+                                android:layout_marginLeft="16dp"
+                                android:layout_toRightOf="@id/img_area"
+                                android:gravity="center_vertical"
+                                android:text="Tamalate"
+                                android:textColor="@color/black" />
+
+
+                            <View
+                                android:id="@+id/line1"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_below="@id/tv_area"
+                                android:layout_marginHorizontal="10dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@color/grey" />
+
+                            <ImageView
+                                android:id="@+id/img_place"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/line1"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:src="@drawable/ic_baseline_place_24"
+                                app:tint="@color/grey" />
+
+                            <TextView
+                                android:id="@+id/tv_alamat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/img_place"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="3dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_toLeftOf="@id/img_chevron"
+                                android:layout_toRightOf="@id/img_place"
+                                android:gravity="center_vertical"
+                                android:maxLines="2"
+                                android:text="Jalan A.P Pettarani No 221 Kelurahan Mangasa Kecamatan"
+                                android:textColor="@color/black" />
+
+                            <ImageView
+                                android:id="@+id/img_chevron"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/tv_alamat"
+                                android:layout_alignBottom="@id/tv_alamat"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="12dp"
+                                android:src="@drawable/ic_baseline_chevron_right_24"
+                                app:tint="@color/grey" />
+
+                            <RelativeLayout
+                                android:id="@+id/continer_map"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/img_place"
+                                android:layout_marginTop="10dp"
+                                android:animateLayoutChanges="true"
+                                android:visibility="gone">
+
+                                <fragment
+                                    android:id="@+id/map"
+                                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="164dp" />
+
+                            </RelativeLayout>
+
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_riwayat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cv1"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="40dp"
+                        android:background="@drawable/bg_stroke_radius_primary"
+                        android:elevation="8dp">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginVertical="10dp"
+                            android:src="@drawable/icon_megaphone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="Riwayat Laporan"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="@dimen/dimen_20dp"
+                        android:layout_below="@id/rl_riwayat"
+                        android:paddingVertical="10dp"
+                        android:layout_marginBottom="100dp"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/bg_primary_radius"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:layout_centerInParent="true"
+                            android:text="Aktifkan Pembayaran"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </RelativeLayout>

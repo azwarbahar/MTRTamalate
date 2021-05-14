@@ -1,6 +1,7 @@
 package com.skripsi.mtrtamalate.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.models.laporan.Laporan;
 import com.skripsi.mtrtamalate.models.masyarakat.Masayarkat;
+import com.skripsi.mtrtamalate.ui.koordinator.DetailMasyarakatActivity;
 import com.skripsi.mtrtamalate.utils.Constanta;
 
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class DataMasyarakatAdapter extends RecyclerView.Adapter<DataMasyarakatAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Klik Masyarakat Detail", Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context, DetailMasyarakatActivity.class));
             }
         });
 
