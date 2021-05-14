@@ -29,9 +29,15 @@ public class ViewImageActivity extends AppCompatActivity {
                     .error(R.drawable.ic_broken_image)
                     .into(photoView);
 
-        } else {
+        } else if (role.equals("petugas")){
             Glide.with(this)
                     .load(Constanta.URL_IMG_PETUGAS + foto)
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+                    .into(photoView);
+        } else if (role.equals("foto_laporan")){
+            Glide.with(this)
+                    .load(Constanta.URL_IMG_LAPORAN + foto)
                     .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.ic_broken_image)
                     .into(photoView);

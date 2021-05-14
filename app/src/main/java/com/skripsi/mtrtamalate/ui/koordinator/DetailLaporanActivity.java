@@ -31,6 +31,7 @@ import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.ImagePickerActivity;
+import com.skripsi.mtrtamalate.ui.masyarakat.akun.ViewImageActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +48,7 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
     private TextView tv_nik;
     private TextView tv_status;
 
+    private String url_image;
     private LatLng latLngzoom;
 
 
@@ -77,7 +79,7 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         tv_status.setText(laporan_parcelable.getStausLaporan());
         getMasyarakat(laporan_parcelable.getMasyarakatId());
         setMarker(laporan_parcelable.getLatitudeLaporan(), laporan_parcelable.getLongitudeLaporan());
-
+        url_image = laporan_parcelable.getFotoLaporan();
 
         img_menu.setOnClickListener(this::clickMenu);
 
@@ -90,7 +92,7 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
 
     private BitmapDescriptor bitmapDescriptor(Context context) {
         int height = 60;
-        int width = 35;
+        int width = 50;
         Drawable vectorDrawble = ContextCompat.getDrawable(context, R.drawable.marker_laporan);
         assert vectorDrawble != null;
         vectorDrawble.setBounds(0, 0, width, height);
@@ -173,7 +175,10 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
 
             @Override
             public void lihatFoto() {
-                Toast.makeText(DetailLaporanActivity.this, "Klik Foto", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DetailLaporanActivity.this, ViewImageActivity.class);
+                intent.putExtra("role", "foto_laporan");
+                intent.putExtra("foto", url_image);
+                startActivity(intent);
             }
         });
     }
@@ -193,7 +198,7 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
             googleMap.addMarker(new MarkerOptions().title("Titik Laporan")
                     .icon(bitmapDescriptor(getApplicationContext()))
                     .position(latLngzoom));
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngzoom, 14));
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngzoom, 15));
         }
 
     }
