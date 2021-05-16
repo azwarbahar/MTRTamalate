@@ -57,7 +57,10 @@ public class DataMasyarakatAdapter extends RecyclerView.Adapter<DataMasyarakatAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, DetailMasyarakatActivity.class));
+
+                Intent intent = new Intent(context, DetailMasyarakatActivity.class);
+                intent.putExtra("id_masyarakat", masayarkats.get(position).getIdMasyarakat());
+                context.startActivity(intent);
             }
         });
 

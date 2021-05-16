@@ -47,6 +47,8 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
     private TextView tv_nama;
     private TextView tv_nik;
     private TextView tv_status;
+    private TextView tv_tanggal_lapor;
+    private TextView tv_tanggal_ditindaki;
 
     private String url_image;
     private LatLng latLngzoom;
@@ -72,11 +74,19 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         tv_nik = findViewById(R.id.tv_nik);
         tv_keterangan = findViewById(R.id.tv_keterangan);
         tv_status = findViewById(R.id.tv_status);
+        tv_tanggal_lapor = findViewById(R.id.tv_tanggal_lapor);
+        tv_tanggal_ditindaki = findViewById(R.id.tv_tanggal_ditindaki);
 
         laporan_parcelable = getIntent().getParcelableExtra("extra_data");
         tv_alamat.setText(laporan_parcelable.getAlamatLaporan());
         tv_keterangan.setText(laporan_parcelable.getKeteranganLaporan());
         tv_status.setText(laporan_parcelable.getStausLaporan());
+        tv_tanggal_lapor.setText("Laporan Pada: "+ laporan_parcelable.getCreatedAt());
+        if (laporan_parcelable.getStausLaporan().equals("Done")){
+            tv_tanggal_ditindaki.setText("Ditindaki Pada: "+ laporan_parcelable.getUpdateAt());
+        } else {
+            tv_tanggal_ditindaki.setText("Ditindaki Pada: - ");
+        }
         getMasyarakat(laporan_parcelable.getMasyarakatId());
         setMarker(laporan_parcelable.getLatitudeLaporan(), laporan_parcelable.getLongitudeLaporan());
         url_image = laporan_parcelable.getFotoLaporan();
@@ -92,7 +102,7 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
 
     private BitmapDescriptor bitmapDescriptor(Context context) {
         int height = 60;
-        int width = 50;
+        int width = 45;
         Drawable vectorDrawble = ContextCompat.getDrawable(context, R.drawable.marker_laporan);
         assert vectorDrawble != null;
         vectorDrawble.setBounds(0, 0, width, height);

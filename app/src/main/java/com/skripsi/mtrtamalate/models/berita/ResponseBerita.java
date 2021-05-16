@@ -8,8 +8,15 @@ public class ResponseBerita{
 	@SerializedName("kode")
 	private int kode;
 
+	@SerializedName("pesan")
+	private String pesan;
+
 	@SerializedName("berita")
 	private List<Berita> berita;
+
+	public String getPesan() {
+		return pesan;
+	}
 
 	public int getKode(){
 		return kode;

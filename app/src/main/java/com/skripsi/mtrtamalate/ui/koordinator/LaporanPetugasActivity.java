@@ -226,10 +226,10 @@ public class LaporanPetugasActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String kode = response.body().getKode();
                     if (kode.equals("1")) {
-                        if (response.body().getResult_data_petugas() == null) {
+                        sampahPetugases = (ArrayList<SampahPetugas>) response.body().getResult_data_petugas();
+                        if (sampahPetugases.isEmpty() || sampahPetugases.size() < 1) {
                             rl_alert_done.setVisibility(View.GONE);
                         } else {
-                            sampahPetugases = (ArrayList<SampahPetugas>) response.body().getResult_data_petugas();
                             rl_alert_done.setVisibility(View.VISIBLE);
                         }
                     } else {

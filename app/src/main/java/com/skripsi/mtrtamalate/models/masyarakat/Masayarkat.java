@@ -1,8 +1,11 @@
 package com.skripsi.mtrtamalate.models.masyarakat;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Masayarkat {
+public class Masayarkat implements Parcelable {
 
 	@SerializedName("foto_masyarakat")
 	private String fotoMasyarakat;
@@ -48,6 +51,36 @@ public class Masayarkat {
 
 	@SerializedName("alamat_masyarakat")
 	private String alamatMasyarakat;
+
+	protected Masayarkat(Parcel in) {
+		fotoMasyarakat = in.readString();
+		usiaMasyarakat = in.readString();
+		idMasyarakat = in.readString();
+		statusMasyarakat = in.readString();
+		longitudeMasyarakat = in.readString();
+		namaMasyarakat = in.readString();
+		statusMarker = in.readString();
+		areaMasyarakat = in.readString();
+		nikMasyarakat = in.readString();
+		kelurahanMasyarakat = in.readString();
+		pembayaranMasyarakat = in.readString();
+		telponMasyarakat = in.readString();
+		latitudeMasyarakat = in.readString();
+		passwordMasyarakat = in.readString();
+		alamatMasyarakat = in.readString();
+	}
+
+	public static final Creator<Masayarkat> CREATOR = new Creator<Masayarkat>() {
+		@Override
+		public Masayarkat createFromParcel(Parcel in) {
+			return new Masayarkat(in);
+		}
+
+		@Override
+		public Masayarkat[] newArray(int size) {
+			return new Masayarkat[size];
+		}
+	};
 
 	public String getFotoMasyarakat(){
 		return fotoMasyarakat;
@@ -107,5 +140,29 @@ public class Masayarkat {
 
 	public String getAlamatMasyarakat(){
 		return alamatMasyarakat;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+		parcel.writeString(fotoMasyarakat);
+		parcel.writeString(usiaMasyarakat);
+		parcel.writeString(idMasyarakat);
+		parcel.writeString(statusMasyarakat);
+		parcel.writeString(longitudeMasyarakat);
+		parcel.writeString(namaMasyarakat);
+		parcel.writeString(statusMarker);
+		parcel.writeString(areaMasyarakat);
+		parcel.writeString(nikMasyarakat);
+		parcel.writeString(kelurahanMasyarakat);
+		parcel.writeString(pembayaranMasyarakat);
+		parcel.writeString(telponMasyarakat);
+		parcel.writeString(latitudeMasyarakat);
+		parcel.writeString(passwordMasyarakat);
+		parcel.writeString(alamatMasyarakat);
 	}
 }

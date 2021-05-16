@@ -90,6 +90,7 @@
                         android:text="0987656789" />
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_call"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/tv_nama"
@@ -141,9 +142,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignTop="@id/img_age"
-                                android:layout_alignBottom="@id/img_age"
                                 android:layout_marginLeft="16dp"
                                 android:layout_toRightOf="@id/img_age"
+                                android:layout_alignBottom="@id/img_age"
                                 android:gravity="center_vertical"
                                 android:text="20 Tahun"
                                 android:textColor="@color/black" />
@@ -177,7 +178,10 @@
                                 android:layout_marginLeft="16dp"
                                 android:layout_toRightOf="@id/img_area"
                                 android:gravity="center_vertical"
-                                android:text="Tamalate"
+                                android:ellipsize="end"
+                                android:layout_marginRight="16dp"
+                                android:text="Mangasa"
+                                android:maxLines="1"
                                 android:textColor="@color/black" />
 
 
@@ -213,6 +217,7 @@
                                 android:layout_toRightOf="@id/img_place"
                                 android:gravity="center_vertical"
                                 android:maxLines="2"
+                                android:ellipsize="end"
                                 android:text="Jalan A.P Pettarani No 221 Kelurahan Mangasa Kecamatan"
                                 android:textColor="@color/black" />
 
@@ -279,20 +284,22 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_btn_aktif"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="@dimen/dimen_20dp"
                         android:layout_below="@id/rl_riwayat"
                         android:paddingVertical="10dp"
                         android:layout_marginBottom="100dp"
                         android:layout_width="match_parent"
-                        android:background="@drawable/bg_primary_radius"
+                        android:background="@drawable/bg_greay_radius"
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/tv_btn_aktif"
                             android:textStyle="bold"
                             android:textColor="@color/white"
                             android:layout_centerInParent="true"
-                            android:text="Aktifkan Pembayaran"
+                            android:text="Batalkan Pembayaran"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 

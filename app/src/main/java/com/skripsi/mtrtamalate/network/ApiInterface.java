@@ -1,5 +1,6 @@
 package com.skripsi.mtrtamalate.network;
 
+import com.skripsi.mtrtamalate.models.area.ResponseArea;
 import com.skripsi.mtrtamalate.models.berita.ResponseBerita;
 import com.skripsi.mtrtamalate.models.kendaraan.ResponseKendaraan;
 import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
@@ -20,6 +21,14 @@ public interface ApiInterface {
     // KENDARAAN
     @GET("kendaraan/getKendaraanPetugas.php")
     Call<ResponseKendaraan> getKendaraanPetugas(@Query("id_kendaraan") String id_kendaraan);
+
+
+    // AREA
+    @GET("area/getAreaId.php")
+    Call<ResponseArea> getAreaId(@Query("id_area") String id_area,
+                                 @Query("kelurahan") String kelurahan);
+
+
 
     // LPORAN
     @GET("laporan/getLaporanMasarakat.php")
@@ -101,6 +110,10 @@ public interface ApiInterface {
 
     @GET("masyarakat/getMasyarakatId.php")
     Call<ResponseMasyarakat> getMasyarakatId(@Query("id_masyarakat") String id_masyarakat);
+
+    @GET("masyarakat/editPembayaran.php")
+    Call<ResponseMasyarakat> editPembayaran(@Query("id_masyarakat") String id_masyarakat,
+                                            @Query("isi") String isi);
 
     @FormUrlEncoded
     @POST("masyarakat/editProfilMasyarakat.php")
