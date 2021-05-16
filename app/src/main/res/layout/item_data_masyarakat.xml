@@ -52,7 +52,7 @@
     <TextView
         android:id="@+id/tv_status"
         android:text="Aktif"
-        android:background="@drawable/bg_text_aktif"
+        android:background="@drawable/bg_text_grey"
         android:layout_width="wrap_content"
         android:paddingVertical="2dp"
         android:textSize="12sp"

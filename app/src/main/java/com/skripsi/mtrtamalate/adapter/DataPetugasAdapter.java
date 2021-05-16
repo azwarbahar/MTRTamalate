@@ -66,7 +66,7 @@ public class DataPetugasAdapter extends RecyclerView.Adapter<DataPetugasAdapter.
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailPetugasActivity.class);
-                intent.putExtra("data_petugas", petugases.get(position));
+                intent.putExtra("id_petugas", petugases.get(position).getIdPekerja());
                 context.startActivity(intent);
             }
         });

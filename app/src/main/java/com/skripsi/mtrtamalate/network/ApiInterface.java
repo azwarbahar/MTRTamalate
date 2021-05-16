@@ -37,6 +37,9 @@ public interface ApiInterface {
     @GET("laporan/getLaporanPetugas.php")
     Call<ResponLaporan> getLaporanPetugas(@Query("petugas_id") String petugas_id);
 
+    @GET("laporan/getLaporanMasarakat.php")
+    Call<ResponLaporan> getLaporanMasyarakat(@Query("masyarakat_id") String masyarakat_id);
+
     @GET("laporan/getLaporanMapPetugas.php")
     Call<ResponLaporan> getLaporanMapPetugas(@Query("kelurahan_laporan") String kelurahan_laporan,
                                              @Query("area_laporan") String area_laporan,

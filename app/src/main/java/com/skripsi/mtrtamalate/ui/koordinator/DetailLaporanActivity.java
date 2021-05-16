@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.models.laporan.Laporan;
 import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
@@ -52,6 +53,9 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
 
     private String url_image;
     private LatLng latLngzoom;
+    private String id_masyarakat;
+    private String id_petugas;
+    private String status_laporan;
 
 
     @Override
@@ -78,9 +82,24 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         tv_tanggal_ditindaki = findViewById(R.id.tv_tanggal_ditindaki);
 
         laporan_parcelable = getIntent().getParcelableExtra("extra_data");
+        id_masyarakat = laporan_parcelable.getMasyarakatId();
+        id_petugas = laporan_parcelable.getPetugasId();
         tv_alamat.setText(laporan_parcelable.getAlamatLaporan());
         tv_keterangan.setText(laporan_parcelable.getKeteranganLaporan());
-        tv_status.setText(laporan_parcelable.getStausLaporan());
+        status_laporan = laporan_parcelable.getStausLaporan();
+        if (status_laporan.equals("Proccess")){
+            tv_status.setText("Proses");
+            tv_status.setTextColor(ContextCompat.getColor(this, R.color.proccessText));
+            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanActivity.this, R.drawable.bg_status_proccess));
+        } else if (status_laporan.equals("Done")){
+            tv_status.setText("Selesai");
+            tv_status.setTextColor(ContextCompat.getColor(this, R.color.doneText));
+            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanActivity.this, R.drawable.bg_status_done));
+        } else {
+            tv_status.setText("Batal");
+            tv_status.setTextColor(ContextCompat.getColor(this, R.color.cancelText));
+            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanActivity.this, R.drawable.bg_status_cancel));
+        }
         tv_tanggal_lapor.setText("Laporan Pada: "+ laporan_parcelable.getCreatedAt());
         if (laporan_parcelable.getStausLaporan().equals("Done")){
             tv_tanggal_ditindaki.setText("Ditindaki Pada: "+ laporan_parcelable.getUpdateAt());
@@ -175,12 +194,20 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         showPickerLaporanOption(this, new PickerLaporanOptionListener() {
             @Override
             public void lihatPelapor() {
-                Toast.makeText(DetailLaporanActivity.this, "klik pelapor", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DetailLaporanActivity.this, DetailMasyarakatActivity.class);
+                intent.putExtra("id_masyarakat", id_masyarakat);
+                startActivity(intent);
             }
 
             @Override
             public void lihatPetugas() {
-                Toast.makeText(DetailLaporanActivity.this, "klik Petugas", Toast.LENGTH_SHORT).show();
+                if (id_petugas.equals("-")){
+                    showSnackMessage("Petugas Belum Menindaki laporan!");
+                } else {
+                    Intent intent = new Intent(DetailLaporanActivity.this, DetailPetugasActivity.class);
+                    intent.putExtra("id_petugas", id_petugas);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -191,6 +218,18 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
                 startActivity(intent);
             }
         });
+    }
+
+    private void showSnackMessage(String message) {
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
+                .setAction("Close", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.setVisibility(View.GONE);
+                    }
+                })
+                .show();
     }
 
     @Override

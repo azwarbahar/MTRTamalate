@@ -32,4 +32,10 @@
     <color name="doneText">#089554</color>
     <color name="doneBack">#C8FFE6</color>
 
+    <color name="cancelText">#DC0000</color>
+    <color name="cancelBack">#FACFCF</color>
+
+    <color name="proccessText">#FFFFFF</color>
+    <color name="proccessBack">#9E9E9E</color>
+
 </resources>

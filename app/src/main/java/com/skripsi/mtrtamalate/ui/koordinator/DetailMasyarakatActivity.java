@@ -141,8 +141,8 @@ public class DetailMasyarakatActivity extends AppCompatActivity implements OnMap
         responseMasyarakatCall.enqueue(new Callback<ResponseMasyarakat>() {
             @Override
             public void onResponse(Call<ResponseMasyarakat> call, Response<ResponseMasyarakat> response) {
+                pDialog.dismiss();
                 if (response.isSuccessful()) {
-                    pDialog.dismiss();
                     masayarkat = response.body().getResult_masyarakat();
                     setDataMasyarakat(masayarkat);
                 }
@@ -236,7 +236,10 @@ public class DetailMasyarakatActivity extends AppCompatActivity implements OnMap
     }
 
     private void clickRiwayat(View view) {
-        Toast.makeText(this, "klik Riwayat", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(DetailMasyarakatActivity.this, RiwayatLaporanActivity.class);
+        intent.putExtra("role", "masyarakat");
+        intent.putExtra("id", id_masyarakat);
+        startActivity(intent);
     }
 
     private void clickCall(View view) {

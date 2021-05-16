@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -46,7 +47,14 @@ public class DataMasyarakatAdapter extends RecyclerView.Adapter<DataMasyarakatAd
 
         holder.tv_nama.setText(masayarkats.get(position).getNamaMasyarakat());
         holder.tv_nik.setText("Akun : "+masayarkats.get(position).getStatusMasyarakat());
-        holder.tv_status.setText(masayarkats.get(position).getPembayaranMasyarakat());
+        String status = masayarkats.get(position).getPembayaranMasyarakat();
+        if (status.equals("Sudah")){
+            holder.tv_status.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_text_aktif));
+            holder.tv_status.setText(masayarkats.get(position).getPembayaranMasyarakat());
+        } else {
+            holder.tv_status.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_text_grey));
+            holder.tv_status.setText(masayarkats.get(position).getPembayaranMasyarakat());
+        }
 
         Glide.with(context)
                 .load(Constanta.URL_IMG_MASYARAKAT + masayarkats.get(position).getFotoMasyarakat())
