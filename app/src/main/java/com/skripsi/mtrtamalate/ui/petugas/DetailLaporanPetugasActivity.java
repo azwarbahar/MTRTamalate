@@ -1,4 +1,4 @@
-package com.skripsi.mtrtamalate.ui.koordinator;
+package com.skripsi.mtrtamalate.ui.petugas;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +11,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,17 +30,19 @@ import com.skripsi.mtrtamalate.models.laporan.Laporan;
 import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
-import com.skripsi.mtrtamalate.ui.masyarakat.akun.ImagePickerActivity;
+import com.skripsi.mtrtamalate.ui.koordinator.DetailLaporanActivity;
+import com.skripsi.mtrtamalate.ui.koordinator.DetailMasyarakatActivity;
+import com.skripsi.mtrtamalate.ui.koordinator.DetailPetugasActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.ViewImageActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailLaporanActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class DetailLaporanPetugasActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap map;
-    private ImageView img_menu;
+//    private ImageView img_menu;
     private Laporan laporan_parcelable;
     private TextView tv_alamat;
     private TextView tv_keterangan;
@@ -50,6 +51,8 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
     private TextView tv_status;
     private TextView tv_tanggal_lapor;
     private TextView tv_tanggal_ditindaki;
+    private TextView tv_selesai;
+    private RelativeLayout rl_foto;
 
     private String url_image;
     private LatLng latLngzoom;
@@ -61,7 +64,7 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_laporan);
+        setContentView(R.layout.activity_detail_laporan_petugas);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,7 +75,9 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-        img_menu = findViewById(R.id.img_menu);
+//        img_menu = findViewById(R.id.img_menu);
+        tv_selesai = findViewById(R.id.tv_selesai);
+        rl_foto = findViewById(R.id.rl_foto);
         tv_alamat = findViewById(R.id.tv_alamat);
         tv_nama = findViewById(R.id.tv_nama);
         tv_nik = findViewById(R.id.tv_nik);
@@ -90,15 +95,15 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         if (status_laporan.equals("Proccess")){
             tv_status.setText("Proses");
             tv_status.setTextColor(ContextCompat.getColor(this, R.color.proccessText));
-            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanActivity.this, R.drawable.bg_status_proccess));
+            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanPetugasActivity.this, R.drawable.bg_status_proccess));
         } else if (status_laporan.equals("Done")){
             tv_status.setText("Selesai");
             tv_status.setTextColor(ContextCompat.getColor(this, R.color.doneText));
-            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanActivity.this, R.drawable.bg_status_done));
+            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanPetugasActivity.this, R.drawable.bg_status_done));
         } else {
             tv_status.setText("Batal");
             tv_status.setTextColor(ContextCompat.getColor(this, R.color.cancelText));
-            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanActivity.this, R.drawable.bg_status_cancel));
+            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanPetugasActivity.this, R.drawable.bg_status_cancel));
         }
         tv_tanggal_lapor.setText("Laporan Pada: "+ laporan_parcelable.getCreatedAt());
         if (laporan_parcelable.getStausLaporan().equals("Done")){
@@ -110,9 +115,23 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         setMarker(laporan_parcelable.getLatitudeLaporan(), laporan_parcelable.getLongitudeLaporan());
         url_image = laporan_parcelable.getFotoLaporan();
 
-        img_menu.setOnClickListener(this::clickMenu);
+//        img_menu.setOnClickListener(this::clickMenu);
+        rl_foto.setOnClickListener(this::clickFoto);
+        tv_selesai.setOnClickListener(this::clickSelesai);
 
+    }
 
+    private void clickSelesai(View view) {
+        String id_laporan;
+        String id_petugas;
+        String status;
+    }
+
+    private void clickFoto(View view) {
+        Intent intent = new Intent(DetailLaporanPetugasActivity.this, ViewImageActivity.class);
+        intent.putExtra("role", "foto_laporan");
+        intent.putExtra("foto", url_image);
+        startActivity(intent);
     }
 
     private void setMarker(String latitudeLaporan, String longitudeLaporan) {
@@ -160,7 +179,7 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         void lihatFoto();
     }
 
-    public static void showPickerLaporanOption(Context context, PickerLaporanOptionListener listener) {
+    public static void showPickerLaporanOption(Context context, DetailLaporanActivity.PickerLaporanOptionListener listener) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getString(R.string.option));
@@ -188,35 +207,6 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         dialog.show();
     }
 
-    private void clickMenu(View view) {
-        showPickerLaporanOption(this, new PickerLaporanOptionListener() {
-            @Override
-            public void lihatPelapor() {
-                Intent intent = new Intent(DetailLaporanActivity.this, DetailMasyarakatActivity.class);
-                intent.putExtra("id_masyarakat", id_masyarakat);
-                startActivity(intent);
-            }
-
-            @Override
-            public void lihatPetugas() {
-                if (id_petugas.equals("-")){
-                    showSnackMessage("Petugas Belum Menindaki laporan!");
-                } else {
-                    Intent intent = new Intent(DetailLaporanActivity.this, DetailPetugasActivity.class);
-                    intent.putExtra("id_petugas", id_petugas);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void lihatFoto() {
-                Intent intent = new Intent(DetailLaporanActivity.this, ViewImageActivity.class);
-                intent.putExtra("role", "foto_laporan");
-                intent.putExtra("foto", url_image);
-                startActivity(intent);
-            }
-        });
-    }
 
     private void showSnackMessage(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_INDEFINITE)

@@ -61,6 +61,7 @@ import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.koordinator.DataMasyarakatActivity;
+import com.skripsi.mtrtamalate.ui.koordinator.DetailMasyarakatActivity;
 import com.skripsi.mtrtamalate.utils.Constanta;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
@@ -220,7 +221,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
                             img_kosong.setVisibility(View.GONE);
                             rv_laporan.setVisibility(View.VISIBLE);
-                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(),laporans);
+                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(),laporans, "petugas");
                             rv_laporan.setLayoutManager(new LinearLayoutManager(getActivity()));
                             rv_laporan.setAdapter(laporanPetugasAdapter);
                             tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
@@ -524,7 +525,10 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             sweetAlertDialog.dismiss();
                             pDialog.dismiss();
-                            Toast.makeText(getActivity(), "Show Detail " + masayarkat.getNamaMasyarakat(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "Show Detail " + masayarkat.getNamaMasyarakat(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getActivity(), DetailMasyarakatPetugasActivity.class);
+                            intent.putExtra("id_masyarakat", masayarkat.getIdMasyarakat());
+                            startActivity(intent);
                         }
                     })
                     .setConfirmButton("Selesai", new SweetAlertDialog.OnSweetClickListener() {
@@ -609,7 +613,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
         if (first_time) {
             updateLatlingDatabase(location);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_petugas, 19));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_petugas, 15));
             first_time = false;
         }
 

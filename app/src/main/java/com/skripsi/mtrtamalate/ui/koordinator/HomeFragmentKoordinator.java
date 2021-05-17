@@ -244,7 +244,7 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
 
                             img_kosong.setVisibility(View.GONE);
                             rv_laporan.setVisibility(View.VISIBLE);
-                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(), laporans);
+                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(), laporans, "koordinator");
                             rv_laporan.setLayoutManager(new LinearLayoutManager(getActivity()));
                             rv_laporan.setAdapter(laporanPetugasAdapter);
                             tv_jumlah_laporan.setText(String.valueOf(laporans.size()));

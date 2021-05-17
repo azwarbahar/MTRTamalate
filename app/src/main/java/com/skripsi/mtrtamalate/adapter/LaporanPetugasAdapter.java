@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.models.laporan.Laporan;
 import com.skripsi.mtrtamalate.ui.koordinator.DetailLaporanActivity;
+import com.skripsi.mtrtamalate.ui.petugas.DetailLaporanPetugasActivity;
 
 import java.util.ArrayList;
 
@@ -20,10 +21,12 @@ public class LaporanPetugasAdapter extends RecyclerView.Adapter<LaporanPetugasAd
 
     private Context context;
     private ArrayList<Laporan> laporans;
+    private String role;
 
-    public LaporanPetugasAdapter(Context context, ArrayList<Laporan> laporans) {
+    public LaporanPetugasAdapter(Context context, ArrayList<Laporan> laporans, String role) {
         this.context = context;
         this.laporans = laporans;
+        this.role = role;
     }
 
     @NonNull
@@ -45,9 +48,16 @@ public class LaporanPetugasAdapter extends RecyclerView.Adapter<LaporanPetugasAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailLaporanActivity.class);
-                intent.putExtra("extra_data", laporans.get(position));
-                context.startActivity(intent);
+
+                if (role.equals("petugas")) {
+                    Intent intent = new Intent(context, DetailLaporanPetugasActivity.class);
+                    intent.putExtra("extra_data", laporans.get(position));
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, DetailLaporanActivity.class);
+                    intent.putExtra("extra_data", laporans.get(position));
+                    context.startActivity(intent);
+                }
             }
         });
 

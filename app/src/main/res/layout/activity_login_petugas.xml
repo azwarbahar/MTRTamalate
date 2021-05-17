@@ -62,7 +62,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:hint="NIK"
-            android:inputType="numberDecimal"
+            android:inputType="text"
             android:textColor="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary" />
     </com.google.android.material.textfield.TextInputLayout>
