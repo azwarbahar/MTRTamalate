@@ -7,10 +7,13 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,14 +30,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.skripsi.mtrtamalate.R;
 import com.skripsi.mtrtamalate.models.laporan.Laporan;
+import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
 import com.skripsi.mtrtamalate.models.masyarakat.ResponseMasyarakat;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.koordinator.DetailLaporanActivity;
 import com.skripsi.mtrtamalate.ui.koordinator.DetailMasyarakatActivity;
 import com.skripsi.mtrtamalate.ui.koordinator.DetailPetugasActivity;
+import com.skripsi.mtrtamalate.ui.masyarakat.FormLaporActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.ViewImageActivity;
+import com.skripsi.mtrtamalate.utils.Constanta;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +49,7 @@ import retrofit2.Response;
 public class DetailLaporanPetugasActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap map;
-//    private ImageView img_menu;
+    //    private ImageView img_menu;
     private Laporan laporan_parcelable;
     private TextView tv_alamat;
     private TextView tv_keterangan;
@@ -56,15 +63,22 @@ public class DetailLaporanPetugasActivity extends AppCompatActivity implements O
 
     private String url_image;
     private LatLng latLngzoom;
+    private String id_laporan;
     private String id_masyarakat;
+    private String id_petugas_sekarang;
     private String id_petugas;
     private String status_laporan;
 
+    private SweetAlertDialog pDialog;
+
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_laporan_petugas);
+        mPreferences = getSharedPreferences(Constanta.MY_SHARED_PREFERENCES, MODE_PRIVATE);
+        id_petugas_sekarang = mPreferences.getString(Constanta.SESSION_ID_PETUGAS, "");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,16 +101,17 @@ public class DetailLaporanPetugasActivity extends AppCompatActivity implements O
         tv_tanggal_ditindaki = findViewById(R.id.tv_tanggal_ditindaki);
 
         laporan_parcelable = getIntent().getParcelableExtra("extra_data");
+        id_laporan = laporan_parcelable.getIdLaporan();
         id_masyarakat = laporan_parcelable.getMasyarakatId();
         id_petugas = laporan_parcelable.getPetugasId();
         tv_alamat.setText(laporan_parcelable.getAlamatLaporan());
         tv_keterangan.setText(laporan_parcelable.getKeteranganLaporan());
         status_laporan = laporan_parcelable.getStausLaporan();
-        if (status_laporan.equals("Proccess")){
+        if (status_laporan.equals("Proccess")) {
             tv_status.setText("Proses");
             tv_status.setTextColor(ContextCompat.getColor(this, R.color.proccessText));
             tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanPetugasActivity.this, R.drawable.bg_status_proccess));
-        } else if (status_laporan.equals("Done")){
+        } else if (status_laporan.equals("Done")) {
             tv_status.setText("Selesai");
             tv_status.setTextColor(ContextCompat.getColor(this, R.color.doneText));
             tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanPetugasActivity.this, R.drawable.bg_status_done));
@@ -105,9 +120,9 @@ public class DetailLaporanPetugasActivity extends AppCompatActivity implements O
             tv_status.setTextColor(ContextCompat.getColor(this, R.color.cancelText));
             tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanPetugasActivity.this, R.drawable.bg_status_cancel));
         }
-        tv_tanggal_lapor.setText("Laporan Pada: "+ laporan_parcelable.getCreatedAt());
-        if (laporan_parcelable.getStausLaporan().equals("Done")){
-            tv_tanggal_ditindaki.setText("Ditindaki Pada: "+ laporan_parcelable.getUpdateAt());
+        tv_tanggal_lapor.setText("Laporan Pada: " + laporan_parcelable.getCreatedAt());
+        if (laporan_parcelable.getStausLaporan().equals("Done")) {
+            tv_tanggal_ditindaki.setText("Ditindaki Pada: " + laporan_parcelable.getUpdateAt());
         } else {
             tv_tanggal_ditindaki.setText("Ditindaki Pada: - ");
         }
@@ -122,9 +137,103 @@ public class DetailLaporanPetugasActivity extends AppCompatActivity implements O
     }
 
     private void clickSelesai(View view) {
-        String id_laporan;
-        String id_petugas;
-        String status;
+
+        pDialog = new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Selesai")
+                .setContentText("Anda Telah Selesai Menindaki Laporan ?")
+                .setCancelButton("Batal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        pDialog.dismiss();
+                        sweetAlertDialog.dismiss();
+                    }
+                })
+                .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+//                                    pDialog.show();
+                        sendDone(id_laporan, id_petugas_sekarang);
+                    }
+                })
+                .show();
+    }
+
+    private void sendDone(String id_laporan, String id_petugas_sekarang) {
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponLaporan> responLaporanCall = apiInterface.editLaporanStatus(id_laporan, id_petugas_sekarang,
+                "Done");
+        responLaporanCall.enqueue(new Callback<ResponLaporan>() {
+            @Override
+            public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
+                pDialog.dismiss();
+                if (response.isSuccessful()) {
+                    String kode = response.body().getKode();
+                    if (kode.equals("1")) {
+                        new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("Success..")
+                                .setContentText("Permintaan Berhasil..")
+                                .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        sweetAlertDialog.dismiss();
+                                        configIntent();
+                                    }
+                                })
+                                .show();
+                    } else {
+                        new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Gagal..")
+                                .setContentText("Terjadi kesalahan!, Kode : " + kode)
+                                .show();
+                    }
+                } else {
+                    new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Gagal..")
+                            .setContentText("Terjadi kesalahan!")
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponLaporan> call, Throwable t) {
+                pDialog.dismiss();
+                new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Gagal..")
+                        .setContentText("Terjadi kesalahan Sistem!")
+                        .show();
+            }
+        });
+
+    }
+
+    private void configIntent() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                pDialog = new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog.setTitleText("Menyimpan Data..");
+                pDialog.setCancelable(true);
+                pDialog.show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        pDialog.dismiss();
+                        finish();
+                    }
+                }, 2500);
+            }
+        }, 400);
     }
 
     private void clickFoto(View view) {

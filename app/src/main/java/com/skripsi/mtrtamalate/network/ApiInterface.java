@@ -29,7 +29,6 @@ public interface ApiInterface {
                                  @Query("kelurahan") String kelurahan);
 
 
-
     // LPORAN
     @GET("laporan/getLaporanMasarakat.php")
     Call<ResponLaporan> laporanMasyarakatStatus(@Query("masyarakat_id") String masyarakat_id);
@@ -45,17 +44,22 @@ public interface ApiInterface {
                                              @Query("area_laporan") String area_laporan,
                                              @Query("staus_laporan") String staus_laporan);
 
+    @GET("laporan/editLaporanSelesai.php")
+    Call<ResponLaporan> editLaporanStatus(@Query("id_laporan") String id_laporan,
+                                          @Query("petugas_id") String petugas_id,
+                                          @Query("staus_laporan") String staus_laporan);
+
     @FormUrlEncoded
     @POST("laporan/addLaporan.php")
     Call<ResponLaporan> AddLaporan(@Field("keterangan_laporan") String keterangan_laporan,
-                                         @Field("foto_laporan") String foto_laporan,
-                                         @Field("latitude_laporan") String latitude_laporan,
-                                         @Field("longitude_laporan") String longitude_laporan,
-                                         @Field("alamat_laporan") String alamat_laporan,
-                                         @Field("nik_laporan") String nik_laporan,
-                                         @Field("kelurahan_laporan") String kelurahan_laporan,
-                                         @Field("area_laporan") String area_laporan,
-                                         @Field("masyarakat_id") String masyarakat_id);
+                                   @Field("foto_laporan") String foto_laporan,
+                                   @Field("latitude_laporan") String latitude_laporan,
+                                   @Field("longitude_laporan") String longitude_laporan,
+                                   @Field("alamat_laporan") String alamat_laporan,
+                                   @Field("nik_laporan") String nik_laporan,
+                                   @Field("kelurahan_laporan") String kelurahan_laporan,
+                                   @Field("area_laporan") String area_laporan,
+                                   @Field("masyarakat_id") String masyarakat_id);
 
 
     // BERITA
@@ -82,7 +86,6 @@ public interface ApiInterface {
                                            @Query("tanggal") String tanggal);
 
 
-
     // MASYARAKAT
     @FormUrlEncoded
     @POST("masyarakat/editFotoMasyarakat.php")
@@ -107,9 +110,9 @@ public interface ApiInterface {
 
     @GET("masyarakat/lokasiMasyarakat.php")
     Call<ResponseMasyarakat> editLokasi(@Query("id_masyarakat") String id_masyarakat,
-                                          @Query("alamat_masyarakat") String alamat_masyarakat,
-                                          @Query("latitude_masyarakat") String latitude_masyarakat,
-                                          @Query("longitude_masyarakat") String longitude_masyarakat);
+                                        @Query("alamat_masyarakat") String alamat_masyarakat,
+                                        @Query("latitude_masyarakat") String latitude_masyarakat,
+                                        @Query("longitude_masyarakat") String longitude_masyarakat);
 
     @GET("masyarakat/getMasyarakatId.php")
     Call<ResponseMasyarakat> getMasyarakatId(@Query("id_masyarakat") String id_masyarakat);
@@ -121,10 +124,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("masyarakat/editProfilMasyarakat.php")
     Call<ResponseMasyarakat> editProfil(@Field("id_masyarakat") String id_masyarakat,
-                                   @Field("nama_masyarakat") String nama_masyarakat,
-                                   @Field("alamat_masyarakat") String alamat_masyarakat,
-                                   @Field("telpon_masyarakat") String telpon_masyarakat,
-                                   @Field("usia_masyarakat") String usia_masyarakat);
+                                        @Field("nama_masyarakat") String nama_masyarakat,
+                                        @Field("alamat_masyarakat") String alamat_masyarakat,
+                                        @Field("telpon_masyarakat") String telpon_masyarakat,
+                                        @Field("usia_masyarakat") String usia_masyarakat);
 
     @GET("masyarakat/editStatusMarker.php")
     Call<ResponseMasyarakat> editStatusMarker(@Query("id_masyarakat") String id_masyarakat);

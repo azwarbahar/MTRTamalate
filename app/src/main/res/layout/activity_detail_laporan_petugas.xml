@@ -206,11 +206,13 @@
 
         <TextView
             android:id="@+id/tv_selesai"
-            android:background="@drawable/bg_white_trans_strok"
+            android:background="@drawable/bg_white_strok"
             android:textColor="@color/colorPrimaryDark"
             android:layout_below="@id/view2"
             android:paddingVertical="5dp"
             android:paddingHorizontal="12dp"
+            android:textSize="16dp"
+            android:textStyle="bold"
             android:layout_marginVertical="10sp"
             android:layout_marginHorizontal="16dp"
             android:layout_alignParentRight="true"

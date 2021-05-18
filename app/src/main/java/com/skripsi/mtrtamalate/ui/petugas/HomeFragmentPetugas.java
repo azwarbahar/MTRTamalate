@@ -206,6 +206,12 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadDataLaporan();
+    }
+
     private void loadDataLaporan() {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
