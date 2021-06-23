@@ -1,4 +1,4 @@
-package com.skripsi.mtrtamalate.ui.koordinator;
+    package com.skripsi.mtrtamalate.ui.koordinator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +29,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
@@ -60,6 +61,7 @@ import com.skripsi.mtrtamalate.models.sampah.SampahPetugas;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.masyarakat.FormLaporActivity;
+import com.skripsi.mtrtamalate.ui.masyarakat.akun.TitikLokasiActivity;
 import com.skripsi.mtrtamalate.utils.Constanta;
 
 import java.io.ByteArrayOutputStream;
@@ -325,12 +327,29 @@ public class LaporanPetugasActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     String kode = response.body().getKode();
                     if (kode.equals("1")){
-                        Toast.makeText(LaporanPetugasActivity.this, "suskes", Toast.LENGTH_SHORT).show();
+                        SweetAlertDialog sweetAlertDialogsuccess = new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.SUCCESS_TYPE);
+                        sweetAlertDialogsuccess.setTitleText("Success..");
+                        sweetAlertDialogsuccess.setContentText(response.body().getPesan());
+                        sweetAlertDialogsuccess.setCancelable(false);
+                        sweetAlertDialogsuccess.setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                                configIntent();
+                            }
+                        });
+                        sweetAlertDialogsuccess.show();
                     } else {
-                        Toast.makeText(LaporanPetugasActivity.this, "kode "+ kode, Toast.LENGTH_SHORT).show();
+                        new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Uups..")
+                                .setContentText(response.body().getPesan())
+                                .show();
                     }
                 } else {
-                    Toast.makeText(LaporanPetugasActivity.this, "gagal", Toast.LENGTH_SHORT).show();
+                    new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Gagal..")
+                            .setContentText("Terjadi kesalahan!")
+                            .show();
                 }
 
             }
@@ -338,9 +357,38 @@ public class LaporanPetugasActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponSampah> call, Throwable t) {
                 pDialog.dismiss();
-                Toast.makeText(LaporanPetugasActivity.this, "Terjadi Kesalahn", Toast.LENGTH_SHORT).show();
+                new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Gagal..")
+                        .setContentText("Terjadi kesalahan!")
+                        .show();
             }
         });
+
+
+    }
+
+
+    private void configIntent() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                pDialog = new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog.setTitleText("Menyimpan Data..");
+                pDialog.setCancelable(true);
+                pDialog.show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        pDialog.dismiss();
+                        finish();
+                    }
+                }, 2500);
+            }
+        }, 500);
 
 
     }
