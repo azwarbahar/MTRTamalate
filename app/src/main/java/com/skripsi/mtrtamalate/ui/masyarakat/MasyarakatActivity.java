@@ -118,7 +118,6 @@ public class MasyarakatActivity extends AppCompatActivity {
             });
             sweetAlertDialogError.show();
         }
-
     }
 
 

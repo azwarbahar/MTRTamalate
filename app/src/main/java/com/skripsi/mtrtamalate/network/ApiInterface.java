@@ -85,6 +85,13 @@ public interface ApiInterface {
     Call<ResponSampah> cekTodaySendPetugas(@Query("id_petugas") String id_petugas,
                                            @Query("tanggal") String tanggal);
 
+    @GET("sampah/getTotalSampah.php")
+    Call<ResponSampah> getTotalSampah();
+
+    @GET("sampah/getTotalSampahKelurahan.php")
+    Call<ResponSampah> getTotalSampahKelurahan(@Query("kelurahan") String kelurahan);
+
+
 
     // MASYARAKAT
     @FormUrlEncoded

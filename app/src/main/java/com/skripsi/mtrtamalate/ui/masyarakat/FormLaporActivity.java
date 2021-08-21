@@ -1,4 +1,4 @@
-package com.skripsi.mtrtamalate.ui.masyarakat;
+ package com.skripsi.mtrtamalate.ui.masyarakat;
 
 import android.Manifest;
 import android.content.Context;

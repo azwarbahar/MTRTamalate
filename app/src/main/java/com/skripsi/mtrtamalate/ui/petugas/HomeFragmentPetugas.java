@@ -316,18 +316,21 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
     private void initMarkerMasyarakat(ArrayList<Masayarkat> masayarkats) {
 
         for (int i = 0; i < masayarkats.size(); i++) {
-            double latitude_masyarakat = Double.parseDouble(masayarkats.get(i).getLatitudeMasyarakat());
-            double longitude_masyarakat = Double.parseDouble(masayarkats.get(i).getLongitudeMasyarakat());
-            Marker marker = map.addMarker(new MarkerOptions().title("Lokasi Sampah")
-                    .icon(bitmapDescriptor(getActivity()))
-                    .position(new LatLng(latitude_masyarakat, longitude_masyarakat)));
+            if (!masayarkats.get(i).getLatitudeMasyarakat().equals("-")){
+                double latitude_masyarakat = Double.parseDouble(masayarkats.get(i).getLatitudeMasyarakat());
+                double longitude_masyarakat = Double.parseDouble(masayarkats.get(i).getLongitudeMasyarakat());
+                Marker marker = map.addMarker(new MarkerOptions().title("Lokasi Sampah")
+                        .icon(bitmapDescriptor(getActivity()))
+                        .position(new LatLng(latitude_masyarakat, longitude_masyarakat)));
 
-            String idmark = marker.getId();
-            markerMapMasyarakat.put(idmark, masayarkats.get(i));
+                String idmark = marker.getId();
+                markerMapMasyarakat.put(idmark, masayarkats.get(i));
 
-            SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-            assert supportMapFragment != null;
-            supportMapFragment.getMapAsync(HomeFragmentPetugas.this);
+                SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+                assert supportMapFragment != null;
+                supportMapFragment.getMapAsync(HomeFragmentPetugas.this);
+
+            }
         }
 
     }
