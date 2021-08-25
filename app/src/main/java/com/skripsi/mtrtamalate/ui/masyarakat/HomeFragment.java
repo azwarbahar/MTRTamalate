@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
     private SharedPreferences.Editor editor;
     private String latitude_masyarakat;
     private String longitude_masyarakat;
+    private String pembayaran_masyarakat;
 
     private LinearLayout menu_bacaan;
     private LinearLayout menu_data_sampah;
@@ -150,6 +151,7 @@ public class HomeFragment extends Fragment {
 
     private void menuLapor(View view) {
 
+        pembayaran_masyarakat = mPreferences.getString(Constanta.SESSION_PEMBAYARAN_MASYARAKAT, "");
         latitude_masyarakat = mPreferences.getString(Constanta.SESSION_LATITUDE_MASYARAKAT, "");
         longitude_masyarakat = mPreferences.getString(Constanta.SESSION_LATITUDE_MASYARAKAT, "");
         if (latitude_masyarakat.equals("-")||longitude_masyarakat.equals("-")||latitude_masyarakat.isEmpty()){
@@ -175,7 +177,23 @@ public class HomeFragment extends Fragment {
             });
             sweetAlertDialogError.show();
         } else {
-            startActivity(new Intent(getActivity(), FormLaporActivity.class));
+            if (pembayaran_masyarakat.equals("Sudah")){
+                startActivity(new Intent(getActivity(), FormLaporActivity.class));
+            } else {
+
+                SweetAlertDialog sweetAlertDialogError = new SweetAlertDialog(getActivity(),
+                        SweetAlertDialog.ERROR_TYPE);
+                sweetAlertDialogError.setTitleText("Tidak Dapat Melapor");
+                sweetAlertDialogError.setCancelable(false);
+                sweetAlertDialogError.setContentText("Anda belum melakukan pembayaran");
+                sweetAlertDialogError.setConfirmButton("OK", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                    }
+                });
+                sweetAlertDialogError.show();
+            }
         }
     }
 

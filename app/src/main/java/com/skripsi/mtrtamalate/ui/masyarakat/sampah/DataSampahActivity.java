@@ -41,6 +41,8 @@ public class DataSampahActivity extends AppCompatActivity {
     private SweetAlertDialog pDialog;
     ArrayList<String> kelurahan = new ArrayList<String>();
 
+    private Pie pie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,29 +60,72 @@ public class DataSampahActivity extends AppCompatActivity {
         any_chart_view = findViewById(R.id.any_chart_view);
         any_chart_view.setProgressBar(findViewById(R.id.progress_bar));
 
-        Pie pie = AnyChart.pie();
+        pie = AnyChart.pie();
 
 
+        loadDataTotal();
+        loadDataKelurahan();
+        loadDataChart();
+
+    }
+
+    private void loadDataChart() {
+        kelurahan.add("Balang Baru");
+        kelurahan.add("Barombong");
+        kelurahan.add("Bongaya");
+        kelurahan.add("Bonto Duri");
+        kelurahan.add("Jongaya");
+        kelurahan.add("Maccini Sombala");
+        kelurahan.add("Mangasa");
+        kelurahan.add("Manuruki");
+        kelurahan.add("Pabaeng-Baeng");
+        kelurahan.add("Parang Tambung");
+        kelurahan.add("Tanjung Merdeka");
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("Tamalate", 250));
-        data.add(new ValueDataEntry("Parang Tambung", 300));
+//        for (int i = 0; i < kelurahan.size(); i++ ){
+//
+//            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+//            Call<ResponSampah> responSampahCall = apiInterface.getTotalSampahKelurahan(kelurahan.get(i));
+//            int finalI = i;
+//            responSampahCall.enqueue(new Callback<ResponSampah>() {
+//                @Override
+//                public void onResponse(Call<ResponSampah> call, Response<ResponSampah> response) {
+//                    String kode = response.body().getKode();
+//                    if (kode.equals("1")) {
+//                        String nilai = response.body().getTotal_berat_kelurahan();
+//                        if (nilai==null){
+//                            data.add(new ValueDataEntry(kelurahan.get(finalI), 0));
+////                            holder.tv_value.setText("0 Kg");
+//                        } else {
+//                            data.add(new ValueDataEntry(kelurahan.get(finalI), Integer.valueOf(nilai)));
+//                        }
+//                    } else {
+//                        data.add(new ValueDataEntry(kelurahan.get(finalI), 0));
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ResponSampah> call, Throwable t) {
+//                    data.add(new ValueDataEntry(kelurahan.get(finalI), 0));
+//                }
+//            });
+//        }
+
+        data.add(new ValueDataEntry("Tamalate", Integer.valueOf("250")));
+        data.add(new ValueDataEntry("Parang Tambung", Integer.valueOf("300")));
         data.add(new ValueDataEntry("Bonto Duri", 500));
         data.add(new ValueDataEntry("Manuruki", 400));
         data.add(new ValueDataEntry("Pabaeng-baneng", 700));
         data.add(new ValueDataEntry("Barombong", 900));
+        data.add(new ValueDataEntry("Barombong", 900));
         pie.data(data);
         pie.title("Data Kelurahan");
         pie.legend(false);
-
         any_chart_view.setChart(pie);
-
-        loadDataTotal();
-        loadDataKelurahan();
 
     }
 
     private void loadDataKelurahan() {
-
         kelurahan.add("Balang Baru");
         kelurahan.add("Barombong");
         kelurahan.add("Bongaya");

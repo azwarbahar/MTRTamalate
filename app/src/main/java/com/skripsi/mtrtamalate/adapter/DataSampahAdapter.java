@@ -51,7 +51,12 @@ public class DataSampahAdapter extends RecyclerView.Adapter<DataSampahAdapter.My
             public void onResponse(Call<ResponSampah> call, Response<ResponSampah> response) {
                 String kode = response.body().getKode();
                 if (kode.equals("1")) {
-                    holder.tv_value.setText(response.body().getTotal_berat_kelurahan());
+                    String nilai = response.body().getTotal_berat_kelurahan();
+                    if (nilai==null){
+                        holder.tv_value.setText("0 Kg");
+                    } else {
+                        holder.tv_value.setText(nilai + " Kg");
+                    }
                 }
             }
 
