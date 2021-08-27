@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.masyarakat.InfoActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.AppCompat.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:theme="@style/ToolbarTheme"
+        app:title="Info"
+        app:titleTextColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/img_splash" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img1"
+        android:layout_marginHorizontal="13sp"
+        android:layout_marginTop="30dp"
+        android:text="       Gerakan MTR atau Makassar Ta’ Tidak Rantasa’ Gerakan LISA (Lihat Sampah Ambil) bersama gerakan-gerakan lainnya seperti MABASA, MABELLO, AKU DAN SEKOLAHKU TIDAK RANTASA’ merupakan gerakan inisiasi masyarakat yang diprakarsai dan dipimpin langsung oleh Walikota Makassar dan berhasil membuat Kota Makassar masuk menjadi kota terbersih di Indonesia." />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="30dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/dimen_20dp">
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="10dp"
+                android:text="Kontak"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/alamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv2"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Alamat"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/telpon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_alamat"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Telpon"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/telpon"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Email"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/web"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/email"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Website"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:id="@+id/titik2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/alamat"
+                android:layout_marginLeft="@dimen/dimen_20dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/alamat"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/titik3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/titik2"
+                android:layout_alignTop="@id/telpon"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/telpon"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/titik4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/titik2"
+                android:layout_alignTop="@id/email"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/email"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/titik5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/titik2"
+                android:layout_alignTop="@id/web"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@id/web"
+                android:text=":" />
+
+            <TextView
+                android:id="@+id/tv_alamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/alamat"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/titik2"
+                android:text="Jl. Danau Tj. Bunga No.181, Tj. Merdeka, Tamalate, Kota Makassar, Sulawesi Selatan 90224, Indonesia"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_telpon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/telpon"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/titik3"
+                android:text="(0411) 879249"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/email"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/titik4"
+                android:text="mtrtamalate@makassar.go.id"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_web"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/web"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/titik5"
+                android:text="https://mtrtamalate.tryapp.my.id/"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

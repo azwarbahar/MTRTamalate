@@ -206,7 +206,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void menuInfo(View view) {
-        Toast.makeText(getActivity(), "Klik Info", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), InfoActivity.class));
     }
 
     private void showAll(View view) {

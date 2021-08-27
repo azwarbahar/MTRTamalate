@@ -3,21 +3,21 @@ package com.skripsi.mtrtamalate.utils;
 public class Constanta {
 
     // IP
-    public static final String IP = "192.168.43.188";
+    public static final String IP = "mtrtamalate.tryapp.my.id";
 
     // URL API
-    public static final String BASE_URL = "http://" + IP + "/pelaporan-sampah/api/";
+    public static final String BASE_URL = "https://" + IP + "/api/";
 
-    public static final String URL_IMG_BERITA = "http://" + IP + "/pelaporan-sampah/kecamatan/admin/" +
+    public static final String URL_IMG_BERITA = "https://" + IP + "/kecamatan/admin/" +
             "berita/foto/";
 
-    public static final String URL_IMG_MASYARAKAT = "http://" + IP + "/pelaporan-sampah/kelurahan/" +
+    public static final String URL_IMG_MASYARAKAT = "https://" + IP + "/kelurahan/" +
             "admin/masyarakat/foto/";
 
-    public static final String URL_IMG_PETUGAS = "http://" + IP + "/pelaporan-sampah/kelurahan/" +
+    public static final String URL_IMG_PETUGAS = "https://" + IP + "/kelurahan/" +
             "admin/petugas/foto/";
 
-    public static final String URL_IMG_LAPORAN = "http://" + IP + "/pelaporan-sampah/assets/" +
+    public static final String URL_IMG_LAPORAN = "https://" + IP + "/assets/" +
             "dist/img/laporan/";
 
     // Shared Preferences
