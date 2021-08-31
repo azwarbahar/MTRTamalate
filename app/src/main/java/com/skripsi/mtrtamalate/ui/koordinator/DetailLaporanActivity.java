@@ -33,6 +33,7 @@ import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.ImagePickerActivity;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.ViewImageActivity;
+import com.skripsi.mtrtamalate.ui.petugas.DetailLaporanPetugasActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,11 +88,15 @@ public class DetailLaporanActivity extends AppCompatActivity implements OnMapRea
         tv_alamat.setText(laporan_parcelable.getAlamatLaporan());
         tv_keterangan.setText(laporan_parcelable.getKeteranganLaporan());
         status_laporan = laporan_parcelable.getStausLaporan();
-        if (status_laporan.equals("Proccess")){
+        if (status_laporan.equals("New")) {
+            tv_status.setText("Terbaru");
+            tv_status.setTextColor(ContextCompat.getColor(this, R.color.newText));
+            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanActivity.this, R.drawable.bg_status_new));
+        } else if (status_laporan.equals("Proccess")) {
             tv_status.setText("Proses");
             tv_status.setTextColor(ContextCompat.getColor(this, R.color.proccessText));
             tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanActivity.this, R.drawable.bg_status_proccess));
-        } else if (status_laporan.equals("Done")){
+        } else if (status_laporan.equals("Done")) {
             tv_status.setText("Selesai");
             tv_status.setTextColor(ContextCompat.getColor(this, R.color.doneText));
             tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanActivity.this, R.drawable.bg_status_done));

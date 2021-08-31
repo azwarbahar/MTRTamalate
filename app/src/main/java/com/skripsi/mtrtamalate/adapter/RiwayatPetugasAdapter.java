@@ -47,21 +47,31 @@ public class RiwayatPetugasAdapter extends RecyclerView.Adapter<RiwayatPetugasAd
 
         holder.tv_tanggal.setText("Waktu : " + tanggal);
 
-        if (status.equals("Proccess")) {
-            holder.tv_status.setText("Diproses");
-            Glide.with(context)
-                    .load(R.drawable.icon_hourglass)
-                    .into(holder.img_status);
-        } else if (status.equals("Done")) {
-            holder.tv_status.setText("Selesai");
-            Glide.with(context)
-                    .load(R.drawable.icon_success)
-                    .into(holder.img_status);
-        } else if (status.equals("Cancel")) {
-            holder.tv_status.setText("Dibatalkan");
-            Glide.with(context)
-                    .load(R.drawable.icon_cancel)
-                    .into(holder.img_status);
+        switch (status) {
+            case "New":
+                holder.tv_status.setText("Terbaru");
+                Glide.with(context)
+                        .load(R.drawable.icon_hourglass)
+                        .into(holder.img_status);
+                break;
+            case "Proccess":
+                holder.tv_status.setText("Diproses");
+                Glide.with(context)
+                        .load(R.drawable.icon_hourglass)
+                        .into(holder.img_status);
+                break;
+            case "Done":
+                holder.tv_status.setText("Selesai");
+                Glide.with(context)
+                        .load(R.drawable.icon_success)
+                        .into(holder.img_status);
+                break;
+            case "Cancel":
+                holder.tv_status.setText("Dibatalkan");
+                Glide.with(context)
+                        .load(R.drawable.icon_cancel)
+                        .into(holder.img_status);
+                break;
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

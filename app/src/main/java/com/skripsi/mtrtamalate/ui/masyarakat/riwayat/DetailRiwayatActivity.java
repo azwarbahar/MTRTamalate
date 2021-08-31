@@ -121,7 +121,15 @@ public class DetailRiwayatActivity extends AppCompatActivity {
     }
 
     private void initStatus(String status) {
-        if (status.equals("Proccess")){
+
+        if (status.equals("New")){
+            tv_status.setText("Laporan Terbaru Anda");
+            tv_batal.setVisibility(View.GONE);
+            rl_status.setBackground(ContextCompat.getDrawable(DetailRiwayatActivity.this, R.color.colorBackWarning));
+            Glide.with(this)
+                    .load(R.drawable.icon_hourglass)
+                    .into(img_status);
+        } else if (status.equals("Proccess")){
             tv_status.setText("Laporan Sedang Proses..");
             tv_batal.setVisibility(View.GONE);
             rl_status.setBackground(ContextCompat.getDrawable(DetailRiwayatActivity.this, R.color.colorBackWarning));

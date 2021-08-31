@@ -38,4 +38,7 @@
     <color name="proccessText">#FFFFFF</color>
     <color name="proccessBack">#9E9E9E</color>
 
+    <color name="newText">#005789</color>
+    <color name="newBack">#C5E9FF</color>
+
 </resources>

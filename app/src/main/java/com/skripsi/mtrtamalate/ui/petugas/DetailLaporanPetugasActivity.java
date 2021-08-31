@@ -107,7 +107,13 @@ public class DetailLaporanPetugasActivity extends AppCompatActivity implements O
         tv_alamat.setText(laporan_parcelable.getAlamatLaporan());
         tv_keterangan.setText(laporan_parcelable.getKeteranganLaporan());
         status_laporan = laporan_parcelable.getStausLaporan();
-        if (status_laporan.equals("Proccess")) {
+        if (status_laporan.equals("New")) {
+            tv_selesai.setText("Tindaki");
+            tv_status.setText("Terbaru");
+            tv_status.setTextColor(ContextCompat.getColor(this, R.color.newText));
+            tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanPetugasActivity.this, R.drawable.bg_status_new));
+        } else if (status_laporan.equals("Proccess")) {
+            tv_selesai.setText("Selesai");
             tv_status.setText("Proses");
             tv_status.setTextColor(ContextCompat.getColor(this, R.color.proccessText));
             tv_status.setBackground(ContextCompat.getDrawable(DetailLaporanPetugasActivity.this, R.drawable.bg_status_proccess));
@@ -144,32 +150,56 @@ public class DetailLaporanPetugasActivity extends AppCompatActivity implements O
         pDialog.setCancelable(false);
         pDialog.show();
 
-        new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Selesai")
-                .setContentText("Anda Telah Selesai Menindaki Laporan ?")
-                .setCancelButton("Batal", new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        pDialog.dismiss();
-                        sweetAlertDialog.dismiss();
-                    }
-                })
-                .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sweetAlertDialog.dismiss();
+        if (status_laporan.equals("New")) {
+
+            new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Tindaki")
+                    .setContentText("Anda ingin menuju titik lokasi laporan ?")
+                    .setCancelButton("Batal", new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            pDialog.dismiss();
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
 //                                    pDialog.show();
-                        sendDone(id_laporan, id_petugas_sekarang);
-                    }
-                })
-                .show();
+                            sendDone(id_laporan, id_petugas_sekarang, "Proccess");
+                        }
+                    })
+                    .show();
+        } else if (status_laporan.equals("Proccess")) {
+
+            new SweetAlertDialog(DetailLaporanPetugasActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Selesai")
+                    .setContentText("Anda Telah Selesai Menindaki Laporan ?")
+                    .setCancelButton("Batal", new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            pDialog.dismiss();
+                            sweetAlertDialog.dismiss();
+                        }
+                    })
+                    .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+//                                    pDialog.show();
+                            sendDone(id_laporan, id_petugas_sekarang, "Done");
+                        }
+                    })
+                    .show();
+        }
     }
 
-    private void sendDone(String id_laporan, String id_petugas_sekarang) {
+    private void sendDone(String id_laporan, String id_petugas_sekarang, String status) {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponLaporan> responLaporanCall = apiInterface.editLaporanStatus(id_laporan, id_petugas_sekarang,
-                "Done");
+                status);
         responLaporanCall.enqueue(new Callback<ResponLaporan>() {
             @Override
             public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
