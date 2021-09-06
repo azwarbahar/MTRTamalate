@@ -30,6 +30,9 @@ public interface ApiInterface {
 
 
     // LPORAN
+    @GET("laporan/getLaporanId.php")
+    Call<ResponLaporan> getLaporanId(@Query("id_laporan") String id_laporan);
+
     @GET("laporan/getLaporanMasarakat.php")
     Call<ResponLaporan> laporanMasyarakatStatus(@Query("masyarakat_id") String masyarakat_id);
 
@@ -44,10 +47,22 @@ public interface ApiInterface {
                                              @Query("area_laporan") String area_laporan,
                                              @Query("staus_laporan") String staus_laporan);
 
+    @GET("laporan/getLaporanTindakipetugas.php")
+    Call<ResponLaporan> getLaporanTindakipetugas(@Query("kelurahan_laporan") String kelurahan_laporan,
+                                                 @Query("area_laporan") String area_laporan,
+                                                 @Query("staus_laporan") String staus_laporan,
+                                                 @Query("petugas_id") String petugas_id);
+
     @GET("laporan/editLaporanSelesai.php")
     Call<ResponLaporan> editLaporanStatus(@Query("id_laporan") String id_laporan,
                                           @Query("petugas_id") String petugas_id,
                                           @Query("staus_laporan") String staus_laporan);
+
+    @GET("laporan/editLaporanSelesaiTindaki.php")
+    Call<ResponLaporan> editLaporanSelesaiTindaki(@Query("id_laporan") String id_laporan,
+                                                  @Query("petugas_id") String petugas_id,
+                                                  @Query("staus_laporan") String staus_laporan,
+                                                  @Query("foto_bukti_tindakan") String foto_bukti_tindakan);
 
     @FormUrlEncoded
     @POST("laporan/addLaporan.php")
@@ -90,7 +105,6 @@ public interface ApiInterface {
 
     @GET("sampah/getTotalSampahKelurahan.php")
     Call<ResponSampah> getTotalSampahKelurahan(@Query("kelurahan") String kelurahan);
-
 
 
     // MASYARAKAT

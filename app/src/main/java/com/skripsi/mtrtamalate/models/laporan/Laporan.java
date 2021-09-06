@@ -49,6 +49,9 @@ public class Laporan implements Parcelable {
 	@SerializedName("area_laporan")
 	private String areaLaporan;
 
+	@SerializedName("foto_tindakan_laporan")
+	private String fotoTindakanLaporan;
+
 	protected Laporan(Parcel in) {
 		petugasId = in.readString();
 		idLaporan = in.readString();
@@ -64,6 +67,7 @@ public class Laporan implements Parcelable {
 		updateAt = in.readString();
 		alamatLaporan = in.readString();
 		areaLaporan = in.readString();
+		fotoTindakanLaporan = in.readString();
 	}
 
 	public static final Creator<Laporan> CREATOR = new Creator<Laporan>() {
@@ -78,60 +82,64 @@ public class Laporan implements Parcelable {
 		}
 	};
 
-	public String getPetugasId(){
+	public String getPetugasId() {
 		return petugasId;
 	}
 
-	public String getIdLaporan(){
+	public String getIdLaporan() {
 		return idLaporan;
 	}
 
-	public String getFotoLaporan(){
+	public String getFotoLaporan() {
 		return fotoLaporan;
 	}
 
-	public String getCreatedAt(){
+	public String getCreatedAt() {
 		return createdAt;
 	}
 
-	public String getLatitudeLaporan(){
+	public String getLatitudeLaporan() {
 		return latitudeLaporan;
 	}
 
-	public String getStausLaporan(){
+	public String getStausLaporan() {
 		return stausLaporan;
 	}
 
-	public String getLongitudeLaporan(){
+	public String getLongitudeLaporan() {
 		return longitudeLaporan;
 	}
 
-	public String getNikLaporan(){
+	public String getNikLaporan() {
 		return nikLaporan;
 	}
 
-	public String getMasyarakatId(){
+	public String getMasyarakatId() {
 		return masyarakatId;
 	}
 
-	public String getKelurahanLaporan(){
+	public String getKelurahanLaporan() {
 		return kelurahanLaporan;
 	}
 
-	public String getKeteranganLaporan(){
+	public String getKeteranganLaporan() {
 		return keteranganLaporan;
 	}
 
-	public String getUpdateAt(){
+	public String getUpdateAt() {
 		return updateAt;
 	}
 
-	public String getAlamatLaporan(){
+	public String getAlamatLaporan() {
 		return alamatLaporan;
 	}
 
-	public String getAreaLaporan(){
+	public String getAreaLaporan() {
 		return areaLaporan;
+	}
+
+	public String getFotoTindakanLaporan() {
+		return fotoTindakanLaporan;
 	}
 
 	@Override
@@ -140,20 +148,21 @@ public class Laporan implements Parcelable {
 	}
 
 	@Override
-	public void writeToParcel(Parcel parcel, int i) {
-		parcel.writeString(petugasId);
-		parcel.writeString(idLaporan);
-		parcel.writeString(fotoLaporan);
-		parcel.writeString(createdAt);
-		parcel.writeString(latitudeLaporan);
-		parcel.writeString(stausLaporan);
-		parcel.writeString(longitudeLaporan);
-		parcel.writeString(nikLaporan);
-		parcel.writeString(masyarakatId);
-		parcel.writeString(kelurahanLaporan);
-		parcel.writeString(keteranganLaporan);
-		parcel.writeString(updateAt);
-		parcel.writeString(alamatLaporan);
-		parcel.writeString(areaLaporan);
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(petugasId);
+		dest.writeString(idLaporan);
+		dest.writeString(fotoLaporan);
+		dest.writeString(createdAt);
+		dest.writeString(latitudeLaporan);
+		dest.writeString(stausLaporan);
+		dest.writeString(longitudeLaporan);
+		dest.writeString(nikLaporan);
+		dest.writeString(masyarakatId);
+		dest.writeString(kelurahanLaporan);
+		dest.writeString(keteranganLaporan);
+		dest.writeString(updateAt);
+		dest.writeString(alamatLaporan);
+		dest.writeString(areaLaporan);
+		dest.writeString(fotoTindakanLaporan);
 	}
 }

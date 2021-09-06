@@ -88,7 +88,7 @@ public class RiwayatLaporanActivity extends AppCompatActivity implements SwipeRe
                         } else {
                             onGetData();
                             rv_laporan.setLayoutManager(new LinearLayoutManager(RiwayatLaporanActivity.this));
-                            laporanPetugasAdapter = new LaporanPetugasAdapter(RiwayatLaporanActivity.this, laporans, "koordinator");
+                            laporanPetugasAdapter = new LaporanPetugasAdapter(RiwayatLaporanActivity.this, laporans, "koordinator", false);
                             rv_laporan.setAdapter(laporanPetugasAdapter);
                         }
 
@@ -139,7 +139,7 @@ public class RiwayatLaporanActivity extends AppCompatActivity implements SwipeRe
                         } else {
                             onGetData();
                             rv_laporan.setLayoutManager(new LinearLayoutManager(RiwayatLaporanActivity.this));
-                            laporanPetugasAdapter = new LaporanPetugasAdapter(RiwayatLaporanActivity.this, laporans, "koordinator");
+                            laporanPetugasAdapter = new LaporanPetugasAdapter(RiwayatLaporanActivity.this, laporans, "koordinator", false);
                             rv_laporan.setAdapter(laporanPetugasAdapter);
                         }
 

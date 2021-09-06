@@ -557,25 +557,6 @@ public class LaporanPetugasActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
-//                case 0:
-//                    if (requestCode == 0) {
-//                        if (resultCode == RESULT_OK) {
-//                            try {
-//                                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
-//                                        getContentResolver(), imageUri);
-//                                img_foto.setImageBitmap(thumbnail);
-//                                bitmap_gambar = thumbnail;
-//                                String imageurl = getRealPathFromURI(imageUri);
-////                                Toast.makeText(this, imageurl, Toast.LENGTH_SHORT).show();
-//
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-////                        Bitmap resized = (Bitmap) data.getExtras().get("data");
-////                        bitmap_gambar = Bitmap.createScaledBitmap(resized, 1000, 1000, false);
-////                        img_foto.setImageBitmap(bitmap_gambar);
-//                        }
-//                    }
 
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {

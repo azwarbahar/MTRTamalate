@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,8 +20,11 @@ import com.skripsi.mtrtamalate.models.petugas.ResponsePetugas;
 import com.skripsi.mtrtamalate.network.ApiClient;
 import com.skripsi.mtrtamalate.network.ApiInterface;
 import com.skripsi.mtrtamalate.ui.masyarakat.akun.TitikLokasiActivity;
+import com.skripsi.mtrtamalate.ui.masyarakat.akun.ViewImageActivity;
+import com.skripsi.mtrtamalate.ui.petugas.DetailLaporanPetugasActivity;
 import com.skripsi.mtrtamalate.utils.Constanta;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,8 +55,11 @@ public class DetailRiwayatActivity extends AppCompatActivity {
     private String alamat;
     private String foto_laporan;
     private String id_petugas;
+    private String foto_bukti_tindakan;
 
     private Petugas petugas;
+
+    private RelativeLayout rl_foto_tindakan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +85,29 @@ public class DetailRiwayatActivity extends AppCompatActivity {
         tv_jekel_petugas = findViewById(R.id.tv_jekel_petugas);
         img_petugas = findViewById(R.id.img_petugas);
         cv_foto_petugas = findViewById(R.id.cv_foto_petugas);
+        rl_foto_tindakan = findViewById(R.id.rl_foto_tindakan);
 
         Laporan laporan = getIntent().getParcelableExtra("extra_data_riwayat");
         assert laporan != null;
         loadData(laporan);
+
+        rl_foto_tindakan.setOnClickListener(this::clickBukti);
+    }
+
+    private void clickBukti(View view) {
+
+        if (foto_bukti_tindakan.equals("-")){
+            new SweetAlertDialog(DetailRiwayatActivity.this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Maaf-")
+                    .setContentText("Bukti tindakan laporan belum tersedia.")
+                    .show();
+        } else {
+            Intent intent = new Intent(DetailRiwayatActivity.this, ViewImageActivity.class);
+            intent.putExtra("role", "foto_tindakan_laporan");
+            intent.putExtra("foto", foto_bukti_tindakan);
+            startActivity(intent);
+        }
+
     }
 
     private void loadData(Laporan laporan) {
@@ -93,6 +119,7 @@ public class DetailRiwayatActivity extends AppCompatActivity {
         alamat = laporan.getAlamatLaporan();
         id_petugas = laporan.getPetugasId();
         foto_laporan = laporan.getFotoLaporan();
+        foto_bukti_tindakan = laporan.getFotoTindakanLaporan();
         Glide.with(this)
                 .load(Constanta.URL_IMG_LAPORAN + foto_laporan)
                 .into(img_foto);
@@ -107,6 +134,7 @@ public class DetailRiwayatActivity extends AppCompatActivity {
     }
 
     private void petugasTdkAda(){
+        rl_foto_tindakan.setVisibility(View.GONE);
         cv_foto_petugas.setVisibility(View.GONE);
         tv_nama_petugas.setVisibility(View.GONE);
         tv_jekel_petugas.setVisibility(View.GONE);
@@ -114,6 +142,7 @@ public class DetailRiwayatActivity extends AppCompatActivity {
     }
 
     private void petugasAda(){
+        rl_foto_tindakan.setVisibility(View.VISIBLE);
         cv_foto_petugas.setVisibility(View.VISIBLE);
         tv_nama_petugas.setVisibility(View.VISIBLE);
         tv_jekel_petugas.setVisibility(View.VISIBLE);

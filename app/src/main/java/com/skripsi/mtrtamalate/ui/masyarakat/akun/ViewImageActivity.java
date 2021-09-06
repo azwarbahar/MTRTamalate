@@ -41,6 +41,12 @@ public class ViewImageActivity extends AppCompatActivity {
                     .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.ic_broken_image)
                     .into(photoView);
+        } else if (role.equals("foto_tindakan_laporan")){
+            Glide.with(this)
+                    .load(Constanta.URL_IMG_TINDAKAN_LAPORAN + foto)
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+                    .into(photoView);
         }
         img_close.setOnClickListener(new View.OnClickListener() {
             @Override

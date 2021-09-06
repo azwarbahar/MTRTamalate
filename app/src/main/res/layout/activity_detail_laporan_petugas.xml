@@ -243,4 +243,107 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/continer_dialog"
+        android:background="@color/blackTrans"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            app:cardElevation="8dp"
+            app:cardCornerRadius="18dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:paddingVertical="@dimen/dimen_20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/img_bukti_foto"
+                    android:id="@+id/img_illust"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"/>
+
+                <TextView
+                    android:id="@+id/tv11"
+                    android:layout_marginHorizontal="@dimen/dimen_20dp"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal"
+                    android:text="Mengambil gambar sebagai bukti penindakan sampah."
+                    android:layout_below="@id/img_illust"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_foto"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_below="@id/tv11"
+                    android:gravity="center"
+                    android:paddingVertical="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/dimen_20dp"
+                    android:background="@drawable/bg_btn_lapor"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_baseline_photo_camera_24"
+                        android:layout_width="wrap_content"
+                        app:tint="@color/white"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="Buka Kamera"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_batal"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/ll_foto"
+                    android:gravity="center"
+                    android:paddingVertical="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/dimen_20dp"
+                    android:background="@drawable/bg_btn_lapor_white"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_baseline_close_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:tint="@color/colorPrimaryDark" />
+
+                    <TextView
+                        android:text="Batal"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvcoba"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>

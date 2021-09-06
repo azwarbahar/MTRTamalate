@@ -232,7 +232,7 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
     private void loadDataLaporan() {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponLaporan> laporanCall = apiInterface.getLaporanMapPetugas(kelurahan_pekerja, area_pekerja, "Proccess");
+        Call<ResponLaporan> laporanCall = apiInterface.getLaporanMapPetugas(kelurahan_pekerja, area_pekerja, "New");
         laporanCall.enqueue(new Callback<ResponLaporan>() {
             @Override
             public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
@@ -244,7 +244,7 @@ public class HomeFragmentKoordinator extends Fragment implements OnMapReadyCallb
 
                             img_kosong.setVisibility(View.GONE);
                             rv_laporan.setVisibility(View.VISIBLE);
-                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(), laporans, "koordinator");
+                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(), laporans, "koordinator", false);
                             rv_laporan.setLayoutManager(new LinearLayoutManager(getActivity()));
                             rv_laporan.setAdapter(laporanPetugasAdapter);
                             tv_jumlah_laporan.setText(String.valueOf(laporans.size()));

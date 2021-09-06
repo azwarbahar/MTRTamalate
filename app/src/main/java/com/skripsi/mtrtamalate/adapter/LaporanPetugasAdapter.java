@@ -17,16 +17,20 @@ import com.skripsi.mtrtamalate.ui.petugas.DetailLaporanPetugasActivity;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class LaporanPetugasAdapter extends RecyclerView.Adapter<LaporanPetugasAdapter.MyHolderView> {
 
     private Context context;
     private ArrayList<Laporan> laporans;
     private String role;
+    private boolean ready_tindaki;
 
-    public LaporanPetugasAdapter(Context context, ArrayList<Laporan> laporans, String role) {
+    public LaporanPetugasAdapter(Context context, ArrayList<Laporan> laporans, String role, boolean ready_tindaki) {
         this.context = context;
         this.laporans = laporans;
         this.role = role;
+        this.ready_tindaki = ready_tindaki;
     }
 
     @NonNull
@@ -50,9 +54,16 @@ public class LaporanPetugasAdapter extends RecyclerView.Adapter<LaporanPetugasAd
             public void onClick(View view) {
 
                 if (role.equals("petugas")) {
-                    Intent intent = new Intent(context, DetailLaporanPetugasActivity.class);
-                    intent.putExtra("extra_data", laporans.get(position));
-                    context.startActivity(intent);
+                    if (ready_tindaki){
+                        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Maaf")
+                                .setContentText("Terdapat laporan yang belum terselesaikan!")
+                                .show();
+                    } else {
+                        Intent intent = new Intent(context, DetailLaporanPetugasActivity.class);
+                        intent.putExtra("extra_data", laporans.get(position));
+                        context.startActivity(intent);
+                    }
                 } else {
                     Intent intent = new Intent(context, DetailLaporanActivity.class);
                     intent.putExtra("extra_data", laporans.get(position));

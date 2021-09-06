@@ -92,6 +92,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
     private Bitmap bitmap;
     private MarkerOptions markerOptionsPesanan;
     private CardView cv_laporan;
+    private CardView cv_tindaki;
 
     private SlidingUpPanelLayout sliding_layout;
 
@@ -141,11 +142,15 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
     private ArrayList<Masayarkat> masayarkats;
     private ArrayList<Laporan> laporans;
+    private ArrayList<Laporan> laporanTindaki;
 
     private RecyclerView rv_laporan;
     private LaporanPetugasAdapter laporanPetugasAdapter;
     private TextView tv_jumlah_laporan;
+    private TextView tv_jumlah_berjalan;
     private ImageView img_kosong;
+
+    private boolean ready_tindaki = false;
 
     HashMap<String, Masayarkat> markerMapMasyarakat = new HashMap<String, Masayarkat>();
     HashMap<String, Laporan> markerMapLaporan = new HashMap<String, Laporan>();
@@ -181,6 +186,9 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
         rv_laporan = view.findViewById(R.id.rv_laporan);
         img_kosong = view.findViewById(R.id.img_kosong);
 
+        tv_jumlah_berjalan = view.findViewById(R.id.tv_jumlah_berjalan);
+        cv_tindaki = view.findViewById(R.id.cv_tindaki);
+
         cv_laporan = view.findViewById(R.id.cv_laporan);
         cv_laporan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +196,8 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
                 showPanel();
             }
         });
+
+        cv_tindaki.setOnClickListener(this::clickBerjalan);
 
         btn_jenis_map = view.findViewById(R.id.btn_jenis_map);
         ImageView img_my_location = view.findViewById(R.id.img_my_location);
@@ -206,16 +216,69 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
     }
 
+    private void clickBerjalan(View view) {
+        //
+        for (int a = 0; a < laporanTindaki.size(); a++){
+            Intent intent = new Intent(getActivity(), DetailLaporanPetugasActivity.class);
+            intent.putExtra("extra_data", laporanTindaki.get(a));
+            getActivity().startActivity(intent);
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         loadDataLaporan();
+        loadDataBerjalan();
+    }
+
+    private void loadDataBerjalan() {
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponLaporan> responLaporanCall = apiInterface.getLaporanTindakipetugas(
+                kelurahan_pekerja, area_pekerja, "Proccess", id_pekerja);
+        responLaporanCall.enqueue(new Callback<ResponLaporan>() {
+            @Override
+            public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
+                if (response.isSuccessful()){
+                    String kode = response.body().getKode();
+                    if (kode.equals("1")){
+                        laporanTindaki = (ArrayList<Laporan>) response.body().getResult_laporan_berjalan();
+                        if (laporanTindaki.size() > 0){
+                            ready_tindaki = true;
+                            cv_tindaki.setVisibility(View.VISIBLE);
+                            tv_jumlah_berjalan.setText(String.valueOf(laporanTindaki.size()));
+//                            Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                        } else {
+//                            Toast.makeText(getActivity(), "kosong", Toast.LENGTH_SHORT).show();
+                            ready_tindaki = false;
+                            cv_tindaki.setVisibility(View.GONE);
+                        }
+                    } else {
+//                        Toast.makeText(getActivity(), "kode ! 1", Toast.LENGTH_SHORT).show();
+                        ready_tindaki = false;
+                        cv_tindaki.setVisibility(View.GONE);
+                    }
+                } else {
+//                    Toast.makeText(getActivity(), "unsuccess", Toast.LENGTH_SHORT).show();
+                    ready_tindaki = false;
+                    cv_tindaki.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponLaporan> call, Throwable t) {
+                cv_tindaki.setVisibility(View.GONE);
+//                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                ready_tindaki = false;
+            }
+        });
     }
 
     private void loadDataLaporan() {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponLaporan> laporanCall = apiInterface.getLaporanMapPetugas(kelurahan_pekerja, area_pekerja, "Proccess");
+        Call<ResponLaporan> laporanCall = apiInterface.getLaporanMapPetugas(kelurahan_pekerja, area_pekerja, "New");
         laporanCall.enqueue(new Callback<ResponLaporan>() {
             @Override
             public void onResponse(Call<ResponLaporan> call, Response<ResponLaporan> response) {
@@ -227,7 +290,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
 
                             img_kosong.setVisibility(View.GONE);
                             rv_laporan.setVisibility(View.VISIBLE);
-                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(),laporans, "petugas");
+                            laporanPetugasAdapter = new LaporanPetugasAdapter(getActivity(),laporans, "petugas", ready_tindaki);
                             rv_laporan.setLayoutManager(new LinearLayoutManager(getActivity()));
                             rv_laporan.setAdapter(laporanPetugasAdapter);
                             tv_jumlah_laporan.setText(String.valueOf(laporans.size()));
@@ -369,6 +432,7 @@ public class HomeFragmentPetugas extends Fragment implements OnMapReadyCallback,
         role_pekerja = mPreferences.getString(Constanta.SESSION_ROLE, "");
 
         loadDataLaporan();
+        loadDataBerjalan();
         loadDataMasyarakat();
     }
 

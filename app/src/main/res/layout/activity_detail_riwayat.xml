@@ -213,6 +213,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
+                <RelativeLayout
+                    android:id="@+id/rl_foto_tindakan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/cv_foto_petugas"
+                    android:layout_marginBottom="8dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginHorizontal="16dp">
+
+                    <ImageView
+                        android:id="@+id/img2"
+                        android:layout_width="@dimen/dimen_20dp"
+                        android:layout_height="@dimen/dimen_20dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="3dp"
+                        android:src="@drawable/ic_baseline_photo_library_24"
+                        app:tint="@color/colorPrimaryDark" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img2"
+                        android:layout_centerHorizontal="true"
+                        android:text="Bukti Tindakan"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
+
             </RelativeLayout>
 
         </RelativeLayout>

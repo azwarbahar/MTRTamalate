@@ -20,6 +20,9 @@ public class Constanta {
     public static final String URL_IMG_LAPORAN = "https://" + IP + "/assets/" +
             "dist/img/laporan/";
 
+    public static final String URL_IMG_TINDAKAN_LAPORAN = "https://" + IP + "/assets/" +
+            "dist/img/laporan/bukti_tindakan/";
+
     // Shared Preferences
     public static final String MY_SHARED_PREFERENCES = "my_shared_preferences";
     public static final String SESSION_ROLE  = "SESSION_ROLE";

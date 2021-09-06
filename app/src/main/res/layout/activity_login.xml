@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/til_password"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="17dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/bg_btn_lapor"
         android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
@@ -152,7 +152,7 @@
         android:layout_alignBottom="@id/view1"
         android:layout_toLeftOf="@id/view1"
         android:gravity="center_vertical"
-        android:text="Koordinaor"
+        android:text="Koordinator"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold|italic" />
 

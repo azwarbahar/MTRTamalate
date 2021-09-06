@@ -72,16 +72,67 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_tindaki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cv_laporan"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="22dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_primary_trans_strok"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="5dp">
+
+
+                <TextView
+                    android:id="@+id/tv_jumlah_berjalan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="99"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv11"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_jumlah_berjalan"
+                    android:text="Sedang menuju lokasi laporan"
+                    android:textColor="@color/black"
+                    android:textStyle="italic" />
+
+                <ImageView
+                    android:layout_toRightOf="@id/tv11"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_baseline_chevron_right_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tint="@color/grey" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <ImageView
             android:id="@+id/btn_jenis_map"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_below="@id/cv_tindaki"
             android:layout_marginHorizontal="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
             android:background="@drawable/bg_bulat_putih"
             android:elevation="8dp"
             android:padding="6dp"
-            android:layout_marginTop="@dimen/dimen_20dp"
-            android:layout_below="@id/cv_laporan"
             android:src="@drawable/ic_baseline_layers_24"
             app:tint="@color/white" />
 
@@ -125,15 +176,15 @@
 
         <TextView
             android:id="@+id/tv2"
-            android:text="Data Laporan"
-            android:layout_below="@id/view2"
-            android:layout_marginTop="30dp"
-            android:textStyle="bold"
-            android:textSize="16dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_marginHorizontal="16dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view2"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Data Laporan"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/img_kosong"
@@ -150,8 +201,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv2"
-            tools:listitem="@layout/item_laporan_pekerja"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/item_laporan_pekerja" />
 
     </RelativeLayout>
 
