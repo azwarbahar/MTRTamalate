@@ -2,6 +2,9 @@ package com.skripsi.mtrtamalate.ui.masyarakat.akun;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -14,6 +17,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -94,6 +98,9 @@ public class AkunFragment extends Fragment {
     private static final String TAG = AkunFragment.class.getSimpleName();
     public static final int REQUEST_IMAGE = 100;
 
+    private ImageView img_copy_telpon;
+    private ImageView img_copy_nik;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -111,6 +118,8 @@ public class AkunFragment extends Fragment {
         tv_nik = view.findViewById(R.id.tv_nik);
         tv_kelurahan = view.findViewById(R.id.tv_kelurahan);
         tv_telpon = view.findViewById(R.id.tv_telpon);
+        img_copy_telpon = view.findViewById(R.id.img_copy_telpon);
+        img_copy_nik = view.findViewById(R.id.img_copy_nik);
 
         img_profile.setOnClickListener(this::clickFoto);
 
@@ -129,7 +138,29 @@ public class AkunFragment extends Fragment {
 
         ImagePickerActivity.clearCache(getActivity());
 
+        img_copy_nik.setOnClickListener(this::clickCopyNik);
+        tv_nik.setOnClickListener(this::clickCopyNik);
+        img_copy_telpon.setOnClickListener(this::clickCopyTelpon);
+        tv_telpon.setOnClickListener(this::clickCopyTelpon);
+
         return view;
+    }
+
+    private void clickCopyNik(View view) {
+        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("NIK", nik);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(getActivity(), "Copied NIK",
+                Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void clickCopyTelpon(View view) {
+        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Telpon", telpon);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(getActivity(), "Copied Telpon",
+                Toast.LENGTH_SHORT).show();
     }
 
     private void clickFoto(View view) {

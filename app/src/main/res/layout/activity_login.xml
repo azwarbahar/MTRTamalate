@@ -39,6 +39,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="@dimen/dimen_20dp"
         android:text="Login"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -99,20 +100,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/til_password"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/bg_btn_lapor"
         android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
-        android:drawablePadding="10dp"
+        android:drawablePadding="16dp"
         android:drawableTint="@color/white"
         android:gravity="center"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="5dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
         android:text="Masuk"
         android:textColor="@color/white"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -123,6 +125,7 @@
         android:textSize="12sp" />
 
     <View
+        android:visibility="gone"
         android:id="@+id/view1"
         android:layout_width="2dp"
         android:layout_height="20dp"
@@ -133,6 +136,7 @@
         android:background="@color/black" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_masuk_petugas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -145,6 +149,7 @@
         android:textStyle="bold|italic" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_masuk_koordinator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

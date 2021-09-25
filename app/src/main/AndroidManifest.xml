@@ -21,7 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MTRTamalate"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.masyarakat.InfoActivity"></activity>
+        <activity android:name=".ui.petugas.akun.UbahPasswordPetugasActivity"></activity>
+        <activity android:name=".ui.petugas.akun.EditAkunPetugasActivity" />
+        <activity android:name=".ui.masyarakat.InfoActivity" />
         <activity android:name=".ui.petugas.DetailLaporanPetugasActivity" />
         <activity android:name=".ui.petugas.DetailMasyarakatPetugasActivity" />
         <activity android:name=".ui.koordinator.RiwayatLaporanActivity" />
@@ -40,21 +42,19 @@
         <activity android:name=".ui.masyarakat.akun.TitikLokasiActivity" />
         <activity android:name=".ui.masyarakat.akun.UbahPasswordActivity" />
         <activity android:name=".ui.masyarakat.akun.EditAkunActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".ui.petugas.PetugasActivity" />
         <activity android:name=".ui.masyarakat.sampah.DataSampahActivity" />
         <activity android:name=".ui.masyarakat.FormLaporActivity" />
         <activity android:name=".ui.masyarakat.bacaan.BacaanActivity" />
         <activity android:name=".ui.masyarakat.MasyarakatActivity" />
-        <activity android:name=".MainActivity" >
-
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait" /> <!-- cache directory file provider paths -->

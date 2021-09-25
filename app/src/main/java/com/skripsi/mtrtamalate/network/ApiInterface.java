@@ -1,6 +1,7 @@
 package com.skripsi.mtrtamalate.network;
 
 import com.skripsi.mtrtamalate.models.area.ResponseArea;
+import com.skripsi.mtrtamalate.models.auth.LoginResponse;
 import com.skripsi.mtrtamalate.models.berita.ResponseBerita;
 import com.skripsi.mtrtamalate.models.kendaraan.ResponseKendaraan;
 import com.skripsi.mtrtamalate.models.laporan.ResponLaporan;
@@ -17,6 +18,11 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
+
+    // AUTH
+    @GET("auth/login.php")
+    Call<LoginResponse> login(@Query("nik") String nik,
+                              @Query("password") String password);
 
     // KENDARAAN
     @GET("kendaraan/getKendaraanPetugas.php")
@@ -171,4 +177,22 @@ public interface ApiInterface {
 
     @GET("petugas/getPetugasKelurahan.php")
     Call<ResponsePetugas> getPetugasKelurahan(@Query("kelurahan_pekerja") String kelurahan_pekerja);
+
+    @FormUrlEncoded
+    @POST("petugas/editProfilePetugas.php")
+    Call<ResponsePetugas> editProfilePetugas(@Field("id_petugas") String id_petugas,
+                                             @Field("nama_petugas") String nama_petugas,
+                                             @Field("alamat_petugas") String alamat_petugas,
+                                             @Field("telpon_petugas") String telpon_petugas,
+                                             @Field("usia_petugas") String usia_petugas);
+
+    @GET("petugas/editPasswordPetugas.php")
+    Call<ResponsePetugas> editPasswordPetugas(@Query("id_petugas") String id_petugas,
+                                              @Query("password_lama") String password_lama,
+                                              @Query("password_baru") String password_baru);
+
+    @FormUrlEncoded
+    @POST("petugas/editFotoPetugas.php")
+    Call<ResponsePetugas> editFotoPetugas(@Field("id_petugas") String id_petugas,
+                                          @Field("foto_petugas") String foto_petugas);
 }
