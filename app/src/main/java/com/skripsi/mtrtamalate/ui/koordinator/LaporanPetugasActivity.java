@@ -187,9 +187,7 @@ public class LaporanPetugasActivity extends AppCompatActivity {
                 return;
             }
             locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-            locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                    LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
 
         }
 
@@ -282,7 +280,7 @@ public class LaporanPetugasActivity extends AppCompatActivity {
                         // Koordinat kosong
                         new SweetAlertDialog(LaporanPetugasActivity.this, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Gagal..")
-                                .setContentText(alamat_laporan)
+                                .setContentText("Koordinat Kosong")
                                 .show();
                     }
                 } else {
@@ -426,7 +424,7 @@ public class LaporanPetugasActivity extends AppCompatActivity {
                     return;
                 }
                 locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER, 1000, 10, locationListener);
+                        LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
 
             }
         }

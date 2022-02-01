@@ -1,9 +1,8 @@
 package com.skripsi.mtrtamalate.utils;
 
 public class Constanta {
-
     // IP
-    public static final String IP = "mtrtamalate.tryapp.my.id";
+    public static final String IP = "mtrtamalate.cfg.my.id";
 
     // URL API
     public static final String BASE_URL = "https://" + IP + "/api/";
